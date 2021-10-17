@@ -6,12 +6,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 public class SumOfNumbers {
+
     public static void run(BufferedReader input) throws IOException {
         String again = "";
         System.out.println("\n===================== FIRST TASK =====================");
 
         do {
-            System.out.println("Input your string: ");
+            System.out.print("Input your string: ");
             String str = input.readLine();
 
             int sum = 0;
@@ -34,4 +35,5 @@ public class SumOfNumbers {
 
         new ChooseTask().run();
     }
+
 }

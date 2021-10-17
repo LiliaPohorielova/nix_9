@@ -5,15 +5,15 @@ import ua.com.alevel.ChooseTask;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Locale;
 
 public class CountOfLetters {
+
     public static void run(BufferedReader input) throws IOException {
         String again = "";
         System.out.println("\n===================== SECOND TASK =====================");
 
         do {
-            System.out.println("Input your string: ");
+            System.out.print("Input your string: ");
             String str = input.readLine().trim().toLowerCase();
 
             char[] chars = str.toCharArray();
@@ -33,5 +33,6 @@ public class CountOfLetters {
 
         new ChooseTask().run();
     }
+
 }
 

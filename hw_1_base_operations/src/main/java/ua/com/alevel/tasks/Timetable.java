@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Timetable {
+
     public static void run(BufferedReader input) throws IOException {
         String again = "";
         System.out.println("\n===================== THIRD TASK =====================");
@@ -42,13 +43,14 @@ public class Timetable {
         new ChooseTask().run();
     }
 
-    public static boolean check (String in){
+    public static boolean check(String in) {
         char[] arr = in.toCharArray();
         for (char c : arr) {
-            if(!Character.isDigit(c)) return false;
+            if (!Character.isDigit(c)) return false;
         }
         int x = Integer.parseInt(in);
         if (x < 1 || x > 10) return false;
         return true;
     }
+
 }

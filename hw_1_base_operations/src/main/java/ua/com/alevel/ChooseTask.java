@@ -10,11 +10,11 @@ import java.io.InputStreamReader;
 
 
 public class ChooseTask {
+
     public static void run() {
         helper();
         BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
         String choice;
-
 
         try {
             while ((choice = input.readLine()) != null) {
@@ -44,7 +44,6 @@ public class ChooseTask {
     }
 
     static void helper() {
-
         System.out.println("\n===================== MAIN MENU =======================");
         System.out.println("Tasks: ");
         System.out.println("1 - Count the sum of the number in the string");
@@ -54,4 +53,5 @@ public class ChooseTask {
         System.out.print("\nTask number you want: ");
         //Добавить описание к каждой задаче
     }
+
 }
