@@ -35,5 +35,4 @@ public class SumOfNumbers {
 
         new ChooseTask().run();
     }
-
 }

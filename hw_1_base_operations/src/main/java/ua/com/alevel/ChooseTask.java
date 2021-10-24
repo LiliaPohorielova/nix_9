@@ -8,7 +8,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-
 public class ChooseTask {
 
     public static void run() {
@@ -53,5 +52,4 @@ public class ChooseTask {
         System.out.print("\nTask number you want: ");
         //Добавить описание к каждой задаче
     }
-
 }
