@@ -33,6 +33,5 @@ public class CountOfLetters {
 
         new ChooseTask().run();
     }
-
 }
 

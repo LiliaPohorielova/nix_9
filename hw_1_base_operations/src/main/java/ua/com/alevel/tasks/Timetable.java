@@ -52,5 +52,4 @@ public class Timetable {
         if (x < 1 || x > 10) return false;
         return true;
     }
-
 }
