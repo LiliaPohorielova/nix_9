@@ -2,10 +2,7 @@ package ua.com.alevel.level1;
 
 import ua.com.alevel.ChooseTask;
 
-
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 

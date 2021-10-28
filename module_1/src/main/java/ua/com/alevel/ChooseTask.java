@@ -3,6 +3,7 @@ package ua.com.alevel;
 import ua.com.alevel.level1.AreaOfTriangle;
 import ua.com.alevel.level1.ChessHorse;
 import ua.com.alevel.level1.UniqueSymbols;
+import ua.com.alevel.level2.CheckBrackets;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -21,10 +22,10 @@ public class ChooseTask {
                     case "1":
                         level1(scanner);
                         break;
-                    /*case "2":
+                    case "2":
                         level2(scanner);
                         break;
-                    case "3":
+                    /*case "3":
                         level3(scanner);
                         break;*/
                     case "0":
@@ -85,7 +86,33 @@ public class ChooseTask {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
+    public static void level2(Scanner scanner) throws IOException {
+        System.out.println("\n===================== LEVEL 2 =====================");
+        System.out.println("Choose task: ");
+        System.out.println("1 - Check for correct of brackets in a string");
+        System.out.println("1 - Find the maximum depth of a binary tree");
+        System.out.println("0 - Exit to main menu");
+        System.out.print("\nTask number you want: ");
+
+        String choice;
+        try {
+            while ((choice = scanner.nextLine()) != null) {
+                switch (choice) {
+                    case "1":
+                        new CheckBrackets().run(scanner);
+                        break;
+                    case "0":
+                        new ChooseTask().run();
+                        return;
+                    default:
+                        System.out.println("Incorrect value. Please, try again.");
+                        System.out.print("\nTask number you want: ");
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
