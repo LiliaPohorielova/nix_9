@@ -3,6 +3,7 @@ package ua.com.alevel;
 import ua.com.alevel.level1.AreaOfTriangle;
 import ua.com.alevel.level1.ChessHorse;
 import ua.com.alevel.level1.UniqueSymbols;
+import ua.com.alevel.level2.BinaryTree;
 import ua.com.alevel.level2.CheckBrackets;
 
 import java.io.IOException;
@@ -92,7 +93,7 @@ public class ChooseTask {
         System.out.println("\n===================== LEVEL 2 =====================");
         System.out.println("Choose task: ");
         System.out.println("1 - Check for correct of brackets in a string");
-        System.out.println("1 - Find the maximum depth of a binary tree");
+        System.out.println("2 - Find the maximum depth of a binary tree");
         System.out.println("0 - Exit to main menu");
         System.out.print("\nTask number you want: ");
 
@@ -102,6 +103,9 @@ public class ChooseTask {
                 switch (choice) {
                     case "1":
                         new CheckBrackets().run(scanner);
+                        break;
+                    case "2":
+                        new BinaryTree().run(scanner);
                         break;
                     case "0":
                         new ChooseTask().run();
