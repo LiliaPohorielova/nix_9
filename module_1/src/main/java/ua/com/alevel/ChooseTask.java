@@ -5,10 +5,10 @@ import ua.com.alevel.level1.ChessHorse;
 import ua.com.alevel.level1.UniqueSymbols;
 import ua.com.alevel.level2.BinaryTree;
 import ua.com.alevel.level2.CheckBrackets;
+import ua.com.alevel.level3.GameOfLife;
 
 import java.io.IOException;
 import java.util.Scanner;
-
 
 public class ChooseTask {
 
@@ -16,7 +16,6 @@ public class ChooseTask {
         helper();
         Scanner scanner = new Scanner(System.in);
         String choiceLevel;
-
         try {
             while ((choiceLevel = scanner.nextLine()) != null) {
                 switch (choiceLevel) {
@@ -26,9 +25,9 @@ public class ChooseTask {
                     case "2":
                         level2(scanner);
                         break;
-                    /*case "3":
+                    case "3":
                         level3(scanner);
-                        break;*/
+                        break;
                     case "0":
                         System.out.println("\n======================= EXIT ========================");
                         System.exit(0);
@@ -41,7 +40,6 @@ public class ChooseTask {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     static void helper() {
@@ -106,6 +104,37 @@ public class ChooseTask {
                         break;
                     case "2":
                         new BinaryTree().run(scanner);
+                        break;
+                    case "0":
+                        new ChooseTask().run();
+                        return;
+                    default:
+                        System.out.println("Incorrect value. Please, try again.");
+                        System.out.print("\nTask number you want: ");
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void level3(Scanner scanner) throws IOException {
+        System.out.println("\n===================== LEVEL 3 =====================");
+        System.out.println("Choose option \"Game of Life\": ");
+        System.out.println("1 - Random grid");
+        System.out.println("2 - Toad grid");
+        System.out.println("0 - Exit to main menu");
+        System.out.print("\nTask number you want: ");
+
+        String choice;
+        try {
+            while ((choice = scanner.nextLine()) != null) {
+                switch (choice) {
+                    case "1":
+                        new GameOfLife().run(scanner, false);
+                        break;
+                    case "2":
+                        new GameOfLife().run(scanner, true);
                         break;
                     case "0":
                         new ChooseTask().run();

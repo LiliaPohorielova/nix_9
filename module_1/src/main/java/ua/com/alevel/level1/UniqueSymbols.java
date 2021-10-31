@@ -59,7 +59,6 @@ public class UniqueSymbols {
                     countNum = count;
                     res++;
                 }
-
             }
             System.out.println("Counts of unique numbers: " + res);
 

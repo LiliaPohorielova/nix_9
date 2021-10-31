@@ -37,10 +37,11 @@ public class AreaOfTriangle {
             double ab = distance(points[0], points[1]);
             double bc = distance(points[1], points[2]);
             double ca = distance(points[0], points[2]);
-            double s = (ab + bc + ca) / 2;
-            String areaOfTriangle = String.format("%.1f", Math.sqrt(s * (s - ab) * (s - bc) * (s - ca)));
-            System.out.println("Area of this triangle " + areaOfTriangle);
-
+            if (triangle(ab, bc, ca)) {
+                double s = (ab + bc + ca) / 2;
+                String areaOfTriangle = String.format("%.1f", Math.sqrt(s * (s - ab) * (s - bc) * (s - ca)));
+                System.out.println("Area of this triangle " + areaOfTriangle);
+            }
             scanner.nextLine();
             System.out.println("\nDo you want to continue? (Y/N)");
             again = scanner.nextLine();
@@ -54,5 +55,14 @@ public class AreaOfTriangle {
         double distanceX = p1.x - p2.x;
         double distanceY = p1.y - p2.y;
         return Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+    }
+
+    public static boolean triangle(double m, double n, double u) {
+        if ((m + n > u) && (n + u > m) && (m + u > n)) {
+            return true;
+        } else {
+            System.out.println("The triangle does NOT exist.");
+            return false;
+        }
     }
 }

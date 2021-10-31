@@ -3,9 +3,7 @@ package ua.com.alevel.level2;
 import ua.com.alevel.ChooseTask;
 
 import java.io.IOException;
-import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.util.Stack;
 
 public class CheckBrackets {
 
@@ -17,17 +15,17 @@ public class CheckBrackets {
             System.out.print("Input yor string with brackets: ");
             boolean isCorrect = false;
             String s = scanner.nextLine().trim();
-            while(true){
-                if(s.contains("()")){
-                    s = s.replace("()","");
-                }else if(s.contains("[]")){
-                    s = s.replace("[]","");
-                }else if(s.contains("{}")){
-                    s = s.replace("{}","");
-                }else if(s.length()>0){
+            while (true) {
+                if (s.contains("()")) {
+                    s = s.replace("()", "");
+                } else if (s.contains("[]")) {
+                    s = s.replace("[]", "");
+                } else if (s.contains("{}")) {
+                    s = s.replace("{}", "");
+                } else if (s.length() > 0) {
                     isCorrect = false;
                     break;
-                }else{
+                } else {
                     isCorrect = true;
                     break;
                 }

@@ -23,9 +23,8 @@ public class BinaryTree {
     }
 
     public static void run(Scanner scanner) throws IOException {
-        //Ввести корень дерева
         Node node;
-        int choice = 0; //этаж
+        int choice = 0;
         while (true) {
             try {
                 System.out.println("\n---------------------- Binary Tree ---------------------");
@@ -39,7 +38,7 @@ public class BinaryTree {
         printMenuOfTree(choice, node);
     }
 
-    private static void printMenuOfTree(int choice, Node node) { //меню для дерева
+    private static void printMenuOfTree(int choice, Node node) {
         do {
             System.out.println("\nChoose action: ");
             System.out.println("1 - Add node to binary tree");
@@ -58,7 +57,7 @@ public class BinaryTree {
                 }
             }
             switch (choice) {
-                case 1: //добавить вершину
+                case 1:
                     int value = 0;
                     while (true) {
                         try {
@@ -93,7 +92,7 @@ public class BinaryTree {
         }
     }
 
-    private static void addNode(Node node, int value) { //добавить
+    private static void addNode(Node node, int value) {
         if (value < node.value) {
             if (node.leftNode == null) {
                 node.leftNode = new Node(value);
