@@ -1,10 +1,8 @@
 package ua.com.alevel.util;
 
-import java.util.ArrayList;
-
 public class MyList<ENTITY> {
 
-    ENTITY[] users;
+    ENTITY[] entities;
     int maxCapacity;
     int countOfEntities;
     static final int DEFAULT_CAPACITY = 100;
@@ -15,7 +13,7 @@ public class MyList<ENTITY> {
 
     public MyList(int capacity) {
         this.maxCapacity = capacity;
-        users = (ENTITY[]) new Object[capacity];
+        entities = (ENTITY[]) new Object[capacity];
         countOfEntities = 0;
     }
 
@@ -23,24 +21,24 @@ public class MyList<ENTITY> {
         return countOfEntities;
     }
 
-    public ENTITY getUser(int index) {
+    public ENTITY getEntity(int index) {
 
         checkIndex(index);
-        return users[index];
+        return entities[index];
     }
 
     public void add(int index, ENTITY element) {
         ENTITY temp;
         checkIndex(index);
-        if (countOfEntities == users.length)
+        if (countOfEntities == entities.length)
             resize();
         if (index < countOfEntities) {
             for (int i = countOfEntities - 1; i >= index; i--) {
-                temp = users[i];
-                users[i + 1] = temp;
+                temp = entities[i];
+                entities[i + 1] = temp;
             }
         }
-        users[index] = element;
+        entities[index] = element;
         countOfEntities++;
     }
 
@@ -49,10 +47,10 @@ public class MyList<ENTITY> {
     }
 
     private void resize() {
-        ENTITY[] resize = (ENTITY[]) new Object[users.length * 2];
-        if (maxCapacity >= 0) System.arraycopy(users, 0, resize, 0, maxCapacity);
-        this.users = resize;
-        this.maxCapacity = users.length;
+        ENTITY[] resize = (ENTITY[]) new Object[entities.length * 2];
+        if (maxCapacity >= 0) System.arraycopy(entities, 0, resize, 0, maxCapacity);
+        this.entities = resize;
+        this.maxCapacity = entities.length;
     }
 
    /* public void add(ENTITY a) {
@@ -69,11 +67,11 @@ public class MyList<ENTITY> {
     }*/
 
     public void update(ENTITY a) {
-        users[indexOf(a)] = a;
+        entities[indexOf(a)] = a;
     }
 
-    public ENTITY[] getUsers() {
-        return users;
+    public ENTITY[] getEntities() {
+        return entities;
     }
 
     public void deleteLastElement() {
@@ -81,14 +79,14 @@ public class MyList<ENTITY> {
             throw new RuntimeException("list is empty: cannot delete");
         }
         countOfEntities--;
-        users[countOfEntities] = null;
+        entities[countOfEntities] = null;
     }
 
     public void deleteFirstElement() {
         for (int i = 0; i < countOfEntities - 1; i++) {
-            users[i] = users[i + 1];
+            entities[i] = entities[i + 1];
         }
-        users[countOfEntities - 1] = null;
+        entities[countOfEntities - 1] = null;
         countOfEntities--;
     }
 
@@ -101,10 +99,10 @@ public class MyList<ENTITY> {
         checkIndex(index);
         if (index < getCountOfEntities()) {
             int i = index;
-            users[index] = null;
+            entities[index] = null;
             while (i < getCountOfEntities() - 1) {
-                users[i] = users[i + 1];
-                users[i + 1] = null;
+                entities[i] = entities[i + 1];
+                entities[i + 1] = null;
                 i++;
             }
         }
@@ -116,7 +114,7 @@ public class MyList<ENTITY> {
     }
 
     int indexOfRange(ENTITY o, int start, int end) {
-        Object[] es = users;
+        Object[] es = entities;
         if (o == null) {
             for (int i = start; i < end; i++) {
                 if (es[i] == null) {
@@ -134,23 +132,23 @@ public class MyList<ENTITY> {
     }
 
 
-//    public MyList<ENTITY> show() {
+    //    public MyList<ENTITY> show() {
 //        MyList<ENTITY> current = new MyList<>();
 //        for (int i = 0; i < countOfEntities; i++) {
 //            current.users = users;
 //        }
 //        return current;
 //    }
-@Override
-public String toString() {
-    if (users == null)
-        return "null";
+    @Override
+    public String toString() {
+        if (entities == null)
+            return "null";
 
-    StringBuilder builder = new StringBuilder();
-    for (int i = 0; i < countOfEntities; i++) {
-        if (i == countOfEntities - 1) builder.append(users[i]);
-        else builder.append(users[i]).append(", ");
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < countOfEntities; i++) {
+            if (i == countOfEntities - 1) builder.append(entities[i]);
+            else builder.append(entities[i]).append(", ");
+        }
+        return "[" + builder + "]";
     }
-    return "[" + builder + "]";
-}
 }

@@ -1,9 +1,13 @@
 package ua.com.alevel.entity;
 
-public class User extends BaseEntity {
+public class Patient extends BaseEntity {
 
     private String name;
     private int age;
+
+    public Patient() {
+        super();
+    }
 
     public String getName() {
         return name;
@@ -23,7 +27,7 @@ public class User extends BaseEntity {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "Patient{" +
                 "id='" + super.getId() + '\'' +
                 ", name='" + name + '\'' +
                 ", age=" + age +
