@@ -14,7 +14,7 @@ public class PatientServiceImplTest {
     @BeforeAll
     public static void setUp() {
         for (int i = 0; i < COUNT_OF_PATIENTS; i++) {
-            Patient patient = PatientGenerationUtil.generatePatient(PatientGenerationUtil.NAME_OF_PATIENT + i, PatientGenerationUtil.AGE_OF_PATIENT);
+            Patient patient = GenerationUtil.generatePatient(GenerationUtil.NAME_OF_PATIENT + i, GenerationUtil.AGE_OF_PATIENT);
             patientServiceImpl.create(patient);
         }
 
@@ -24,72 +24,60 @@ public class PatientServiceImplTest {
     @Order(1)
     @Test
     public void shouldBeCreatePatientWhenNameIsEmpty() {
-        Patient Patient = new Patient();
-        Patient.setName(null);
-        patientServiceImpl.create(Patient);
-        verifyPatientArrayWhenPatientsListIsNotEmpty(COUNT_OF_PATIENTS + 1);
+        Patient patient = new Patient();
+        patient.setName(null);
+        patient.setAge(GenerationUtil.AGE_OF_PATIENT);
+        patientServiceImpl.create(patient);
+        verifyPatientListWhenPatientsListIsNotEmpty(COUNT_OF_PATIENTS + 1);
     }
 
     @Order(2)
     @Test
-    public void shouldBeFindPatientByIdWhenPatientExistInDB() {
+    public void shouldBeDeletePatient() {
         String id = patientServiceImpl.findAll().getEntity(0).getId();
-
-        Assertions.assertNotNull(patientServiceImpl.findById(id));
-        Assertions.assertDoesNotThrow(() -> {
-            patientServiceImpl.findById(id);
-        });
-        verifyPatientArrayWhenPatientsListIsNotEmpty(COUNT_OF_PATIENTS + 1);
+        patientServiceImpl.delete(id);
+        verifyPatientListWhenPatientsListIsNotEmpty(COUNT_OF_PATIENTS);
     }
 
     @Order(3)
     @Test
-    public void shouldBeUpdatePatientWhenPatientExistInDB() {
-        String id = patientServiceImpl.findAll().getEntity(0).getId();
-        Patient patient = new Patient();
-        patient.setId(id);
-        String newName = PatientGenerationUtil.NAME_OF_PATIENT + PatientGenerationUtil.NAME_OF_PATIENT;
-        patient.setName(newName);
-        patientServiceImpl.update(patient);
-        Patient patientById = patientServiceImpl.findById(id);
-
-        Assertions.assertEquals(patientById.getName(), newName);
-        verifyPatientArrayWhenPatientsListIsNotEmpty(COUNT_OF_PATIENTS + 1);
+    public void shouldBeFindPatientWhenIdIsRandom() {
+        Patient patient = getRandomPatientFromPatientList(getRandomIdFromPatientList());
+        Assertions.assertNotNull(patient);
     }
 
     @Order(4)
     @Test
-    public void shouldBeDeletePatientWhenPatientAgreementDoesNotExist() {
-        String id = patientServiceImpl.findAll().getEntity(0).getId();
-        patientServiceImpl.delete(id);
-        verifyPatientArrayWhenPatientsListIsNotEmpty(COUNT_OF_PATIENTS);
+    public void shouldBeUpdatePatient() {
+        String id = getRandomIdFromPatientList();
+        Patient patient = getRandomPatientFromPatientList(id);
+        patient.setAge(99);
+        patient.setName("test");
+        patientServiceImpl.update(patient);
+        patient = patientServiceImpl.findById(id);
+        Assertions.assertEquals("test", patient.getName());
+        Assertions.assertEquals(99, patient.getAge());
     }
 
-    /*@Order(5)
-    @Test
-    public void shouldBeNotDeletePatientWhenPatientAgreementIsExist() {
-        String id = patientServiceImpl.getEntity(0).getId();
-        Patient Patient = patientServiceImpl.findById(id);
-        Patient Patient = PatientGenerationUtil.generateCustomer(PatientGenerationUtil.NAME_CUSTOMER);
-        Patient.create(customer);
-        Patient patient = PatientGenerationUtil.generateCustomerAgreement(GenerationUtil.NAME_CUSTOMER_AGREEMENT, Patient, customer);
-        Patient.create(customerAgreement);
-        patientServiceImpl.delete(id);
-        verifyPatientArrayWhenPatientsListIsNotEmpty(COUNT_OF_PATIENTS);
-    }
-
-    @Order(6)
+    @Order(5)
     @Test
     public void shouldBeEmptyArrayWhenDBIsClear() {
-        GenerationUtil.clearDB();
+        GenerationUtil.clearPatients();
+        Assertions.assertEquals(0, patientServiceImpl.findAll().getCountOfEntities());
+    }
 
-        Assertions.assertEquals(0, patientServiceImpl.findAll().length);
-    }*/
-
-    private void verifyPatientArrayWhenPatientsListIsNotEmpty(int size) {
+    private void verifyPatientListWhenPatientsListIsNotEmpty(int size) {
         MyList<Patient> patients = patientServiceImpl.findAll();
 
         Assertions.assertTrue(patients.getCountOfEntities() != 0);
         Assertions.assertEquals(size, patientServiceImpl.findAll().getCountOfEntities());
+    }
+
+    private String getRandomIdFromPatientList() {
+        return patientServiceImpl.findAll().getEntity(0).getId();
+    }
+
+    private Patient getRandomPatientFromPatientList(String id) {
+        return patientServiceImpl.findById(id);
     }
 }

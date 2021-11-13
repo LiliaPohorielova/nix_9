@@ -1,9 +1,7 @@
 package ua.com.alevel.controller.impl;
 
 import ua.com.alevel.controller.DeclarationController;
-import ua.com.alevel.controller.DoctorController;
 import ua.com.alevel.entity.Declaration;
-import ua.com.alevel.entity.Doctor;
 import ua.com.alevel.service.DoctorService;
 import ua.com.alevel.service.PatientService;
 import ua.com.alevel.service.DeclarationService;

@@ -16,7 +16,6 @@ public class NormalRevers {
         System.out.print("Input your string: ");
         String str = input.readLine();
 
-        //todo "Do you want to reverse full string?"
         str = StringHelperUtil.reverse(str, true);
         System.out.println(str);
         str = StringHelperUtil.reverse(str, true);

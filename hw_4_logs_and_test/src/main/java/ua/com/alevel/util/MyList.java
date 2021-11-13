@@ -134,4 +134,10 @@ public class MyList<ENTITY> {
         }
         return builder + "";
     }
+
+    public void clear() {
+        for (int i = 0; i < getCountOfEntities(); i++)
+            entities[i] = null;
+        countOfEntities = 0;
+    }
 }
