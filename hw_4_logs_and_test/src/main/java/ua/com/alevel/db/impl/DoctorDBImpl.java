@@ -56,16 +56,6 @@ public class DoctorDBImpl implements DoctorDB {
         return doctors;
     }
 
-    public void showAllToConsole() {
-        if (doctors.getCountOfEntities() != 0) {
-            for (int i = 0; i < doctors.getCountOfEntities(); i++) {
-                System.out.println(doctors.getEntity(i));
-            }
-        } else {
-            System.out.println("[empty]");
-        }
-    }
-
     private String generateId() {
         String id = UUID.randomUUID().toString();
         for (int i = 0; i < doctors.getCountOfEntities(); i++) {

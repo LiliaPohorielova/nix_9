@@ -36,6 +36,4 @@ public class DeclarationServiceImpl implements DeclarationService {
             throw exception;
         }
     }
-
-    public void showAllToConsole() { declarationDao.showAllToConsole();}
 }

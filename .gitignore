@@ -1,4 +1,5 @@
 .idea
 *.iml
 */target
+*/logs
 /hw_2_strings/dependency-reduced-pom.xml

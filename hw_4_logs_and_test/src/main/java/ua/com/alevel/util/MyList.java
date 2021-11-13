@@ -53,19 +53,6 @@ public class MyList<ENTITY> {
         this.maxCapacity = entities.length;
     }
 
-   /* public void add(ENTITY a) {
-        if (countOfEntities == maxCapacity) {
-            ENTITY[] dataNew = (ENTITY[]) new Object[maxCapacity * 2];
-            maxCapacity = maxCapacity * 2;
-            for (int i = 0; i < countOfEntities; i++) {
-                dataNew[i] = users[i];
-            }
-            users = dataNew;
-        }
-        users[countOfEntities] = a;
-        countOfEntities++;
-    }*/
-
     public void update(ENTITY a) {
         entities[indexOf(a)] = a;
     }
@@ -131,24 +118,20 @@ public class MyList<ENTITY> {
         return -1;
     }
 
-
-    //    public MyList<ENTITY> show() {
-//        MyList<ENTITY> current = new MyList<>();
-//        for (int i = 0; i < countOfEntities; i++) {
-//            current.users = users;
-//        }
-//        return current;
-//    }
     @Override
     public String toString() {
-        if (entities == null)
-            return "null";
-
+        if (entities == null) {
+            return "Empty....";
+        }
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < countOfEntities; i++) {
-            if (i == countOfEntities - 1) builder.append(entities[i]);
-            else builder.append(entities[i]).append(", ");
+            if (i == countOfEntities - 1) {
+                builder.append(entities[i]);
+            }
+            else {
+                builder.append(entities[i]).append(",\n");
+            }
         }
-        return "[" + builder + "]";
+        return builder + "";
     }
 }

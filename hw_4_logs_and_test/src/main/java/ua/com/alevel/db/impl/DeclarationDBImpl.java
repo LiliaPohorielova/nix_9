@@ -52,7 +52,6 @@ public class DeclarationDBImpl implements DeclarationDB {
     }
 
     public MyList<Declaration> findAll() {
-
         return declarations;
     }
 
@@ -64,15 +63,5 @@ public class DeclarationDBImpl implements DeclarationDB {
             }
         }
         return id;
-    }
-
-    public void showAllToConsole() {
-        if (declarations.getCountOfEntities() != 0) {
-            for (int i = 0; i < declarations.getCountOfEntities(); i++) {
-                System.out.println(declarations.getEntity(i));
-            }
-        } else {
-            System.out.println("[empty]");
-        }
     }
 }

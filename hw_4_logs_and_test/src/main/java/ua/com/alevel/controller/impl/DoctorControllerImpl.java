@@ -72,11 +72,12 @@ public class DoctorControllerImpl implements DoctorController {
     private void update(BufferedReader reader) {
         System.out.println("\n===================== UPDATE DOCTOR =====================");
         try {
-            System.out.println("Please, enter id");
+            System.out.println(doctorService.findAll());
+            System.out.println("Please, enter id (Choose one id of the options below)");
             String id = reader.readLine();
-            System.out.println("Please, enter doctor`s name");
+            System.out.println("Please, enter new doctor`s name");
             String name = reader.readLine();
-            System.out.println("Please, enter doctor`s specialization");
+            System.out.println("Please, enter new doctor`s specialization");
             String specialization = reader.readLine();
             Doctor doctor = new Doctor();
             doctor.setId(id);
@@ -91,8 +92,8 @@ public class DoctorControllerImpl implements DoctorController {
     private void delete(BufferedReader reader) {
         System.out.println("\n===================== DELETE DOCTOR =====================");
         try {
-            System.out.println("Please, enter id");
-            doctorService.showAllToConsole();
+            System.out.println(doctorService.findAll());
+            System.out.println("Please, enter id (Choose one id of the options below)");
             String id = reader.readLine();
             doctorService.delete(id);
         } catch (IOException|RuntimeException e) {

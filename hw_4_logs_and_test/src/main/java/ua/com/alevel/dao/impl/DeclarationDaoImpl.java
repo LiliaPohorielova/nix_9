@@ -26,6 +26,4 @@ public class DeclarationDaoImpl implements DeclarationDao {
     public MyList<Declaration> findAll() {
         return DeclarationDBImpl.getInstance().findAll();
     }
-
-    public void showAllToConsole() { DeclarationDBImpl.getInstance().showAllToConsole();}
 }

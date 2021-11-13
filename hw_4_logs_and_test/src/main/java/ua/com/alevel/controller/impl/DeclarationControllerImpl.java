@@ -66,13 +66,13 @@ public class DeclarationControllerImpl implements DeclarationController {
     private void create(BufferedReader reader) {
         System.out.println("\n===================== CREATE DECLARATION =====================");
         try {
-            System.out.println("Please, enter patient`s id");
-            patientService.showAllToConsole();
+            System.out.println(patientService.findAll());
+            System.out.println("Please, enter patient`s id (Choose one id of the options below)");
             String idPatient = reader.readLine();
             Declaration declaration = new Declaration();
             declaration.setIdPatient(patientService.findById(idPatient).getId());
-            System.out.println("Please, enter doctor`s id");
-            doctorService.showAllToConsole();
+            System.out.println(doctorService.findAll());
+            System.out.println("Please, enter doctor`s id (Choose one id of the options below)");
             String idDoctor = reader.readLine();
             declaration.setIdDoctor(doctorService.findById(idDoctor).getId());
             declarationService.create(declaration);
@@ -84,17 +84,17 @@ public class DeclarationControllerImpl implements DeclarationController {
     private void update(BufferedReader reader) {
         System.out.println("\n===================== UPDATE DECLARATION =====================");
         try {
-            System.out.println("Please, enter id of declaration");
-            declarationService.showAllToConsole();
+            System.out.println(declarationService.findAll());
+            System.out.println("Please, enter id of declaration (Choose one id of the options below)");
             String id = reader.readLine();
             Declaration declaration = new Declaration();
             declaration.setId(id);
-            System.out.println("Please, enter patient`s id (Choose one id of the options bottom)");
-            patientService.showAllToConsole();
+            System.out.println(patientService.findAll());
+            System.out.println("Please, enter patient`s id (Choose one id of the options below)");
             String idPatient = reader.readLine();
             declaration.setIdPatient(patientService.findById(idPatient).getId());
-            System.out.println("Please, enter doctor`s id (Choose one id of the options bottom)");
-            doctorService.showAllToConsole();
+            System.out.println(doctorService.findAll());
+            System.out.println("Please, enter doctor`s id (Choose one id of the options below)");
             String idDoctor = reader.readLine();
             declaration.setIdDoctor(doctorService.findById(idDoctor).getId());
             declarationService.update(declaration);
@@ -106,8 +106,8 @@ public class DeclarationControllerImpl implements DeclarationController {
     private void delete(BufferedReader reader) {
         System.out.println("\n===================== DELETE DECLARATION =====================");
         try {
-            System.out.println("Please, enter id");
-            declarationService.showAllToConsole();
+            System.out.println(declarationService.findAll());
+            System.out.println("Please, enter id (Choose one id of the options below)");
             String id = reader.readLine();
             declarationService.delete(id);
         } catch (IOException|RuntimeException e) {

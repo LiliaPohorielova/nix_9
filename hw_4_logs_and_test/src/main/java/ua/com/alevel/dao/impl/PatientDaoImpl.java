@@ -26,6 +26,4 @@ public class PatientDaoImpl implements PatientDao {
     public MyList<Patient> findAll() {
         return PatientDBImpl.getInstance().findAll();
     }
-
-    public void showAllToConsole() { PatientDBImpl.getInstance().showAllToConsole();}
 }

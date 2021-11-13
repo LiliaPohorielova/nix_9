@@ -31,9 +31,6 @@ public final class PatientDBImpl implements PatientDB {
         Patient temp = findById(patient.getId());
         temp.setName(patient.getName());
         temp.setAge(patient.getAge());
-//        temp.getId();
-//        users.update(temp);
-        //users.getUser(users.indexOf(temp)) = user;
     }
 
     public void delete(String id) {
@@ -52,16 +49,6 @@ public final class PatientDBImpl implements PatientDB {
             }
         }
         throw new RuntimeException("Patient not found by id");
-    }
-
-    public void showAllToConsole() {
-        if (patients.getCountOfEntities() != 0) {
-            for (int i = 0; i < patients.getCountOfEntities(); i++) {
-                System.out.println(patients.getEntity(i));
-            }
-        } else {
-            System.out.println("[empty]");
-        }
     }
 
     public MyList<Patient> findAll() {

@@ -26,6 +26,4 @@ public class DoctorDaoImpl implements DoctorDao {
     public MyList<Doctor> findAll() {
         return DoctorDBImpl.getInstance().findAll();
     }
-
-    public void showAllToConsole() { DoctorDBImpl.getInstance().showAllToConsole();}
 }

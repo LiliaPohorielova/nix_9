@@ -75,11 +75,12 @@ public class PatientControllerImpl implements PatientController {
     private void update(BufferedReader reader) {
         System.out.println("\n===================== UPDATE PATIENT =====================");
         try {
-            System.out.println("Please, enter id");
+            System.out.println(patientService.findAll());
+            System.out.println("Please, enter id (Choose one id of the options below)");
             String id = reader.readLine();
-            System.out.println("Please, enter patient`s name");
+            System.out.println("Please, enter new patient`s name");
             String name = reader.readLine();
-            System.out.println("Please, enter patient`s age");
+            System.out.println("Please, enter new patient`s age");
             String ageString = reader.readLine();
             int age = Integer.parseInt(ageString);
             Patient patient = new Patient();
@@ -95,8 +96,8 @@ public class PatientControllerImpl implements PatientController {
     private void delete(BufferedReader reader) {
         System.out.println("\n===================== DELETE PATIENT =====================");
         try {
-            System.out.println("Please, enter id");
-            patientService.showAllToConsole();
+            System.out.println(patientService.findAll());
+            System.out.println("Please, enter id (Choose one id of the options below)");
             String id = reader.readLine();
             patientService.delete(id);
         } catch (IOException|RuntimeException e) {
@@ -110,7 +111,7 @@ public class PatientControllerImpl implements PatientController {
             System.out.println("Please, enter id");
             String id = reader.readLine();
             Patient patient = patientService.findById(id);
-            System.out.println("User = " + patient);
+            System.out.println("Patient = " + patient);
         } catch (IOException|RuntimeException e) {
             System.out.println("Error: " + e.getMessage());
         }

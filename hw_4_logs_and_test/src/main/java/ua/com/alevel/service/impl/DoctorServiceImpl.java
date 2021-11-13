@@ -1,7 +1,6 @@
 package ua.com.alevel.service.impl;
 
 import ua.com.alevel.dao.impl.DoctorDaoImpl;
-import ua.com.alevel.db.impl.DoctorDBImpl;
 import ua.com.alevel.entity.Doctor;
 import ua.com.alevel.service.DoctorService;
 import ua.com.alevel.util.MyList;
@@ -19,7 +18,25 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     public void delete(String id) {
-        doctorDao.delete(id);
+        DoctorService doctorService = new DoctorServiceImpl();
+        MyList<Doctor> doctors = doctorService.findAll();
+        boolean canBeDeleted = true;
+        for (int i = 0; i < doctors.getCountOfEntities(); i++) {
+            if (doctors.getEntity(i) != null && doctors.getEntity(i).getId().equals(id)) {
+                if (canBeDeleted) {
+                    System.out.println("You cannot delete a patient. Delete the declaration first:");
+                    canBeDeleted = false;
+                }
+                System.out.println(doctors.getEntity(i).getId());
+            }
+        }
+        if (canBeDeleted) {
+            try {
+                doctorDao.delete(id);
+            } catch (RuntimeException e) {
+                throw e;
+            }
+        }
     }
 
     public Doctor findById(String id) {
@@ -37,6 +54,4 @@ public class DoctorServiceImpl implements DoctorService {
             throw exception;
         }
     }
-
-    public void showAllToConsole() { doctorDao.showAllToConsole();}
 }
