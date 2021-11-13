@@ -25,7 +25,7 @@ public class PatientControllerImpl implements PatientController {
                 }
                 crud(position, reader);
             }
-        } catch (IOException|RuntimeException e) {
+        } catch (IOException | RuntimeException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
@@ -67,7 +67,7 @@ public class PatientControllerImpl implements PatientController {
             patient.setAge(age);
             patient.setName(name);
             patientService.create(patient);
-        } catch (IOException|RuntimeException e) {
+        } catch (IOException | RuntimeException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
@@ -88,7 +88,7 @@ public class PatientControllerImpl implements PatientController {
             patient.setAge(age);
             patient.setName(name);
             patientService.update(patient);
-        } catch (IOException|RuntimeException e) {
+        } catch (IOException | RuntimeException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
@@ -100,7 +100,7 @@ public class PatientControllerImpl implements PatientController {
             System.out.println("Please, enter id (Choose one id of the options below)");
             String id = reader.readLine();
             patientService.delete(id);
-        } catch (IOException|RuntimeException e) {
+        } catch (IOException | RuntimeException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
@@ -112,7 +112,7 @@ public class PatientControllerImpl implements PatientController {
             String id = reader.readLine();
             Patient patient = patientService.findById(id);
             System.out.println("Patient = " + patient);
-        } catch (IOException|RuntimeException e) {
+        } catch (IOException | RuntimeException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }

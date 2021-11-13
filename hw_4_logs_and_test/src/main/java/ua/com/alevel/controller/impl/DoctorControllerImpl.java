@@ -25,7 +25,7 @@ public class DoctorControllerImpl implements DoctorController {
                 }
                 crud(position, reader);
             }
-        } catch (IOException|RuntimeException e) {
+        } catch (IOException | RuntimeException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
@@ -64,7 +64,7 @@ public class DoctorControllerImpl implements DoctorController {
             doctor.setSpecialization(specialization);
             doctor.setName(name);
             doctorService.create(doctor);
-        } catch (IOException|RuntimeException e) {
+        } catch (IOException | RuntimeException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
@@ -84,7 +84,7 @@ public class DoctorControllerImpl implements DoctorController {
             doctor.setSpecialization(specialization);
             doctor.setName(name);
             doctorService.update(doctor);
-        } catch (IOException|RuntimeException e) {
+        } catch (IOException | RuntimeException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
@@ -96,7 +96,7 @@ public class DoctorControllerImpl implements DoctorController {
             System.out.println("Please, enter id (Choose one id of the options below)");
             String id = reader.readLine();
             doctorService.delete(id);
-        } catch (IOException|RuntimeException e) {
+        } catch (IOException | RuntimeException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
@@ -108,7 +108,7 @@ public class DoctorControllerImpl implements DoctorController {
             String id = reader.readLine();
             Doctor doctor = doctorService.findById(id);
             System.out.println("Doctor = " + doctor);
-        } catch (IOException|RuntimeException e) {
+        } catch (IOException | RuntimeException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }

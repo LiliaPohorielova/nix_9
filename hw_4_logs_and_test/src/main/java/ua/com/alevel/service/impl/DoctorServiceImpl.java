@@ -27,7 +27,7 @@ public class DoctorServiceImpl implements DoctorService {
             doctorDao.update(doctor);
             LOGGER_INFO.info("doctor finish updated, id: " + doctor.getId());
         } catch (RuntimeException e) {
-            LOGGER_ERROR.error("doctor NOT be updated" + doctor.getId() + "; problem = " + e.getMessage());
+            LOGGER_ERROR.error("doctor NOT be updated " + doctor.getId() + "; problem = " + e.getMessage());
             throw e;
         }
     }
@@ -47,11 +47,11 @@ public class DoctorServiceImpl implements DoctorService {
         }
         if (canBeDeleted) {
             try {
-                LOGGER_WARN.warn("doctor start deleted" + id);
+                LOGGER_WARN.warn("doctor start deleted " + id);
                 doctorDao.delete(id);
-                LOGGER_WARN.warn("doctor finish deleted" + id);
+                LOGGER_WARN.warn("doctor finish deleted " + id);
             } catch (RuntimeException e) {
-                LOGGER_ERROR.error("doctor NOT be deleted" + id + "; problem = " + e.getMessage());
+                LOGGER_ERROR.error("doctor NOT be deleted " + id + "; problem = " + e.getMessage());
                 throw e;
             }
         }
@@ -61,7 +61,7 @@ public class DoctorServiceImpl implements DoctorService {
         try {
             return doctorDao.findById(id);
         } catch (RuntimeException exception) {
-            LOGGER_ERROR.error("doctor NOT be found" + id + "; problem = " + exception.getMessage());
+            LOGGER_ERROR.error("doctor NOT be found " + id + "; problem = " + exception.getMessage());
             throw exception;
         }
     }

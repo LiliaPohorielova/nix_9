@@ -24,11 +24,11 @@ public class PatientServiceImpl implements PatientService {
 
     public void update(Patient patient) {
         try {
-            LOGGER_INFO.info("patient start updated" + patient.getId());
+            LOGGER_INFO.info("patient start updated " + patient.getId());
             patientDao.update(patient);
-            LOGGER_INFO.info("patient finish updated" + patient.getId());
+            LOGGER_INFO.info("patient finish updated " + patient.getId());
         } catch (RuntimeException e) {
-            LOGGER_ERROR.error("patient NOT be updated" + patient.getId() + "; problem = " + e.getMessage());
+            LOGGER_ERROR.error("patient NOT be updated " + patient.getId() + "; problem = " + e.getMessage());
             throw e;
         }
     }
@@ -40,7 +40,7 @@ public class PatientServiceImpl implements PatientService {
         for (int i = 0; i < declarations.getCountOfEntities(); i++) {
             if (declarations.getEntity(i) != null && declarations.getEntity(i).getIdPatient().equals(id)) {
                 if (canBeDeleted) {
-                    System.out.println("You cannot delete a doctor. Delete the declaration first:");
+                    System.out.println("You cannot delete a patient. Delete the declaration first:");
                     canBeDeleted = false;
                 }
                 System.out.println(declarations.getEntity(i).getId());
@@ -48,11 +48,11 @@ public class PatientServiceImpl implements PatientService {
         }
         if (canBeDeleted) {
             try {
-                LOGGER_WARN.warn("patient start deleted" + id);
+                LOGGER_WARN.warn("patient start deleted " + id);
                 patientDao.delete(id);
-                LOGGER_WARN.warn("patient finish deleted" + id);
+                LOGGER_WARN.warn("patient finish deleted " + id);
             } catch (RuntimeException e) {
-                LOGGER_ERROR.error("patient NOT be deleted" + id + "; problem = " + e.getMessage());
+                LOGGER_ERROR.error("patient NOT be deleted " + id + "; problem = " + e.getMessage());
                 throw e;
             }
         }
@@ -62,7 +62,7 @@ public class PatientServiceImpl implements PatientService {
         try {
             return patientDao.findById(id);
         } catch (RuntimeException exception) {
-            LOGGER_ERROR.error("patient NOT be found" + id + "; problem = " + exception.getMessage());
+            LOGGER_ERROR.error("patient NOT be found " + id + "; problem = " + exception.getMessage());
             throw exception;
         }
     }

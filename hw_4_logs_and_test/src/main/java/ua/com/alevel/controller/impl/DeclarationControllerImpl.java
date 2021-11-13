@@ -19,6 +19,7 @@ public class DeclarationControllerImpl implements DeclarationController {
     private final DeclarationService declarationService = new DeclarationServiceImpl();
     private final PatientService patientService = new PatientServiceImpl();
     private final DoctorService doctorService = new DoctorServiceImpl();
+
     public void run() {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String position;
@@ -31,7 +32,7 @@ public class DeclarationControllerImpl implements DeclarationController {
                 }
                 crud(position, reader);
             }
-        } catch (IOException|RuntimeException e) {
+        } catch (IOException | RuntimeException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
@@ -74,7 +75,7 @@ public class DeclarationControllerImpl implements DeclarationController {
             String idDoctor = reader.readLine();
             declaration.setIdDoctor(doctorService.findById(idDoctor).getId());
             declarationService.create(declaration);
-        } catch (RuntimeException|IOException e) {
+        } catch (RuntimeException | IOException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
@@ -96,7 +97,7 @@ public class DeclarationControllerImpl implements DeclarationController {
             String idDoctor = reader.readLine();
             declaration.setIdDoctor(doctorService.findById(idDoctor).getId());
             declarationService.update(declaration);
-        } catch (IOException|RuntimeException e) {
+        } catch (IOException | RuntimeException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
@@ -108,7 +109,7 @@ public class DeclarationControllerImpl implements DeclarationController {
             System.out.println("Please, enter id (Choose one id of the options below)");
             String id = reader.readLine();
             declarationService.delete(id);
-        } catch (IOException|RuntimeException e) {
+        } catch (IOException | RuntimeException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
@@ -120,7 +121,7 @@ public class DeclarationControllerImpl implements DeclarationController {
             String id = reader.readLine();
             Declaration declaration = declarationService.findById(id);
             System.out.println("Declaration = " + declaration);
-        } catch (IOException|RuntimeException e) {
+        } catch (IOException | RuntimeException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }

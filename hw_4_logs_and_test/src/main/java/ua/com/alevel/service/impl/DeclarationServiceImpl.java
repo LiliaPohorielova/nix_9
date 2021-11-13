@@ -26,18 +26,18 @@ public class DeclarationServiceImpl implements DeclarationService {
             declarationDao.update(declaration);
             LOGGER_INFO.info("declaration finish updated, id: " + declaration.getId());
         } catch (RuntimeException e) {
-            LOGGER_ERROR.error("declaration NOT be updated" + declaration.getId() + "; problem = " + e.getMessage());
+            LOGGER_ERROR.error("declaration NOT be updated " + declaration.getId() + "; problem = " + e.getMessage());
             throw e;
         }
     }
 
     public void delete(String id) {
         try {
-            LOGGER_WARN.warn("declaration start deleted" + id);
+            LOGGER_WARN.warn("declaration start deleted " + id);
             declarationDao.delete(id);
-            LOGGER_WARN.warn("declaration start deleted" + id);
+            LOGGER_WARN.warn("declaration start deleted " + id);
         } catch (RuntimeException e) {
-            LOGGER_ERROR.error("declaration NOT be deleted" + id + "; problem = " + e.getMessage());
+            LOGGER_ERROR.error("declaration NOT be deleted " + id + "; problem = " + e.getMessage());
             throw e;
         }
     }
@@ -46,7 +46,7 @@ public class DeclarationServiceImpl implements DeclarationService {
         try {
             return declarationDao.findById(id);
         } catch (RuntimeException exception) {
-            LOGGER_ERROR.error("declaration NOT be found" + id + "; problem = " + exception.getMessage());
+            LOGGER_ERROR.error("declaration NOT be found " + id + "; problem = " + exception.getMessage());
             throw exception;
         }
     }

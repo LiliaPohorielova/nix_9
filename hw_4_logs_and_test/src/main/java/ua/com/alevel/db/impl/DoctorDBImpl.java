@@ -2,7 +2,6 @@ package ua.com.alevel.db.impl;
 
 import ua.com.alevel.db.DoctorDB;
 import ua.com.alevel.entity.Doctor;
-import ua.com.alevel.entity.Patient;
 import ua.com.alevel.util.MyList;
 
 import java.util.UUID;

@@ -11,7 +11,8 @@
 
     <artifactId>hw_4_logs_and_test</artifactId>
 
-    <properties><maven.compiler.source>17</maven.compiler.source>
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <reflections.version>0.10.1</reflections.version>
         <java.version>17</java.version>
@@ -150,7 +151,8 @@
                         </goals>
                         <configuration>
                             <transformers>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <mainClass>ua.com.alevel.Main</mainClass>
                                 </transformer>
                             </transformers>
@@ -160,5 +162,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

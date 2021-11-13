@@ -127,8 +127,7 @@ public class MyList<ENTITY> {
         for (int i = 0; i < countOfEntities; i++) {
             if (i == countOfEntities - 1) {
                 builder.append(entities[i]);
-            }
-            else {
+            } else {
                 builder.append(entities[i]).append(",\n");
             }
         }
