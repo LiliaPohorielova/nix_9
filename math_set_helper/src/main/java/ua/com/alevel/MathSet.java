@@ -1,8 +1,8 @@
 package ua.com.alevel;
 
-public class MathSet<N extends Number> {
+public class MathSet {
 
-    N[] numbers;
+    Number[] numbers;
     int maxCapacity;
     int size;
     static final int DEFAULT_CAPACITY = 10;
@@ -13,36 +13,40 @@ public class MathSet<N extends Number> {
 
     public MathSet(int capacity) {
         this.maxCapacity = capacity;
-        numbers = (N[]) new Number[capacity];
+        numbers = new Number[capacity];
         size = 0;
     }
 
-    public MathSet(N[] arrayOfNumbers) {
-        this.maxCapacity = DEFAULT_CAPACITY;
-        numbers = getNumbersWithoutDuplicates(arrayOfNumbers);
-        size = numbers.length;//getsize
+    public MathSet(Number[] arrayOfNumbers) {
+        maxCapacity = arrayOfNumbers.length;
+        numbers = new Number[maxCapacity];
+        for (Number n : arrayOfNumbers) {
+            add(n);
+        }
     }
 
-    public MathSet(N[]... varargsArrayOfNumbers) {
+    public MathSet(Number[]... varargsArrayOfNumbers) {
         this.maxCapacity = DEFAULT_CAPACITY;
-        numbers = (N[]) new Number[maxCapacity];
-        for (N number : numbers) {
-            add(number);
+        numbers = new Number[maxCapacity];
+        for (Number[] number : varargsArrayOfNumbers) {
+            for (Number n : number) {
+                add(n);
+            }
         }
     }
 
     public MathSet(MathSet setOfNumbers) {
         this(DEFAULT_CAPACITY);
         for (int i = 0; i < setOfNumbers.size; i++) {
-            add((N) setOfNumbers.numbers[i]);
+            add(setOfNumbers.numbers[i]);
         }
         size = setOfNumbers.size;
     }
 
     public MathSet(MathSet... varargsSetOfNumbers) {
         this.maxCapacity = DEFAULT_CAPACITY;
-        numbers = (N[]) new Number[maxCapacity];
-        for (MathSet<N> number : varargsSetOfNumbers) {
+        numbers = new Number[maxCapacity];
+        for (MathSet number : varargsSetOfNumbers) {
             for (int i = 0; i < number.size; i++) {
                 add(number.numbers[i]);
             }
@@ -53,60 +57,86 @@ public class MathSet<N extends Number> {
         return size;
     }
 
-    public N getEntity(int index) {
-
+    public Number getNumber(int index) {
         checkIndex(index);
         return numbers[index];
     }
 
-    public void add(int index, N element) {
-        N temp;
-        checkIndex(index);
-        if (size == numbers.length)
-            resize();
-        if (index < size) {
-            for (int i = size - 1; i >= index; i--) {
-                temp = numbers[i];
-                numbers[i + 1] = temp;
+    public void add(Number element) {
+        if (!alreadyInArray(element)) {
+            if (maxCapacity == size) {
+                throw new RuntimeException("You can't add elements, maxCapacity = " + maxCapacity);
             }
+            if (size == numbers.length)
+                resize();
+            numbers[size] = element;
+            size++;
         }
-        numbers[index] = element;
-        size++;
     }
 
-    public void add(N element) {
-        add(size, element);
+    public void add(Number... numbers) {
+        for (int i = 0; i < numbers.length; i++) {
+            add(numbers[i]);
+        }
+    }
+
+    private boolean alreadyInArray(Number element) {
+        Number[] temp = numbers;
+        for (int i = 0; i < size; i++) {
+            if (temp[i].equals(element)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void resize() {
-        N[] resize = (N[]) new Number[numbers.length * 2];
+        Number[] resize = new Number[numbers.length * 2];
         if (maxCapacity >= 0) System.arraycopy(numbers, 0, resize, 0, maxCapacity);
         this.numbers = resize;
         this.maxCapacity = numbers.length;
     }
 
-    public void update(N a) {
-        numbers[indexOf(a)] = a;
+    public void sortAsc() {
+        sortAsc(0, size);
     }
 
-    public N[] getEntities() {
-        return numbers;
-    }
-
-    public void deleteLastElement() {
-        if (size == 0) {
-            throw new RuntimeException("list is empty: cannot delete");
+    public void sortAsc(int firstIndex, int lastIndex) {
+        boolean isSorted = false;
+        while (!isSorted) {
+            isSorted = true;
+            if ((lastIndex - firstIndex) > 0) {
+                for (int i = firstIndex; i < lastIndex-1; i++) {
+                    if (numbers[i].longValue() > numbers[i + 1].longValue()) {
+                        isSorted = false;
+                        Number temp = numbers[i];
+                        numbers[i] = numbers[i + 1];
+                        numbers[i + 1] = temp;
+                    }
+                }
+            }
         }
-        size--;
-        numbers[size] = null;
     }
 
-    public void deleteFirstElement() {
-        for (int i = 0; i < size - 1; i++) {
-            numbers[i] = numbers[i + 1];
+    public void sortDesc() {
+        sortAsc(0, size);
+    }
+
+    public void sortDesc(int firstIndex, int lastIndex) {
+        boolean isSorted = false;
+        while (!isSorted) {
+            isSorted = true;
+            if ((lastIndex - firstIndex) > 0) {
+                for (int i = firstIndex; i < lastIndex-1; i++) {
+                    if (numbers[i].longValue() < numbers[i + 1].longValue()) {
+                        isSorted = false;
+                        Number temp = numbers[i];
+                        numbers[i] = numbers[i + 1];
+                        numbers[i + 1] = temp;
+                    }
+                }
+            }
         }
-        numbers[size - 1] = null;
-        size--;
     }
 
     private void checkIndex(int index) {
@@ -114,25 +144,11 @@ public class MathSet<N extends Number> {
             throw new IndexOutOfBoundsException();
     }
 
-    public void delete(int index) {
-        checkIndex(index);
-        if (index < getSize()) {
-            int i = index;
-            numbers[index] = null;
-            while (i < getSize() - 1) {
-                numbers[i] = numbers[i + 1];
-                numbers[i + 1] = null;
-                i++;
-            }
-        }
-        size--;
-    }
-
-    public int indexOf(N o) {
+    public int indexOf(Number o) {
         return indexOfRange(o, 0, size);
     }
 
-    int indexOfRange(N o, int start, int end) {
+    int indexOfRange(Number o, int start, int end) {
         Number[] es = numbers;
         if (o == null) {
             for (int i = start; i < end; i++) {
@@ -153,14 +169,17 @@ public class MathSet<N extends Number> {
     @Override
     public String toString() {
         if (numbers == null) {
-            return "Empty....";
+            return "MathSet is empty....";
         }
+
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < size; i++) {
-            if (i == size - 1) {
-                builder.append(numbers[i]);
-            } else {
-                builder.append(numbers[i]).append(", ");
+            if (numbers[i] != null) {
+                if (i == size - 1) {
+                    builder.append(numbers[i]);
+                } else {
+                    builder.append(numbers[i]).append(", ");
+                }
             }
         }
         return builder + "";
@@ -172,7 +191,21 @@ public class MathSet<N extends Number> {
         size = 0;
     }
 
-    private N[] getNumbersWithoutDuplicates(N[] arrayOfNumbers) {
+    public void delete(int index) {
+        checkIndex(index);
+        if (index < getSize()) {
+            int i = index;
+            numbers[index] = null;
+            while (i < getSize() - 1) {
+                numbers[i] = numbers[i + 1];
+                numbers[i + 1] = null;
+                i++;
+            }
+        }
+        size--;
+    }
+
+    private Number[] getNumbersWithoutDuplicates(Number[] arrayOfNumbers) {
         int n = arrayOfNumbers.length;
         for (int i = 0, m = 0; i != n; i++, n = m) {
             for (int j = m = i + 1; j != n; j++) {
@@ -183,11 +216,42 @@ public class MathSet<N extends Number> {
             }
         }
         if (n != arrayOfNumbers.length) {
-            N[] b = (N[]) new Number[n];
+            Number[] b = new Number[n];
             System.arraycopy(arrayOfNumbers, 0, b, 0, n);
             arrayOfNumbers = b;
         }
         return arrayOfNumbers;
+
+       /* Number[] temp = new Number[];
+        for (int i = 0; i < arrayOfNumbers.length; i++) {
+            if (!alreadyInArray(arrayOfNumbers[i])) {
+                add(arrayOfNumbers[i]);
+            }
+        }*/
+    }
+
+    public void update(Number a) {
+        numbers[indexOf(a)] = a;
+    }
+
+    public Number[] getEntities() {
+        return numbers;
+    }
+
+    public void deleteLastElement() {
+        if (size == 0) {
+            throw new RuntimeException("list is empty: cannot delete");
+        }
+        size--;
+        numbers[size] = null;
+    }
+
+    public void deleteFirstElement() {
+        for (int i = 0; i < size - 1; i++) {
+            numbers[i] = numbers[i + 1];
+        }
+        numbers[size - 1] = null;
+        size--;
     }
 
 }

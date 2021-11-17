@@ -1,6 +1,7 @@
 package ua.com.alevel;
 
-import ua.com.alevel.tasks.CreateMathSet;
+import ua.com.alevel.tasks.DefaultMathSet;
+import static ua.com.alevel.util.Navigation.helper;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,7 +18,7 @@ public class ChooseTask {
             while ((choice = input.readLine()) != null) {
                 switch (choice) {
                     case "1":
-                        new CreateMathSet().run(input);
+                        new DefaultMathSet().run(input);
                         break;
                     /*case "2":
                         new SubstringRevers().run(input);
@@ -37,28 +38,13 @@ public class ChooseTask {
                         break;
                     default:
                         System.out.println("Incorrect value. Please, try again.");
-                        System.out.print("\nTask number you want: ");
+                        System.out.print("\nChoose action you want: ");
+                        break;
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException | RuntimeException e) {
+            System.out.println("problem: = " + e.getMessage());
         }
 
-    }
-
-    static void helper() {
-        System.out.println("\n===================== MAIN MENU =======================");
-        System.out.println("Action with the Math Set: ");
-        System.out.println("1 - Create");
-        System.out.println("2 - Add elements");
-        /*System.out.println("3 - Sorting");
-        System.out.println("4 - Finding max or min");
-        System.out.println("5 - Find average or median");
-        System.out.println("6 - Join or intersection");
-        System.out.println("7 - Cut");
-        System.out.println("8 - Clear");*/
-        System.out.println("9 - Print");
-        System.out.println("0 - Exit");
-        System.out.print("\nChoose action you want: ");
     }
 }
