@@ -15,6 +15,8 @@
         <module>string_helper</module>
         <module>module_1</module>
         <module>hw_4_logs_and_test</module>
+        <module>math_set_helper</module>
+        <module>hw_5_collection</module>
     </modules>
 
 
