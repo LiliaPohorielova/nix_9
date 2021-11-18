@@ -1,6 +1,7 @@
 package ua.com.alevel;
 
 import ua.com.alevel.mathSets.ArrayMathSet;
+import ua.com.alevel.mathSets.ArraysMathSet;
 import ua.com.alevel.mathSets.CapacityMathSet;
 import ua.com.alevel.mathSets.DefaultMathSet;
 import static ua.com.alevel.util.Navigation.helper;
@@ -28,10 +29,10 @@ public class ChooseTask {
                     case "3":
                         new ArrayMathSet().run(input);
                         break;
-                    /*case "4":
-                        new SymbolRevers().run(input);
+                    case "4":
+                        new ArraysMathSet().run(input);
                         break;
-                    case "5":
+                    /*case "5":
                         new StringsRevers().run(input);
                         break;*/
                     case "0":
