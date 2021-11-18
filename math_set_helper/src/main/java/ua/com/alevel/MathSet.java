@@ -1,5 +1,7 @@
 package ua.com.alevel;
 
+import java.util.Objects;
+
 public class MathSet {
 
     Number[] numbers;
@@ -18,6 +20,7 @@ public class MathSet {
         maxCapacity = capacity;
         numbers = new Number[capacity];
         size = 0;
+        capacityFromUser = true;
     }
 
     public MathSet(Number[] arrayOfNumbers) {
@@ -67,7 +70,7 @@ public class MathSet {
 
     public void add(Number element) {
         if (!alreadyInArray(element)) {
-            if (maxCapacity == size) {
+            if (capacityFromUser && maxCapacity == size) {
                 throw new IndexOutOfBoundsException("You can't add elements, maxCapacity = " + maxCapacity);
             }
             if (size == numbers.length) resize();
@@ -80,6 +83,10 @@ public class MathSet {
         for (int i = 0; i < numbers.length; i++) {
             add(numbers[i]);
         }
+    }
+
+    public Number[] getNumbers() {
+        return numbers;
     }
 
     private boolean alreadyInArray(Number element) {
@@ -99,7 +106,7 @@ public class MathSet {
     }
 
     public void sortAsc() {
-        sortAsc(0, size-1);
+        sortAsc(0, size - 1);
     }
 
     public void sortAsc(int firstIndex, int lastIndex) {
@@ -108,7 +115,7 @@ public class MathSet {
             isSorted = true;
             if ((lastIndex - firstIndex) > 0) {
                 for (int i = firstIndex; i < lastIndex; i++) {
-                    if (numbers[i].doubleValue() > numbers[i + 1].doubleValue()) {
+                    if (compareNumber(numbers[i], numbers[i + 1]) > 0) {
                         isSorted = false;
                         Number temp = numbers[i];
                         numbers[i] = numbers[i + 1];
@@ -121,7 +128,7 @@ public class MathSet {
 
     public void sortAsc(Number number) {
         int indexOfNumber = getIndex(number);
-        sortAsc(indexOfNumber, size);
+        sortAsc(indexOfNumber, size - 1);
     }
 
     private int getIndex(Number number) {
@@ -134,7 +141,7 @@ public class MathSet {
     }
 
     public void sortDesc() {
-        sortDesc(0, size-1);
+        sortDesc(0, size - 1);
     }
 
     public void sortDesc(int firstIndex, int lastIndex) {
@@ -143,7 +150,7 @@ public class MathSet {
             isSorted = true;
             if ((lastIndex - firstIndex) > 0) {
                 for (int i = firstIndex; i < lastIndex; i++) {
-                    if (numbers[i].doubleValue() < numbers[i + 1].doubleValue()) {
+                    if (compareNumber(numbers[i], numbers[i + 1]) < 0) {
                         isSorted = false;
                         Number temp = numbers[i];
                         numbers[i] = numbers[i + 1];
@@ -152,6 +159,11 @@ public class MathSet {
                 }
             }
         }
+    }
+
+    public void sortDesc(Number number) {
+        int indexOfNumber = getIndex(number);
+        sortDesc(indexOfNumber, size - 1);
     }
 
     private void checkIndex(int index) {
@@ -185,31 +197,31 @@ public class MathSet {
     public Number getMax() {
         Number max;
         if (numbers.length == 0) return 0;
-        else max = numbers[0].doubleValue();
+        else max = numbers[0];
         for (int i = 1; i < numbers.length; i++)
-            if (numbers[i].doubleValue() > max.doubleValue())
-                max = numbers[i].doubleValue();
+            if (compareNumber(numbers[i], max) > 0)
+                max = numbers[i];
         return max;
     }
 
     public Number getMin() {
         Number min;
         if (numbers.length == 0) return 0;
-        else min = numbers[0].doubleValue();
+        else min = numbers[0];
         for (int i = 1; i < numbers.length; i++)
-            if (numbers[i].doubleValue() < min.doubleValue())
-                min = numbers[i].doubleValue();
+            if (compareNumber(numbers[i], min) < 0)
+                min = numbers[i];
         return min;
     }
 
-    public Number getAverage() {
-        double arithmeticalMean = 0d;
+/*    public Number getAverage() {
+        Number arithmeticalMean = 0;
         for (int i = 0; i < numbers.length; i++)
             arithmeticalMean += numbers[i].doubleValue();
         return arithmeticalMean / numbers.length;
-    }
+    }*/
 
-    public Number getMedian() {
+/*    public Number getMedian() {
         MathSet temp = new MathSet(this);
         temp.sortAsc();
         int medianIndex = size / 2;
@@ -220,35 +232,38 @@ public class MathSet {
             medianNumber = temp.getNumber(medianIndex);
         }
         return medianNumber;
-    }
+    }*/
 
     public void join(MathSet mathSet) {
         for (int i = 0; i < mathSet.size; i++) {
-            add((mathSet.numbers[i]));
+            add(mathSet.numbers[i]);
         }
     }
 
     public void join(MathSet... setsOfNumbers) {
-        for (int i = 0; i < setsOfNumbers.length; i++) {
-            Number[] arrayOfNumbers = setsOfNumbers[i].toArray();
-            for (int j = 0; j < arrayOfNumbers.length; j++) {
-                add(arrayOfNumbers[j]);
+        for (MathSet number : setsOfNumbers) {
+            for (int i = 0; i < number.size; i++) {
+                add(number.numbers[i]);
             }
         }
     }
 
     public void intersection(MathSet mathSet) {
-        Number[] arrayOfNumbers = new Number[Math.max(numbers.length, mathSet.size)];
-        Number[] intersectionArray = mathSet.toArray();
-        int mathSetNewIndex = 0;
+        int newSize = Math.max(numbers.length, mathSet.getSize());
+        Number[] result = new Number[newSize];
+        Number[] givenMathSetToArray = mathSet.toArray();
+        size = 0;
         for (Number number : numbers) {
-            for (Number value : intersectionArray) {
-                if (number.equals(value)) {
-                    arrayOfNumbers[mathSetNewIndex] = number;
+            for (Number value : givenMathSetToArray) {
+                if (number == null || value == null)
+                    continue;
+                if (compareNumber(number, value) == 0) {
+                    result[size] = number;
+                    size++;
                 }
             }
         }
-        numbers = arrayOfNumbers;
+        numbers = result;
     }
 
     public void intersection(MathSet... setsOfNumbers) {
@@ -292,13 +307,13 @@ public class MathSet {
 
 
     public Number[] toArray() {
-        return toArray(0, numbers.length);
+        return toArray(0, numbers.length - 1);
     }
 
     public Number[] toArray(int firstIndex, int lastIndex) {
         Number[] arrayOfNumbers = new Number[numbers.length];
         for (int i = firstIndex; i < lastIndex; i++) {
-            arrayOfNumbers[i] = numbers[i];
+            if (numbers[i] != null) arrayOfNumbers[i] = numbers[i];
         }
         return arrayOfNumbers;
     }
@@ -353,4 +368,42 @@ public class MathSet {
         return builder + " ";
     }
 
+    private int compareNumber(Number n1, Number n2) {
+        String classOfNum1 = n1.getClass().getSimpleName();
+        String classOfNum2 = n2.getClass().getSimpleName();
+        if (classOfNum1.equals(classOfNum2))
+            switch (classOfNum1) {
+                case "Byte":
+                    if (n1.byteValue() > n2.byteValue()) return 1;
+                    if (n1.byteValue() < n2.byteValue()) return -1;
+                    if (n1.byteValue() == n2.byteValue()) return 0;
+                case "Short":
+                    if (n1.shortValue() > n2.shortValue()) return 1;
+                    if (n1.shortValue() < n2.shortValue()) return -1;
+                    if (n1.shortValue() == n2.shortValue()) return 0;
+                case "Integer":
+                    if (n1.intValue() > n2.intValue()) return 1;
+                    if (n1.intValue() < n2.intValue()) return -1;
+                    if (n1.intValue() == n2.intValue()) return 0;
+                case "Long":
+                    if (n1.longValue() > n2.longValue()) return 1;
+                    if (n1.longValue() < n2.longValue()) return -1;
+                    if (n1.longValue() == n2.longValue()) return 0;
+                case "Float":
+                    if (n1.floatValue() > n2.floatValue()) return 1;
+                    if (n1.floatValue() < n2.floatValue()) return -1;
+                    if (n1.floatValue() == n2.floatValue()) return 0;
+                case "Double":
+                    if (n1.doubleValue() > n2.doubleValue()) return 1;
+                    if (n1.doubleValue() < n2.doubleValue()) return -1;
+                    if (n1.doubleValue() == n2.doubleValue()) return 0;
+            }
+        else {
+            System.out.println("You can't compare apples and oranges");
+            System.out.print("You tried to compare " + n1.getClass().getSimpleName());
+            System.out.print(" with " + n2.getClass().getSimpleName());
+            throw new RuntimeException("Can't compare");
+        }
+        return -2;
+    }
 }

@@ -1,5 +1,6 @@
 package ua.com.alevel.tasks;
 
+import org.apache.commons.lang3.math.NumberUtils;
 import ua.com.alevel.ChooseTask;
 import ua.com.alevel.MathSet;
 
@@ -7,7 +8,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import static ua.com.alevel.util.Navigation.menuOfMathSet;
+import static ua.com.alevel.util.Navigation.*;
 
 public class DefaultMathSet {
 
@@ -83,14 +84,6 @@ public class DefaultMathSet {
         }
     }
 
-    private void printAddMenu() {
-        System.out.println("\n--------------------- ADD ELEMENTS DEFAULT MATH SET ---------------------");
-        System.out.println("1 - Add element");
-        System.out.println("2 - Add elements");
-        System.out.println("0 - Exit");
-        System.out.print("Choose action, what you want: ");
-    }
-
     private void sort(BufferedReader reader) {
         try {
             String sort;
@@ -135,23 +128,10 @@ public class DefaultMathSet {
                 }
                 printSortMenu();
             }
-        } catch (IOException | RuntimeException e) {
+        } catch ( IOException | RuntimeException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
-
-    private void printSortMenu() {
-        System.out.println("\n--------------------- SORT ELEMENTS DEFAULT MATH SET ---------------------");
-        System.out.println("1 - Sort Ascending");
-        System.out.println("2 - Sort Ascending Part of Math Set");
-        System.out.println("3 - Sort Ascending One Number Of Math Set");
-        System.out.println("4 - Sort Descending");
-        System.out.println("5 - Sort Descending Part of Math Set");
-        System.out.println("6 - Sort Descending One Number Of Math Set");
-        System.out.println("0 - Exit");
-        System.out.print("Choose action, what you want: ");
-    }
-
 
     private void print(boolean mainMenu) {
         if (mainMenu) {
@@ -162,4 +142,19 @@ public class DefaultMathSet {
         }
         System.out.print(defaultMathSet);
     }
+
+    public static void enterNumber(BufferedReader reader) {
+        System.out.print("Enter number: ");
+        String value = null;
+        Number number = 0;
+        try {
+            value = reader.readLine();
+            number = NumberUtils.createNumber(value);
+        } catch (NumberFormatException | IOException e) {
+            System.out.println("Error: "+ e.getMessage());
+        }
+        System.out.println("Your number is: "+ number);
+        System.out.println("Your class is: "+ number.getClass().getName());
+    }
+
 }

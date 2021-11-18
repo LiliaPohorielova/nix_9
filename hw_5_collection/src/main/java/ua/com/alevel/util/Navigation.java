@@ -30,4 +30,24 @@ public class Navigation {
         System.out.println("0 - Exit");
         System.out.print("\nChoose action you want: ");
     }
+
+    public static void printSortMenu() {
+        System.out.println("\n--------------------- SORT ELEMENTS  ---------------------");
+        System.out.println("1 - Sort Ascending");
+        System.out.println("2 - Sort Ascending Part of Math Set");
+        System.out.println("3 - Sort Ascending One Number Of Math Set");
+        System.out.println("4 - Sort Descending");
+        System.out.println("5 - Sort Descending Part of Math Set");
+        System.out.println("6 - Sort Descending One Number Of Math Set");
+        System.out.println("0 - Exit");
+        System.out.print("Choose action, what you want: ");
+    }
+
+    public static void printAddMenu() {
+        System.out.println("\n--------------------- ADD ELEMENTS  ---------------------");
+        System.out.println("1 - Add element");
+        System.out.println("2 - Add elements");
+        System.out.println("0 - Exit");
+        System.out.print("Choose action, what you want: ");
+    }
 }
