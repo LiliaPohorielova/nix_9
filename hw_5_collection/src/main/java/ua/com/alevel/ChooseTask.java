@@ -1,9 +1,7 @@
 package ua.com.alevel;
 
-import ua.com.alevel.mathSets.ArrayMathSet;
-import ua.com.alevel.mathSets.ArraysMathSet;
-import ua.com.alevel.mathSets.CapacityMathSet;
-import ua.com.alevel.mathSets.DefaultMathSet;
+import ua.com.alevel.mathSets.*;
+
 import static ua.com.alevel.util.Navigation.helper;
 
 import java.io.BufferedReader;
@@ -32,9 +30,9 @@ public class ChooseTask {
                     case "4":
                         new ArraysMathSet().run(input);
                         break;
-                    /*case "5":
-                        new StringsRevers().run(input);
-                        break;*/
+                    case "5":
+                        new MathSetWithMathSet().run(input);
+                        break;
                     case "0":
                         System.out.println("\n======================= EXIT ========================");
                         System.exit(0);
