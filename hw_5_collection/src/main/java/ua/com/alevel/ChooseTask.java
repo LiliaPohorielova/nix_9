@@ -1,6 +1,7 @@
 package ua.com.alevel;
 
-import ua.com.alevel.tasks.DefaultMathSet;
+import ua.com.alevel.mathSets.CapacityMathSet;
+import ua.com.alevel.mathSets.DefaultMathSet;
 import static ua.com.alevel.util.Navigation.helper;
 
 import java.io.BufferedReader;
@@ -20,10 +21,10 @@ public class ChooseTask {
                     case "1":
                         new DefaultMathSet().run(input);
                         break;
-                    /*case "2":
-                        new SubstringRevers().run(input);
+                    case "2":
+                        new CapacityMathSet().run(input);
                         break;
-                    case "3":
+                    /*case "3":
                         new IndexRevers().run(input);
                         break;
                     case "4":

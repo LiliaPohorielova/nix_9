@@ -61,6 +61,10 @@ public class MathSet {
         return size;
     }
 
+    public int getCapacity() {
+        return maxCapacity;
+    }
+
     public Number getNumber(int index) {
         checkIndex(index);
         return numbers[index];

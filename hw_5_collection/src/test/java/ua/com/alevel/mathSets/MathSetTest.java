@@ -1,10 +1,10 @@
-package ua.com.alevel.tasks;
+package ua.com.alevel.mathSets;
 
 import org.junit.jupiter.api.*;
 import ua.com.alevel.MathSet;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class DefaultMathSetTest {
+public class MathSetTest {
 
     private static MathSet mathSet;
     private static MathSet mathSetSecond;
@@ -109,5 +109,22 @@ public class DefaultMathSetTest {
         Assertions.assertEquals(0, mathSet.getSize());
         mathSetSecond.clear(new Number[]{34, 21, 29});
         Assertions.assertEquals(0, mathSetSecond.getSize());
+    }
+
+    @Test
+    @Order(7)
+    public void createMathSetWithAnyConstructorTest() {
+        mathSet = new MathSet();
+        Assertions.assertEquals(10, mathSet.getCapacity());
+        mathSet = new MathSet(5);
+        Assertions.assertEquals(5, mathSet.getCapacity());
+        mathSet = new MathSet(new Number[]{1,2,3,4,5,6,7});
+        Assertions.assertEquals(7, mathSet.getCapacity());
+        mathSet = new MathSet(new Number[]{1,2,3},new Number[]{1,2,3,4,5,6,7});
+        Assertions.assertEquals(10, mathSet.getCapacity());
+        mathSet = new MathSet(mathSetSecond = new MathSet());
+        Assertions.assertEquals(10, mathSet.getCapacity());
+        mathSet = new MathSet(mathSetSecond = new MathSet(5),mathSetThird = new MathSet());
+        Assertions.assertEquals(10, mathSet.getCapacity());
     }
 }
