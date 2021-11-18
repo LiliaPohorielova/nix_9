@@ -6,13 +6,16 @@ public class MathSet {
     int maxCapacity;
     int size;
     static final int DEFAULT_CAPACITY = 10;
+    boolean capacityFromUser = false;
 
     public MathSet() {
-        this(DEFAULT_CAPACITY);
+        maxCapacity = DEFAULT_CAPACITY;
+        numbers = new Number[DEFAULT_CAPACITY];
+        size = 0;
     }
 
     public MathSet(int capacity) {
-        this.maxCapacity = capacity;
+        maxCapacity = capacity;
         numbers = new Number[capacity];
         size = 0;
     }
@@ -25,10 +28,10 @@ public class MathSet {
         }
     }
 
-    public MathSet(Number[]... varargsArrayOfNumbers) {
+    public MathSet(Number[]... arraysOfNumbers) {
         this.maxCapacity = DEFAULT_CAPACITY;
         numbers = new Number[maxCapacity];
-        for (Number[] number : varargsArrayOfNumbers) {
+        for (Number[] number : arraysOfNumbers) {
             for (Number n : number) {
                 add(n);
             }
@@ -43,10 +46,10 @@ public class MathSet {
         size = setOfNumbers.size;
     }
 
-    public MathSet(MathSet... varargsSetOfNumbers) {
+    public MathSet(MathSet... setsOfNumbers) {
         this.maxCapacity = DEFAULT_CAPACITY;
         numbers = new Number[maxCapacity];
-        for (MathSet number : varargsSetOfNumbers) {
+        for (MathSet number : setsOfNumbers) {
             for (int i = 0; i < number.size; i++) {
                 add(number.numbers[i]);
             }
@@ -65,10 +68,9 @@ public class MathSet {
     public void add(Number element) {
         if (!alreadyInArray(element)) {
             if (maxCapacity == size) {
-                throw new RuntimeException("You can't add elements, maxCapacity = " + maxCapacity);
+                throw new IndexOutOfBoundsException("You can't add elements, maxCapacity = " + maxCapacity);
             }
-            if (size == numbers.length)
-                resize();
+            if (size == numbers.length) resize();
             numbers[size] = element;
             size++;
         }
@@ -81,9 +83,8 @@ public class MathSet {
     }
 
     private boolean alreadyInArray(Number element) {
-        Number[] temp = numbers;
         for (int i = 0; i < size; i++) {
-            if (temp[i].equals(element)) {
+            if (numbers[i].equals(element)) {
                 return true;
             }
         }
@@ -98,7 +99,7 @@ public class MathSet {
     }
 
     public void sortAsc() {
-        sortAsc(0, size);
+        sortAsc(0, size-1);
     }
 
     public void sortAsc(int firstIndex, int lastIndex) {
@@ -106,8 +107,8 @@ public class MathSet {
         while (!isSorted) {
             isSorted = true;
             if ((lastIndex - firstIndex) > 0) {
-                for (int i = firstIndex; i < lastIndex-1; i++) {
-                    if (numbers[i].longValue() > numbers[i + 1].longValue()) {
+                for (int i = firstIndex; i < lastIndex; i++) {
+                    if (numbers[i].doubleValue() > numbers[i + 1].doubleValue()) {
                         isSorted = false;
                         Number temp = numbers[i];
                         numbers[i] = numbers[i + 1];
@@ -118,8 +119,22 @@ public class MathSet {
         }
     }
 
+    public void sortAsc(Number number) {
+        int indexOfNumber = getIndex(number);
+        sortAsc(indexOfNumber, size);
+    }
+
+    private int getIndex(Number number) {
+        for (int i = 0; i < size; i++) {
+            if (numbers[i] != null && numbers[i].equals(number)) {
+                return i;
+            }
+        }
+        return size;
+    }
+
     public void sortDesc() {
-        sortAsc(0, size);
+        sortDesc(0, size-1);
     }
 
     public void sortDesc(int firstIndex, int lastIndex) {
@@ -127,8 +142,8 @@ public class MathSet {
         while (!isSorted) {
             isSorted = true;
             if ((lastIndex - firstIndex) > 0) {
-                for (int i = firstIndex; i < lastIndex-1; i++) {
-                    if (numbers[i].longValue() < numbers[i + 1].longValue()) {
+                for (int i = firstIndex; i < lastIndex; i++) {
+                    if (numbers[i].doubleValue() < numbers[i + 1].doubleValue()) {
                         isSorted = false;
                         Number temp = numbers[i];
                         numbers[i] = numbers[i + 1];
@@ -144,26 +159,179 @@ public class MathSet {
             throw new IndexOutOfBoundsException();
     }
 
-    public int indexOf(Number o) {
-        return indexOfRange(o, 0, size);
+    public int indexOf(Number number) {
+        return indexOfRange(number, 0, size);
     }
 
-    int indexOfRange(Number o, int start, int end) {
-        Number[] es = numbers;
-        if (o == null) {
+    int indexOfRange(Number number, int start, int end) {
+        Number[] arrayOfNumbers = numbers;
+        if (number == null) {
             for (int i = start; i < end; i++) {
-                if (es[i] == null) {
+                if (arrayOfNumbers[i] == null) {
                     return i;
                 }
             }
         } else {
             for (int i = start; i < end; i++) {
-                if (o.equals(es[i])) {
+                if (number.equals(arrayOfNumbers[i])) {
                     return i;
                 }
             }
         }
         return -1;
+    }
+
+
+    public Number getMax() {
+        Number max;
+        if (numbers.length == 0) return 0;
+        else max = numbers[0].doubleValue();
+        for (int i = 1; i < numbers.length; i++)
+            if (numbers[i].doubleValue() > max.doubleValue())
+                max = numbers[i].doubleValue();
+        return max;
+    }
+
+    public Number getMin() {
+        Number min;
+        if (numbers.length == 0) return 0;
+        else min = numbers[0].doubleValue();
+        for (int i = 1; i < numbers.length; i++)
+            if (numbers[i].doubleValue() < min.doubleValue())
+                min = numbers[i].doubleValue();
+        return min;
+    }
+
+    public Number getAverage() {
+        double arithmeticalMean = 0d;
+        for (int i = 0; i < numbers.length; i++)
+            arithmeticalMean += numbers[i].doubleValue();
+        return arithmeticalMean / numbers.length;
+    }
+
+    public Number getMedian() {
+        MathSet temp = new MathSet(this);
+        temp.sortAsc();
+        int medianIndex = size / 2;
+        Number medianNumber;
+        if (medianIndex % 2 == 1) {
+            medianNumber = (temp.getNumber(medianIndex).doubleValue() + temp.getNumber(medianIndex - 1).doubleValue()) / 2;
+        } else {
+            medianNumber = temp.getNumber(medianIndex);
+        }
+        return medianNumber;
+    }
+
+    public void join(MathSet mathSet) {
+        for (int i = 0; i < mathSet.size; i++) {
+            add((mathSet.numbers[i]));
+        }
+    }
+
+    public void join(MathSet... setsOfNumbers) {
+        for (int i = 0; i < setsOfNumbers.length; i++) {
+            Number[] arrayOfNumbers = setsOfNumbers[i].toArray();
+            for (int j = 0; j < arrayOfNumbers.length; j++) {
+                add(arrayOfNumbers[j]);
+            }
+        }
+    }
+
+    public void intersection(MathSet mathSet) {
+        Number[] arrayOfNumbers = new Number[Math.max(numbers.length, mathSet.size)];
+        Number[] intersectionArray = mathSet.toArray();
+        int mathSetNewIndex = 0;
+        for (Number number : numbers) {
+            for (Number value : intersectionArray) {
+                if (number.equals(value)) {
+                    arrayOfNumbers[mathSetNewIndex] = number;
+                }
+            }
+        }
+        numbers = arrayOfNumbers;
+    }
+
+    public void intersection(MathSet... setsOfNumbers) {
+        for (MathSet mathSet : setsOfNumbers) {
+            intersection(mathSet);
+        }
+    }
+
+
+    public void delete(int index) {
+        checkIndex(index);
+        if (index < getSize()) {
+            int i = index;
+            numbers[index] = null;
+            while (i < getSize() - 1) {
+                numbers[i] = numbers[i + 1];
+                numbers[i + 1] = null;
+                i++;
+            }
+        }
+        size--;
+    }
+
+    private Number[] getNumbersWithoutDuplicates(Number[] duplicateNumbers) {
+        int n = duplicateNumbers.length;
+        for (int i = 0, m = 0; i != n; i++, n = m) {
+            for (int j = m = i + 1; j != n; j++) {
+                if (duplicateNumbers[j] != duplicateNumbers[i]) {
+                    if (m != j) duplicateNumbers[m] = duplicateNumbers[j];
+                    m++;
+                }
+            }
+        }
+        if (n != duplicateNumbers.length) {
+            Number[] b = new Number[n];
+            System.arraycopy(duplicateNumbers, 0, b, 0, n);
+            duplicateNumbers = b;
+        }
+        return duplicateNumbers;
+    }
+
+
+    public Number[] toArray() {
+        return toArray(0, numbers.length);
+    }
+
+    public Number[] toArray(int firstIndex, int lastIndex) {
+        Number[] arrayOfNumbers = new Number[numbers.length];
+        for (int i = firstIndex; i < lastIndex; i++) {
+            arrayOfNumbers[i] = numbers[i];
+        }
+        return arrayOfNumbers;
+    }
+
+    public MathSet cut(int firstIndex, int lastIndex) {
+        checkIndex(lastIndex);
+        Number[] cutNumbers = new Number[lastIndex + 1 - firstIndex];
+        int cutElements = 0;
+        for (int i = firstIndex; i < lastIndex + 1 && i < numbers.length; i++) {
+            numbers[i] = cutNumbers[cutElements];
+            cutElements++;
+        }
+        return new MathSet(cutNumbers);
+    }
+
+    public void clear() {
+        for (int i = 0; i < getSize(); i++)
+            numbers[i] = null;
+        size = 0;
+    }
+
+    public void clear(Number[] numbers) {
+        for (Number number : numbers) {
+            for (int i = 0; i < size; i++) {
+                if (number.equals(numbers[i])) {
+                    for (int j = i; j < size; j++) {
+                        numbers[j] = numbers[j + 1];
+                        numbers[j + 1] = null;
+                    }
+                    size--;
+                }
+            }
+        }
     }
 
     @Override
@@ -182,76 +350,7 @@ public class MathSet {
                 }
             }
         }
-        return builder + "";
-    }
-
-    public void clear() {
-        for (int i = 0; i < getSize(); i++)
-            numbers[i] = null;
-        size = 0;
-    }
-
-    public void delete(int index) {
-        checkIndex(index);
-        if (index < getSize()) {
-            int i = index;
-            numbers[index] = null;
-            while (i < getSize() - 1) {
-                numbers[i] = numbers[i + 1];
-                numbers[i + 1] = null;
-                i++;
-            }
-        }
-        size--;
-    }
-
-    private Number[] getNumbersWithoutDuplicates(Number[] arrayOfNumbers) {
-        int n = arrayOfNumbers.length;
-        for (int i = 0, m = 0; i != n; i++, n = m) {
-            for (int j = m = i + 1; j != n; j++) {
-                if (arrayOfNumbers[j] != arrayOfNumbers[i]) {
-                    if (m != j) arrayOfNumbers[m] = arrayOfNumbers[j];
-                    m++;
-                }
-            }
-        }
-        if (n != arrayOfNumbers.length) {
-            Number[] b = new Number[n];
-            System.arraycopy(arrayOfNumbers, 0, b, 0, n);
-            arrayOfNumbers = b;
-        }
-        return arrayOfNumbers;
-
-       /* Number[] temp = new Number[];
-        for (int i = 0; i < arrayOfNumbers.length; i++) {
-            if (!alreadyInArray(arrayOfNumbers[i])) {
-                add(arrayOfNumbers[i]);
-            }
-        }*/
-    }
-
-    public void update(Number a) {
-        numbers[indexOf(a)] = a;
-    }
-
-    public Number[] getEntities() {
-        return numbers;
-    }
-
-    public void deleteLastElement() {
-        if (size == 0) {
-            throw new RuntimeException("list is empty: cannot delete");
-        }
-        size--;
-        numbers[size] = null;
-    }
-
-    public void deleteFirstElement() {
-        for (int i = 0; i < size - 1; i++) {
-            numbers[i] = numbers[i + 1];
-        }
-        numbers[size - 1] = null;
-        size--;
+        return builder + " ";
     }
 
 }
