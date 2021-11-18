@@ -1,7 +1,5 @@
 package ua.com.alevel;
 
-import java.util.Objects;
-
 public class MathSet {
 
     Number[] numbers;
@@ -138,7 +136,6 @@ public class MathSet {
             }
         }
         throw new RuntimeException("No such index for element");
-        //return size;
     }
 
     public void sortDesc() {
@@ -194,12 +191,11 @@ public class MathSet {
         return -1;
     }
 
-
     public Number getMax() {
         Number max;
         if (numbers.length == 0) return 0;
         else max = numbers[0];
-        for (int i = 1; i < numbers.length; i++)
+        for (int i = 1; i < size; i++)
             if (compareNumber(numbers[i], max) > 0)
                 max = numbers[i];
         return max;
@@ -209,7 +205,7 @@ public class MathSet {
         Number min;
         if (numbers.length == 0) return 0;
         else min = numbers[0];
-        for (int i = 1; i < numbers.length; i++)
+        for (int i = 1; i < size; i++)
             if (compareNumber(numbers[i], min) < 0)
                 min = numbers[i];
         return min;
@@ -217,7 +213,7 @@ public class MathSet {
 
     public Number getAverage() {
         Number arithmeticalMean = 0;
-        for (int i = 0; i < numbers.length; i++)
+        for (int i = 0; i < size; i++)
             arithmeticalMean = sumOfNumbers(arithmeticalMean, numbers[i]);
         return divOfNumbers(arithmeticalMean, size);
     }
@@ -273,7 +269,6 @@ public class MathSet {
         }
     }
 
-
     public void delete(int index) {
         checkIndex(index);
         if (index < getSize()) {
@@ -306,7 +301,6 @@ public class MathSet {
         return duplicateNumbers;
     }
 
-
     public Number[] toArray() {
         return toArray(0, numbers.length - 1);
     }
@@ -320,9 +314,9 @@ public class MathSet {
     }
 
     public MathSet cut(int firstIndex, int lastIndex) {
-        checkIndex(lastIndex);
+        //checkIndex(lastIndex);
         MathSet resCutting = new MathSet();
-        for (int i = firstIndex; i < lastIndex + 1 && i < numbers.length; i++) {
+        for (int i = firstIndex; i < lastIndex + 1 && i < size; i++) {
             resCutting.add(numbers[i]);
         }
         return resCutting;
@@ -353,7 +347,6 @@ public class MathSet {
         if (numbers == null) {
             return "MathSet is empty....";
         }
-
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < size; i++) {
             if (numbers[i] != null) {
@@ -438,14 +431,12 @@ public class MathSet {
         String classOfNum2 = n2.getClass().getSimpleName();
         if (classOfNum1.equals(classOfNum2))
             switch (classOfNum1) {
-                case "Byte", "Short", "Integer":
+                case "Byte", "Short", "Integer","Double":
                     return (n1.doubleValue() / n2.doubleValue());
                 case "Long":
                     return (n1.longValue() / n2.longValue());
                 case "Float":
                     return (n1.floatValue() / n2.floatValue());
-                case "Double":
-                    return (n1.doubleValue() / n2.doubleValue());
             }
         else {
             System.out.println("You can't add apples and oranges");

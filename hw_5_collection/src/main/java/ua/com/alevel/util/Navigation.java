@@ -21,12 +21,11 @@ public class Navigation {
         System.out.println("1 - Create");
         System.out.println("2 - Add elements");
         System.out.println("3 - Sorting");
-        /*System.out.println("4 - Finding max or min");
-        System.out.println("5 - Find average or median");
-        System.out.println("6 - Join or intersection");
-        System.out.println("7 - Cut");
-        System.out.println("8 - Clear");*/
-        System.out.println("9 - Print Math Set");
+        System.out.println("4 - Get something");
+        System.out.println("5 - Join or intersection");
+        System.out.println("6 - Cut");
+        System.out.println("7 - Clear");
+        System.out.println("8 - Print Math Set");
         System.out.println("0 - Exit");
         System.out.print("\nChoose action you want: ");
     }
@@ -47,6 +46,25 @@ public class Navigation {
         System.out.println("\n--------------------- ADD ELEMENTS  ---------------------");
         System.out.println("1 - Add element");
         System.out.println("2 - Add elements");
+        System.out.println("0 - Exit");
+        System.out.print("Choose action, what you want: ");
+    }
+
+    public static void printGetMenu() {
+        System.out.println("\n--------------------- GET SOMETHING ----------------------");
+        System.out.println("1 - Max element");
+        System.out.println("2 - Min element");
+        System.out.println("3 - Average of array");
+        System.out.println("4 - Median of array");
+        System.out.println("5 - Get element by index");
+        System.out.println("0 - Exit");
+        System.out.print("Choose action, what you want: ");
+    }
+
+    public static void printJoinOrInterMenu() {
+        System.out.println("\n--------------------- ADD ELEMENTS  ---------------------");
+        System.out.println("1 - Join random math set to current math set");
+        System.out.println("2 - Intersection current math set with random math set");
         System.out.println("0 - Exit");
         System.out.print("Choose action, what you want: ");
     }
