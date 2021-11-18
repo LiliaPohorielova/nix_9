@@ -133,11 +133,12 @@ public class MathSet {
 
     private int getIndex(Number number) {
         for (int i = 0; i < size; i++) {
-            if (numbers[i] != null && numbers[i].equals(number)) {
+            if (compareNumber(numbers[i], number) == 0) {
                 return i;
             }
         }
-        return size;
+        throw new RuntimeException("No such index for element");
+        //return size;
     }
 
     public void sortDesc() {
@@ -214,14 +215,14 @@ public class MathSet {
         return min;
     }
 
-/*    public Number getAverage() {
+    public Number getAverage() {
         Number arithmeticalMean = 0;
         for (int i = 0; i < numbers.length; i++)
-            arithmeticalMean += numbers[i].doubleValue();
-        return arithmeticalMean / numbers.length;
-    }*/
+            arithmeticalMean = sumOfNumbers(arithmeticalMean, numbers[i]);
+        return divOfNumbers(arithmeticalMean, size);
+    }
 
-/*    public Number getMedian() {
+    public Number getMedian() {
         MathSet temp = new MathSet(this);
         temp.sortAsc();
         int medianIndex = size / 2;
@@ -232,7 +233,7 @@ public class MathSet {
             medianNumber = temp.getNumber(medianIndex);
         }
         return medianNumber;
-    }*/
+    }
 
     public void join(MathSet mathSet) {
         for (int i = 0; i < mathSet.size; i++) {
@@ -320,13 +321,11 @@ public class MathSet {
 
     public MathSet cut(int firstIndex, int lastIndex) {
         checkIndex(lastIndex);
-        Number[] cutNumbers = new Number[lastIndex + 1 - firstIndex];
-        int cutElements = 0;
+        MathSet resCutting = new MathSet();
         for (int i = firstIndex; i < lastIndex + 1 && i < numbers.length; i++) {
-            numbers[i] = cutNumbers[cutElements];
-            cutElements++;
+            resCutting.add(numbers[i]);
         }
-        return new MathSet(cutNumbers);
+        return resCutting;
     }
 
     public void clear() {
@@ -335,8 +334,8 @@ public class MathSet {
         size = 0;
     }
 
-    public void clear(Number[] numbers) {
-        for (Number number : numbers) {
+    public void clear(Number[] arrayOfNumbers) {
+        for (Number number : arrayOfNumbers) {
             for (int i = 0; i < size; i++) {
                 if (number.equals(numbers[i])) {
                     for (int j = i; j < size; j++) {
@@ -402,7 +401,57 @@ public class MathSet {
             System.out.println("You can't compare apples and oranges");
             System.out.print("You tried to compare " + n1.getClass().getSimpleName());
             System.out.print(" with " + n2.getClass().getSimpleName());
-            throw new RuntimeException("Can't compare");
+            throw new RuntimeException("You can't compare apples and oranges");
+        }
+        return -2;
+    }
+
+    private Number sumOfNumbers(Number n1, Number n2) {
+        String classOfNum1 = n1.getClass().getSimpleName();
+        String classOfNum2 = n2.getClass().getSimpleName();
+        if (classOfNum1.equals(classOfNum2))
+            switch (classOfNum1) {
+                case "Byte":
+                    return (n1.byteValue() + n2.byteValue());
+                case "Short":
+                    return (n1.shortValue() + n2.shortValue());
+                case "Integer":
+                    return (n1.intValue() + n2.intValue());
+                case "Long":
+                    return (n1.longValue() + n2.longValue());
+                case "Float":
+                    return (n1.floatValue() + n2.floatValue());
+                case "Double":
+                    return (n1.doubleValue() + n2.doubleValue());
+            }
+        else {
+            System.out.println("You can't add apples and oranges");
+            System.out.print("You tried to add " + n1.getClass().getSimpleName());
+            System.out.print(" with " + n2.getClass().getSimpleName());
+            throw new RuntimeException("You can't add apples and oranges");
+        }
+        return -2;
+    }
+
+    private Number divOfNumbers(Number n1, Number n2) {
+        String classOfNum1 = n1.getClass().getSimpleName();
+        String classOfNum2 = n2.getClass().getSimpleName();
+        if (classOfNum1.equals(classOfNum2))
+            switch (classOfNum1) {
+                case "Byte", "Short", "Integer":
+                    return (n1.doubleValue() / n2.doubleValue());
+                case "Long":
+                    return (n1.longValue() / n2.longValue());
+                case "Float":
+                    return (n1.floatValue() / n2.floatValue());
+                case "Double":
+                    return (n1.doubleValue() / n2.doubleValue());
+            }
+        else {
+            System.out.println("You can't add apples and oranges");
+            System.out.print("You tried to add " + n1.getClass().getSimpleName());
+            System.out.print(" with " + n2.getClass().getSimpleName());
+            throw new RuntimeException("You can't add apples and oranges");
         }
         return -2;
     }

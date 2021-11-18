@@ -7,12 +7,15 @@ import ua.com.alevel.MathSet;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Random;
 
+import static ua.com.alevel.util.InputHelper.enterNumber;
 import static ua.com.alevel.util.Navigation.*;
 
 public class DefaultMathSet {
 
     private static MathSet defaultMathSet;
+    final Random random = new Random();
 
     public void run(BufferedReader input) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -60,17 +63,19 @@ public class DefaultMathSet {
             while ((add = reader.readLine()) != null) {
                 switch (add) {
                     case "1" -> {
-                        Number num = Math.round(Math.random() * 20);
-                        defaultMathSet.add(num);
+                        System.out.println("\nEnter number (all types of numbers are available): ");
+                        defaultMathSet.add(enterNumber(reader));
                         print(false);
                     }
                     case "2" -> {
-                        Number[] nums = {Math.round(Math.random() * 20), Math.round(Math.random() * 20), Math.round(Math.random() * 20)};
+                        System.out.println("\nGenerated random array of numbers: ");
+                        Number[] nums = {random.nextInt(100), random.nextInt(100),
+                                         random.nextInt(100), random.nextInt(100),
+                                         random.nextInt(100)};
                         defaultMathSet.add(nums);
                         print(false);
                     }
                     case "0" -> {
-                        System.out.println("\n-------------------- Exit ---------------------");
                         run(reader);
                     }
                     default -> System.out.println("Try again");
@@ -103,10 +108,10 @@ public class DefaultMathSet {
                         print(false);
                     }
                     case "3" -> {
-                        /*System.out.print("Enter one number from current Math Set: ");
-                        Number num = Integer.parseInt(reader.readLine());
-                        defaultMathSet.sortAsc(firstIndex, lastIndex);
-                        print(false);*/
+                        System.out.println("\nCurrent Math Set: " + defaultMathSet);
+                        System.out.print("Enter one number from current Math Set: ");
+                        defaultMathSet.sortAsc(enterNumber(reader));
+                        print(false);
                     }
                     case "4" -> {
                         defaultMathSet.sortDesc();
@@ -120,8 +125,13 @@ public class DefaultMathSet {
                         defaultMathSet.sortDesc(firstIndex, lastIndex);
                         print(false);
                     }
+                    case "6" -> {
+                        System.out.println("\nCurrent Math Set: " + defaultMathSet);
+                        System.out.print("Enter one number from current Math Set: ");
+                        defaultMathSet.sortDesc(enterNumber(reader));
+                        print(false);
+                    }
                     case "0" -> {
-                        System.out.println("\n-------------------- Exit ---------------------");
                         run(reader);
                     }
                     default -> System.out.println("Try again");
@@ -142,19 +152,4 @@ public class DefaultMathSet {
         }
         System.out.print(defaultMathSet);
     }
-
-    public static void enterNumber(BufferedReader reader) {
-        System.out.print("Enter number: ");
-        String value = null;
-        Number number = 0;
-        try {
-            value = reader.readLine();
-            number = NumberUtils.createNumber(value);
-        } catch (NumberFormatException | IOException e) {
-            System.out.println("Error: "+ e.getMessage());
-        }
-        System.out.println("Your number is: "+ number);
-        System.out.println("Your class is: "+ number.getClass().getName());
-    }
-
 }

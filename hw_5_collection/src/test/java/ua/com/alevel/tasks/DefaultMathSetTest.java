@@ -1,10 +1,6 @@
 package ua.com.alevel.tasks;
 
-import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 import ua.com.alevel.MathSet;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -95,8 +91,23 @@ public class DefaultMathSetTest {
         Assertions.assertEquals(29, mathSet.getNumber(3));
         Assertions.assertEquals(171, mathSet.getMax());
         Assertions.assertEquals(5, mathSet.getMin());
-//        Assertions.assertEquals(5, mathSet.getAverage());
-//        Assertions.assertEquals(5, mathSet.getMedian());
+        Assertions.assertEquals(65.9, mathSet.getAverage());
+        Assertions.assertEquals(31.5, mathSet.getMedian());
         mathSet.clear();
+    }
+
+    @Test
+    @Order(6)
+    public void cutArrayAndClearTest() {
+        mathSet = new MathSet();
+        mathSet.add(5, 34, 21, 29, 95, 15, 143, 123, 171, 23);
+        mathSetSecond = new MathSet();
+        mathSetSecond = mathSet.cut(1,3);
+        System.out.println(mathSetSecond);
+        Assertions.assertEquals(21, mathSetSecond.getNumber(1));
+        mathSet.clear();
+        Assertions.assertEquals(0, mathSet.getSize());
+        mathSetSecond.clear(new Number[]{34, 21, 29});
+        Assertions.assertEquals(0, mathSetSecond.getSize());
     }
 }
