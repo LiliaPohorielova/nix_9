@@ -2,7 +2,6 @@ package ua.com.alevel.util;
 
 public class Navigation {
 
-
     public static void helper() {
         System.out.println("\n===================== MAIN MENU =======================");
         System.out.println("Choose type of Math Set: ");

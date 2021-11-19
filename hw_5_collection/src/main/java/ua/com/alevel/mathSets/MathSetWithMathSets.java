@@ -13,14 +13,15 @@ import java.util.Random;
 import static ua.com.alevel.util.InputHelper.enterNumber;
 import static ua.com.alevel.util.Navigation.*;
 
-public class MathSetWithMathSet {
+public class MathSetWithMathSets {
 
     private static final Logger LOGGER_INFO = LoggerFactory.getLogger("info");
     private static final Logger LOGGER_WARN = LoggerFactory.getLogger("warn");
     private static final Logger LOGGER_ERROR = LoggerFactory.getLogger("error");
 
-    private static MathSet mathSetWithMathSet;
+    private static MathSet mathSetWithMathSets;
     private static MathSet randomMathSet;
+    private static MathSet randomMathSet2;
     final Random random = new Random();
 
     public void run(BufferedReader input) throws IOException {
@@ -61,15 +62,21 @@ public class MathSetWithMathSet {
     private void create(BufferedReader reader) {
         System.out.println("\n--------------------- CREATE CAPACITY MATH SET ---------------------");
         LOGGER_INFO.info("Creating MathSet");
-        System.out.println("Generated random math set... ");
-        Number[] nums = {random.nextInt(100), random.nextInt(100),
+        System.out.println("Generated first random math set... ");
+        Number[] nums1 = {random.nextInt(100), random.nextInt(100),
                 random.nextInt(100), random.nextInt(100),
                 random.nextInt(100)};
-        randomMathSet = new MathSet(nums);
-        System.out.println("Random MathSet is: " + randomMathSet);
+        randomMathSet = new MathSet(nums1);
+        System.out.println("First Random MathSet is: " + randomMathSet);
+        System.out.println("Generated second random math set... ");
+        Number[] nums2 = {random.nextInt(100), random.nextInt(100),
+                random.nextInt(100), random.nextInt(100),
+                random.nextInt(100)};
+        randomMathSet2 = new MathSet(nums2);
+        System.out.println("Second Random MathSet is: " + randomMathSet2);
         LOGGER_INFO.info("Creating MathSet");
-        mathSetWithMathSet = new MathSet(randomMathSet);
-        System.out.println("Your MathSet is: " + mathSetWithMathSet);
+        mathSetWithMathSets = new MathSet(randomMathSet, randomMathSet2);
+        System.out.println("Your MathSet is: " + mathSetWithMathSets);
         randomMathSet.clear();
     }
 
@@ -82,7 +89,7 @@ public class MathSetWithMathSet {
                     case "1" -> {
                         System.out.println("\nEnter number (all types of numbers are available): ");
                         LOGGER_INFO.info("Add elements to MathSet");
-                        mathSetWithMathSet.add(enterNumber(reader));
+                        mathSetWithMathSets.add(enterNumber(reader));
                         print(false);
                     }
                     case "2" -> {
@@ -91,7 +98,7 @@ public class MathSetWithMathSet {
                                 random.nextInt(100), random.nextInt(100),
                                 random.nextInt(100)};
                         LOGGER_INFO.info("Add elements to MathSet");
-                        mathSetWithMathSet.add(nums);
+                        mathSetWithMathSets.add(nums);
                         print(false);
                     }
                     case "0" -> {
@@ -117,7 +124,7 @@ public class MathSetWithMathSet {
                 switch (sort) {
                     case "1" -> {
                         LOGGER_INFO.info("Sorting MathSet");
-                        mathSetWithMathSet.sortAsc();
+                        mathSetWithMathSets.sortAsc();
                         print(false);
                     }
                     case "2" -> {
@@ -126,19 +133,19 @@ public class MathSetWithMathSet {
                         System.out.print("Enter last index: ");
                         int lastIndex = Integer.parseInt(reader.readLine());
                         LOGGER_INFO.info("Sorting MathSet");
-                        mathSetWithMathSet.sortAsc(firstIndex, lastIndex);
+                        mathSetWithMathSets.sortAsc(firstIndex, lastIndex);
                         print(false);
                     }
                     case "3" -> {
-                        System.out.println("\nCurrent Math Set: " + mathSetWithMathSet);
+                        System.out.println("\nCurrent Math Set: " + mathSetWithMathSets);
                         System.out.print("Enter one number from current Math Set: ");
                         LOGGER_INFO.info("Sorting MathSet");
-                        mathSetWithMathSet.sortAsc(enterNumber(reader));
+                        mathSetWithMathSets.sortAsc(enterNumber(reader));
                         print(false);
                     }
                     case "4" -> {
                         LOGGER_INFO.info("Sorting MathSet");
-                        mathSetWithMathSet.sortDesc();
+                        mathSetWithMathSets.sortDesc();
                         print(false);
                     }
                     case "5" -> {
@@ -147,14 +154,14 @@ public class MathSetWithMathSet {
                         System.out.print("Enter last index: ");
                         int lastIndex = Integer.parseInt(reader.readLine());
                         LOGGER_INFO.info("Sorting MathSet");
-                        mathSetWithMathSet.sortDesc(firstIndex, lastIndex);
+                        mathSetWithMathSets.sortDesc(firstIndex, lastIndex);
                         print(false);
                     }
                     case "6" -> {
-                        System.out.println("\nCurrent Math Set: " + mathSetWithMathSet);
+                        System.out.println("\nCurrent Math Set: " + mathSetWithMathSets);
                         System.out.print("Enter one number from current Math Set: ");
                         LOGGER_INFO.info("Sorting MathSet");
-                        mathSetWithMathSet.sortDesc(enterNumber(reader));
+                        mathSetWithMathSets.sortDesc(enterNumber(reader));
                         print(false);
                     }
                     case "0" -> {
@@ -177,30 +184,30 @@ public class MathSetWithMathSet {
             while ((add = reader.readLine()) != null) {
                 switch (add) {
                     case "1" -> {
-                        System.out.println("\nCurrent Math Set: " + mathSetWithMathSet);
+                        System.out.println("\nCurrent Math Set: " + mathSetWithMathSets);
                         System.out.print("Maximal element of current Math Set: ");
-                        System.out.println(mathSetWithMathSet.getMax());
+                        System.out.println(mathSetWithMathSets.getMax());
                     }
                     case "2" -> {
-                        System.out.println("\nCurrent Math Set: " + mathSetWithMathSet);
+                        System.out.println("\nCurrent Math Set: " + mathSetWithMathSets);
                         System.out.print("Minimal element of current Math Set: ");
-                        System.out.println(mathSetWithMathSet.getMin());
+                        System.out.println(mathSetWithMathSets.getMin());
                     }
                     case "3" -> {
-                        System.out.println("\nCurrent Math Set: " + mathSetWithMathSet);
+                        System.out.println("\nCurrent Math Set: " + mathSetWithMathSets);
                         System.out.print("Average element of current Math Set: ");
-                        System.out.println(mathSetWithMathSet.getAverage());
+                        System.out.println(mathSetWithMathSets.getAverage());
                     }
                     case "4" -> {
-                        System.out.println("\nCurrent Math Set: " + mathSetWithMathSet);
+                        System.out.println("\nCurrent Math Set: " + mathSetWithMathSets);
                         System.out.print("Median of current Math Set: ");
-                        System.out.println(mathSetWithMathSet.getMedian());
+                        System.out.println(mathSetWithMathSets.getMedian());
                     }
                     case "5" -> {
-                        System.out.println("\nCurrent Math Set: " + mathSetWithMathSet);
+                        System.out.println("\nCurrent Math Set: " + mathSetWithMathSets);
                         System.out.print("Enter index of one element from current Math Set: ");
                         int index = Integer.parseInt(reader.readLine());
-                        System.out.println("Your number is: " + mathSetWithMathSet.getNumber(index));
+                        System.out.println("Your number is: " + mathSetWithMathSets.getNumber(index));
                     }
                     case "0" -> {
                         run(reader);
@@ -224,7 +231,7 @@ public class MathSetWithMathSet {
             while ((add = reader.readLine()) != null) {
                 switch (add) {
                     case "1" -> {
-                        System.out.println("\nCurrent Math Set: " + mathSetWithMathSet);
+                        System.out.println("\nCurrent Math Set: " + mathSetWithMathSets);
                         randomMathSet = new MathSet();
                         Number[] nums = {random.nextInt(100), random.nextInt(100),
                                 random.nextInt(100), random.nextInt(100),
@@ -232,11 +239,11 @@ public class MathSetWithMathSet {
                         randomMathSet.add(nums);
                         System.out.println("Random Math Set: " + randomMathSet);
                         System.out.print("Joining result: ");
-                        mathSetWithMathSet.join(randomMathSet);
-                        System.out.println(mathSetWithMathSet);
+                        mathSetWithMathSets.join(randomMathSet);
+                        System.out.println(mathSetWithMathSets);
                     }
                     case "2" -> {
-                        System.out.println("\nCurrent Math Set: " + mathSetWithMathSet);
+                        System.out.println("\nCurrent Math Set: " + mathSetWithMathSets);
                         randomMathSet = new MathSet();
                         Number[] nums = {random.nextInt(100), random.nextInt(100),
                                 random.nextInt(100), random.nextInt(100),
@@ -244,8 +251,8 @@ public class MathSetWithMathSet {
                         randomMathSet.add(nums);
                         System.out.println("Random Math Set: " + randomMathSet);
                         System.out.print("Intersection result: ");
-                        mathSetWithMathSet.intersection(randomMathSet);
-                        System.out.println(mathSetWithMathSet);
+                        mathSetWithMathSets.intersection(randomMathSet);
+                        System.out.println(mathSetWithMathSets);
                     }
                     case "0" -> {
                         run(reader);
@@ -265,13 +272,13 @@ public class MathSetWithMathSet {
     private void cut(BufferedReader reader) {
         try {
             System.out.println("\n--------------------- CUTTING ----------------------");
-            System.out.println("\nCurrent Math Set: " + mathSetWithMathSet);
+            System.out.println("\nCurrent Math Set: " + mathSetWithMathSets);
             System.out.print("Enter first index: ");
             int firstIndex = Integer.parseInt(reader.readLine());
             System.out.print("Enter last index: ");
             int lastIndex = Integer.parseInt(reader.readLine());
             LOGGER_WARN.warn("Cutting MathSet");
-            System.out.println("\nCutting Math Set: " + mathSetWithMathSet.cut(firstIndex, lastIndex));
+            System.out.println("\nCutting Math Set: " + mathSetWithMathSets.cut(firstIndex, lastIndex));
         } catch (IOException | RuntimeException e) {
             LOGGER_ERROR.error("Error: " + e.getMessage());
             System.out.println("Error: " + e.getMessage());
@@ -281,11 +288,11 @@ public class MathSetWithMathSet {
     private void clear(BufferedReader reader) {
         try {
             System.out.println("\n--------------------- CLEANING ----------------------");
-            System.out.println("\nCurrent Math Set: " + mathSetWithMathSet);
+            System.out.println("\nCurrent Math Set: " + mathSetWithMathSets);
             System.out.println("Clear math set...");
             LOGGER_WARN.warn("Clearing MathSet");
-            mathSetWithMathSet.clear();
-            System.out.println("Current Math Set: Empty..." + mathSetWithMathSet);
+            mathSetWithMathSets.clear();
+            System.out.println("Current Math Set: Empty..." + mathSetWithMathSets);
         } catch (RuntimeException e) {
             LOGGER_ERROR.error("Error: " + e.getMessage());
             System.out.println("Error: " + e.getMessage());
@@ -299,6 +306,6 @@ public class MathSetWithMathSet {
         } else {
             System.out.println("\nYour MathSet:");
         }
-        System.out.print(mathSetWithMathSet);
+        System.out.print(mathSetWithMathSets);
     }
 }

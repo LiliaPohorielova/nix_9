@@ -18,34 +18,24 @@ public class ChooseTask {
         try {
             while ((choice = input.readLine()) != null) {
                 switch (choice) {
-                    case "1":
-                        new DefaultMathSet().run(input);
-                        break;
-                    case "2":
-                        new CapacityMathSet().run(input);
-                        break;
-                    case "3":
-                        new ArrayMathSet().run(input);
-                        break;
-                    case "4":
-                        new ArraysMathSet().run(input);
-                        break;
-                    case "5":
-                        new MathSetWithMathSet().run(input);
-                        break;
-                    case "0":
+                    case "1" -> new DefaultMathSet().run(input);
+                    case "2" -> new CapacityMathSet().run(input);
+                    case "3" -> new ArrayMathSet().run(input);
+                    case "4" -> new ArraysMathSet().run(input);
+                    case "5" -> new MathSetWithMathSet().run(input);
+                    case "6" -> new MathSetWithMathSets().run(input);
+                    case "0" -> {
                         System.out.println("\n======================= EXIT ========================");
                         System.exit(0);
-                        break;
-                    default:
+                    }
+                    default -> {
                         System.out.println("Incorrect value. Please, try again.");
                         System.out.print("\nChoose action you want: ");
-                        break;
+                    }
                 }
             }
         } catch (IOException | RuntimeException e) {
             System.out.println("problem: = " + e.getMessage());
         }
-
     }
 }
