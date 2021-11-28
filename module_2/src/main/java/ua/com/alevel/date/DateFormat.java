@@ -1,5 +1,7 @@
 package ua.com.alevel.date;
 
+import ua.com.alevel.ChooseTask;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
@@ -24,6 +26,8 @@ public class DateFormat {
         DateTimeFormatter myFormat = DateTimeFormatter.ofPattern("yyyyMMdd");
         BufferedReader bufferedReader = null;
         List<String> inputs = new ArrayList<>();
+        System.out.println("\n---------------------- Date Format -------------------------");
+        System.out.println("Reading input file: resources/input_date.txt");
         try {
             bufferedReader = new BufferedReader(new InputStreamReader(DateFormat.class.getClassLoader().getResourceAsStream("starts/" + inputFile)));
             String line;
@@ -40,11 +44,11 @@ public class DateFormat {
                 System.out.println("File is empty");
             }
         }
-
-        try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("module_2/src/main/resources/results/" + outputFile), StandardCharsets.UTF_8))) {
+        System.out.println("Analyzing dates...");
+        try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("module_2/src/main/resources/results/" + outputFile, true), StandardCharsets.UTF_8))) {
             writeResults(formatters, myFormat, inputs, writer);
         } catch (FileNotFoundException e) {
-            try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("src/main/resources/results/" + outputFile), StandardCharsets.UTF_8))) {
+            try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("src/main/resources/results/" + outputFile, true), StandardCharsets.UTF_8))) {
                 writeResults(formatters, myFormat, inputs, writer);
             } catch (IOException ioe) {
                 System.out.println(ioe.getMessage());
@@ -52,25 +56,30 @@ public class DateFormat {
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
+        new ChooseTask().run();
     }
 
     private static void writeResults(List<DateTimeFormatter> formatters, DateTimeFormatter myFormat, List<String> inputs, Writer writer) throws IOException {
+        System.out.print("Correct inputs: ");
+        int ignoringInputCount = 0;
         for (String input : inputs) {
             LocalDate localDate = null;
             for (DateTimeFormatter formatter : formatters) {
                 try {
                     localDate = LocalDate.parse(input, formatter);
-                } catch (DateTimeParseException dateTimeParseException) {
-                   // writer.write("\nERROR: " + dateTimeParseException.getMessage());
+                } catch (DateTimeParseException ignored) {
                 }
             }
             if (Objects.isNull(localDate)) {
-                writer.write("\nERROR: Unexpected input: " + input);
+                ignoringInputCount++;
             } else {
                 writer.write("\nInput: " + input + " -> " + localDate.format(myFormat));
+                System.out.print("\nInput: " + input + " -> " + localDate.format(myFormat));
             }
         }
-        System.out.println("Data writing successfully completed.");
-        writer.flush();
+        System.out.println("\nIgnoring input count: " + ignoringInputCount);
+        System.out.println("Data writing successfully completed!");
+        writer.write("\n");
+        writer.close();
     }
 }
