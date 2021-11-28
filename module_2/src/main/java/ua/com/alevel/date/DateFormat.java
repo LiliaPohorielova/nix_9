@@ -41,15 +41,16 @@ public class DateFormat {
                 bufferedReader.close();
             }
             if (inputs.isEmpty()) {
-                System.out.println("File is empty");
+                System.out.println("File is empty!");
+                new ChooseTask().run();
             }
         }
         System.out.println("Analyzing dates...");
         try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("module_2/src/main/resources/results/" + outputFile, true), StandardCharsets.UTF_8))) {
-            writeResults(formatters, myFormat, inputs, writer);
+            findAndSaveDates(formatters, myFormat, inputs, writer);
         } catch (FileNotFoundException e) {
             try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("src/main/resources/results/" + outputFile, true), StandardCharsets.UTF_8))) {
-                writeResults(formatters, myFormat, inputs, writer);
+                findAndSaveDates(formatters, myFormat, inputs, writer);
             } catch (IOException ioe) {
                 System.out.println(ioe.getMessage());
             }
@@ -59,7 +60,7 @@ public class DateFormat {
         new ChooseTask().run();
     }
 
-    private static void writeResults(List<DateTimeFormatter> formatters, DateTimeFormatter myFormat, List<String> inputs, Writer writer) throws IOException {
+    private static void findAndSaveDates(List<DateTimeFormatter> formatters, DateTimeFormatter myFormat, List<String> inputs, Writer writer) throws IOException {
         System.out.print("Correct inputs: ");
         int ignoringInputCount = 0;
         for (String input : inputs) {

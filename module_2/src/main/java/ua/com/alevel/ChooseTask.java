@@ -1,6 +1,7 @@
 package ua.com.alevel;
 
 import ua.com.alevel.date.DateFormat;
+import ua.com.alevel.names.FirstUniqueName;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -17,10 +18,10 @@ public class ChooseTask {
                     case "1":
                         new DateFormat().run(scanner);
                         break;
-                   /* case "2":
-                        level2(scanner);
+                    case "2":
+                        new FirstUniqueName().run(scanner);
                         break;
-                    case "3":
+                    /*case "3":
                         level3(scanner);
                         break;*/
                     case "0":
