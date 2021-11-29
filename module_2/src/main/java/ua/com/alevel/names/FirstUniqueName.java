@@ -8,7 +8,7 @@ import java.util.*;
 
 public class FirstUniqueName {
 
-    public static void run(Scanner scanner) throws IOException {
+    public static void run() throws IOException {
         String inputFile = "input_name.txt";
         String outputFile = "output_name.txt";
 

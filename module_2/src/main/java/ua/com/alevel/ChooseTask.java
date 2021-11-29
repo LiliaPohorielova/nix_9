@@ -2,6 +2,7 @@ package ua.com.alevel;
 
 import ua.com.alevel.date.DateFormat;
 import ua.com.alevel.names.FirstUniqueName;
+import ua.com.alevel.salesman.TravellingSalesmanProblem;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -16,14 +17,14 @@ public class ChooseTask {
             while ((choiceLevel = scanner.nextLine()) != null) {
                 switch (choiceLevel) {
                     case "1":
-                        new DateFormat().run(scanner);
+                        new DateFormat().run();
                         break;
                     case "2":
-                        new FirstUniqueName().run(scanner);
+                        new FirstUniqueName().run();
                         break;
-                    /*case "3":
-                        level3(scanner);
-                        break;*/
+                    case "3":
+                        new TravellingSalesmanProblem().run();
+                        break;
                     case "0":
                         System.out.println("\n======================= EXIT ========================");
                         System.exit(0);

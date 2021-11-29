@@ -10,11 +10,10 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Scanner;
 
 public class DateFormat {
 
-    public static void run(Scanner scanner) throws IOException {
+    public static void run() throws IOException {
         String inputFile = "input_date.txt";
         String outputFile = "output_date.txt";
         List<DateTimeFormatter> formatters =
