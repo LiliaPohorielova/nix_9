@@ -1,7 +1,7 @@
 package ua.com.alevel;
 
 import ua.com.alevel.dateAdd.AddNewDate;
-import ua.com.alevel.dateSort.DateSort;
+import ua.com.alevel.datePrint.PrintListOfDates;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,8 +19,9 @@ public class ChooseTask {
         try {
             while ((choice = input.readLine()) != null) {
                 switch (choice) {
-                    case "1" -> new AddNewDate().run(input);
-                    case "2" -> new DateSort().run(input);
+                    case "1" -> new AddNewDate().run();
+                    case "2" -> new PrintListOfDates().run();
+                    /*case "2" -> new DateSort().run(input);
                     /*case "3" -> new ArrayMathSet().run(input);
                     case "4" -> new ArraysMathSet().run(input);
                     case "5" -> new MathSetWithMathSet().run(input);

@@ -10,7 +10,15 @@ public class CustomDate {
     private int month;
     private int year;
 
-    public CustomDate() {}
+    public CustomDate() {
+        millisecond = 0;
+        second = 0;
+        minute = 0;
+        hour = 0;
+        day = 1;
+        month = 1;
+        year = 0;
+    }
 
     public CustomDate(int day, int month, int year, int hour, int minute, int second, int millisecond) {
         this.millisecond = millisecond;
@@ -80,6 +88,7 @@ public class CustomDate {
 
     @Override
     public String toString() {
+        if(month < 10) return "Date: " + day + "/" + "0" + month + "/" + year + " " + hour + ":" + minute + ":" + second + ":" + millisecond;
         return "Date: " + day + "/" + month + "/" + year + " " + hour + ":" + minute + ":" + second + ":" + millisecond;
     }
 }

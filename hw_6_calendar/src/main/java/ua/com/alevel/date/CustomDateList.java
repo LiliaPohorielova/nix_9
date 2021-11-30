@@ -53,8 +53,13 @@ public class CustomDateList {
     }
 
     public static void printList() {
-        for (CustomDate d: dateList) {
-            System.out.println(d);
+        if (!dateList.isEmpty()) {
+            System.out.println("Your list of Dates: ");
+            for (CustomDate d : dateList) {
+                System.out.println(d);
+            }
+        } else {
+            System.out.println("Your list of Dates is empty!");
         }
     }
 
