@@ -1,8 +1,10 @@
 package ua.com.alevel.enums;
 
+import java.io.IOException;
+
 public enum NameOfMonth {
 
-    JANUARY(1, "JANUARY"),
+    JANUARY(1, "January"),
     FEBRUARY(2, "FEBRUARY"),
     MARCH(3, "MARCH"),
     APRIL(4, "APRIL"),
@@ -35,12 +37,12 @@ public enum NameOfMonth {
         return this.monthName;
     }
 
-    public static NameOfMonth fromString(String text) {
+    public static NameOfMonth fromString(String text) throws IOException {
         for (NameOfMonth b : NameOfMonth.values()) {
             if (b.monthName.equalsIgnoreCase(text)) {
                 return b;
             }
         }
-        return null;
+        throw new IOException("Not found such mounth");
     }
 }
