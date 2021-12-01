@@ -1,13 +1,7 @@
 package ua.com.alevel.dateFormat;
 
-import ua.com.alevel.date.CustomDate;
-import ua.com.alevel.util.StringToDate;
-
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.util.Scanner;
 
-import static ua.com.alevel.util.Navigation.printFormatMenu;
 import static ua.com.alevel.util.StringToDate.stringToDate;
 
 public class InputDateFormat {
@@ -26,7 +20,7 @@ public class InputDateFormat {
                 "9 - dd/mm/yyyy 00:00:00\n" +
                 "10 - mm/dd/yyyy 00:00:00\n" +
                 "11 - mmm-dd-yyyy 00:00:00\n" +
-                "12 - dd-mmm-yyyy 00:00:00:000\n" +
+                "12 - dd-mmm-yyyy 00:00:00\n" +
                 "13 - dd/mm/yyyy 00:00:00:000\n" +
                 "14 - mm/dd/yyyy 00:00:00:000\n" +
                 "15 - mmm-dd-yyyy 00:00:00:000\n" +

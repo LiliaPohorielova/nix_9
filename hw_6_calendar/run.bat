@@ -1,4 +1,2 @@
-@echo off
-call chcp 1251
-call mvn clean install
-call java -jar .\target\maven.jar
+call run_test.bat
+call run_life.bat
