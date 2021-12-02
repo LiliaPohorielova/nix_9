@@ -1,6 +1,10 @@
 package ua.com.alevel;
 
 import ua.com.alevel.dateAdd.AddNewDate;
+import ua.com.alevel.dateChange.DecreaseDate;
+import ua.com.alevel.dateChange.IncreaseDate;
+import ua.com.alevel.dateClear.ClearAllDates;
+import ua.com.alevel.dateCompare.DifferenceBetweenDates;
 import ua.com.alevel.datePrint.PrintListOfDates;
 import ua.com.alevel.dateSort.DateSort;
 
@@ -23,10 +27,10 @@ public class ChooseTask {
                     case "1" -> new AddNewDate().run();
                     case "2" -> new PrintListOfDates().run();
                     case "3" -> new DateSort().run(input);
-                    /*case "3" -> new ArrayMathSet().run(input);
-                    case "4" -> new ArraysMathSet().run(input);
-                    case "5" -> new MathSetWithMathSet().run(input);
-                    case "6" -> new MathSetWithMathSets().run(input);*/
+                    case "4" -> new DifferenceBetweenDates().run(input);
+                    case "5" -> new IncreaseDate().run(input);
+                    case "6" -> new DecreaseDate().run(input);
+                    case "7" -> new ClearAllDates().run();
                     case "0" -> {
                         System.out.println("\n======================= EXIT ========================");
                         System.exit(0);
@@ -38,7 +42,7 @@ public class ChooseTask {
                 }
             }
         } catch (IOException | RuntimeException e) {
-            System.out.println("problem: = " + e.getMessage());
+            System.out.println("Problem: " + e.getMessage());
         }
     }
 }

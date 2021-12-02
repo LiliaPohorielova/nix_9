@@ -1,35 +1,51 @@
 package ua.com.alevel.dateCompare;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import ua.com.alevel.ChooseTask;
 import ua.com.alevel.date.CustomDate;
-import ua.com.alevel.enums.MilliDate;
+
+import java.io.BufferedReader;
+
+import static ua.com.alevel.date.CustomDateList.findDateById;
+import static ua.com.alevel.util.DateToString.printDatesWithIndex;
+import static ua.com.alevel.util.ParseDate.dateToMilliseconds;
+import static ua.com.alevel.util.ParseDate.millisecondsToDate;
 
 public class DifferenceBetweenDates {
 
-    public static Long dateToMilliseconds(CustomDate date) {
-        return (MilliDate.YEAR.getValueInMillisecondOrder() * date.getYear() +
-                MilliDate.MONTH.getValueInMillisecondOrder() * date.getMonth() +
-                MilliDate.DAY.getValueInMillisecondOrder() * date.getDay() +
-                MilliDate.HOUR.getValueInMillisecondOrder() * date.getHour() +
-                MilliDate.MINUTE.getValueInMillisecondOrder() * date.getMinute() +
-                MilliDate.SECOND.getValueInMillisecondOrder() * date.getSecond() +
-                MilliDate.MILLISECOND.getValueInMillisecondOrder() * date.getMillisecond());
-    }
+    private static final Logger INFO = LoggerFactory.getLogger("info");
+    private static final Logger ERROR = LoggerFactory.getLogger("error");
 
-    public static CustomDate millisecondsToDate(Long milli) {
-        CustomDate date = new CustomDate();
-        date.setYear(Integer.parseInt(String.valueOf(milli / MilliDate.YEAR.getValueInMillisecondOrder())));
-        milli -= milli / MilliDate.YEAR.getValueInMillisecondOrder() * MilliDate.YEAR.getValueInMillisecondOrder();
-        date.setMonth(Integer.parseInt(String.valueOf(milli / MilliDate.MONTH.getValueInMillisecondOrder())));
-        milli -= milli / MilliDate.MONTH.getValueInMillisecondOrder() * MilliDate.MONTH.getValueInMillisecondOrder();
-        date.setDay(Integer.parseInt(String.valueOf(milli / MilliDate.DAY.getValueInMillisecondOrder())));
-        milli -= milli / MilliDate.DAY.getValueInMillisecondOrder() * MilliDate.DAY.getValueInMillisecondOrder();
-        date.setHour(Integer.parseInt(String.valueOf(milli / MilliDate.HOUR.getValueInMillisecondOrder())));
-        milli -= milli / MilliDate.HOUR.getValueInMillisecondOrder() * MilliDate.HOUR.getValueInMillisecondOrder();
-        date.setMinute(Integer.parseInt(String.valueOf(milli / MilliDate.MINUTE.getValueInMillisecondOrder())));
-        milli -= milli / MilliDate.MINUTE.getValueInMillisecondOrder() * MilliDate.MINUTE.getValueInMillisecondOrder();
-        date.setSecond(Integer.parseInt(String.valueOf(milli / MilliDate.SECOND.getValueInMillisecondOrder())));
-        milli -= milli / MilliDate.SECOND.getValueInMillisecondOrder() * MilliDate.SECOND.getValueInMillisecondOrder();
-        date.setMillisecond(milli.intValue());
-        return date;
+    public static void run(BufferedReader reader) {
+        INFO.info("Difference Between Dates");
+        System.out.println("================== DIFFERENCE BETWEEN DATES ==================");
+        CustomDate date1;
+        CustomDate date2;
+        CustomDate result;
+        try {
+            printDatesWithIndex();
+            System.out.print("\nEnter id of First Date:");
+            date1 = findDateById(reader);
+            System.out.print("Enter id of Second Date:");
+            date2 = findDateById(reader);
+            result = millisecondsToDate(Math.abs(dateToMilliseconds(date1) - dateToMilliseconds(date2)));
+            if (dateToMilliseconds(result) == 0) {
+                System.out.println("\nDates are equals!");
+            } else {
+                System.out.println("\nDifference between two dates: ");
+                System.out.println(result.getYear() + " years, " +
+                        result.getMonth() + " months, "
+                        + result.getDay() + " days, "
+                        + result.getHour() + " hours, "
+                        + result.getMinute() + " minutes, "
+                        + result.getSecond() + " seconds, "
+                        + result.getMillisecond() + " milliseconds.");
+            }
+        } catch (RuntimeException e) {
+            ERROR.error(e.getMessage());
+            System.out.println("Problem = " + e.getMessage());
+        }
+        new ChooseTask().run();
     }
 }

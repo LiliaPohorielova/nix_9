@@ -1,12 +1,14 @@
 package ua.com.alevel.date;
 
-import ua.com.alevel.dateCompare.DifferenceBetweenDates;
-
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import static ua.com.alevel.dateValid.FormatVerify.isValidDate;
+import static ua.com.alevel.util.ParseDate.dateToMilliseconds;
+import static ua.com.alevel.util.ParseDate.millisecondsToDate;
 
 public class CustomDateList extends ArrayList<CustomDate> {
 
@@ -36,16 +38,33 @@ public class CustomDateList extends ArrayList<CustomDate> {
             System.out.println("No dates to sort.");
             return;
         }
-        dateList.stream().forEach(x -> milliList.add(DifferenceBetweenDates.dateToMilliseconds(x)));
+        dateList.stream().forEach(x -> milliList.add(dateToMilliseconds(x)));
         if (asc) Collections.sort(milliList);
-        else Collections.sort(milliList,Collections.reverseOrder());
+        else Collections.sort(milliList, Collections.reverseOrder());
         dateList.clear();
-        milliList.stream().forEach(x -> dateList.add(DifferenceBetweenDates.millisecondsToDate(x)));
+        milliList.stream().forEach(x -> dateList.add(millisecondsToDate(x)));
         milliList.clear();
         dateList.stream().forEach(x -> System.out.println(x));
     }
 
     public List<CustomDate> findAll() {
         return dateList;
+    }
+
+    public static CustomDate findDateById(BufferedReader reader) {
+        String inputId;
+        try {
+            while ((inputId = reader.readLine()) != null) {
+                CustomDate foundDate = dateList.get(Integer.parseInt(inputId));
+                if (foundDate == null) {
+                    System.out.println("Not exist such date, try again please!");
+                } else {
+                    return foundDate;
+                }
+            }
+        } catch (NumberFormatException | IOException e) {
+            System.out.println("Problem = " + e.getMessage());
+        }
+        throw new RuntimeException("Date is not found!");
     }
 }

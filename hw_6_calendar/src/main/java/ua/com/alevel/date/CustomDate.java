@@ -30,6 +30,16 @@ public class CustomDate {
         this.year = year;
     }
 
+    public CustomDate(CustomDate date) {
+        this.millisecond = date.millisecond;
+        this.second = date.second;
+        this.minute = date.minute;
+        this.hour = date.hour;
+        this.day = date.day;
+        this.month = date.month;
+        this.year = date.year;
+    }
+
     public int getMillisecond() {
         return millisecond;
     }
@@ -88,9 +98,7 @@ public class CustomDate {
 
     @Override
     public String toString() {
-        return "Date: " +
-                String.format("%02d", day) + "/" + String.format("%02d", month) + "/" + String.format("%04d", year) + " " +
+        return String.format("%02d", day) + "/" + String.format("%02d", month) + "/" + String.format("%04d", year) + " " +
                 String.format("%02d", hour) + ":" + String.format("%02d", minute) + ":" + String.format("%02d", second) + ":" + String.format("%03d", millisecond);
-
     }
 }

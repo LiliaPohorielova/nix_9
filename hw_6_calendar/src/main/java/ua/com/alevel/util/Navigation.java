@@ -9,18 +9,22 @@ public class Navigation {
         System.out.println("2 - Print all Dates");
         System.out.println("3 - Sort Dates");
         System.out.println("4 - Difference between Dates");
-        System.out.println("5 - Increase/Decrease Date");
-        System.out.println("6 - Clear All Dates");
+        System.out.println("5 - Increase Date");
+        System.out.println("6 - Decrease Date");
+        System.out.println("7 - Clear All Dates");
         System.out.println("0 - Exit");
         System.out.print("\nChoose action you want: ");
     }
 
     public static void printIncreaseDecreaseMenu() {
-        System.out.println("\n--------------------- CHANGE DATE -----------------------");
-        System.out.println("1 - Increase Date");
-        System.out.println("2 - Decrease Date");
+        System.out.println("1 - Years");
+        System.out.println("2 - Days");
+        System.out.println("3 - Hours");
+        System.out.println("4 - Minutes");
+        System.out.println("5 - Seconds");
+        System.out.println("6 - Milliseconds");
         System.out.println("0 - Exit");
-        System.out.print("Choose action, what you want: ");
+        System.out.print("Choose number unit of measurement, what you want: ");
     }
 
     public static void printOutputDateFormatMenu() {

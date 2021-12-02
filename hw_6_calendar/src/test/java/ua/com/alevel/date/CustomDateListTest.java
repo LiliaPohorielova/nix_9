@@ -1,19 +1,30 @@
 package ua.com.alevel.date;
 
 import org.junit.jupiter.api.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
 import static ua.com.alevel.date.CustomDateList.*;
+import static ua.com.alevel.dateChange.DecreaseDate.*;
+import static ua.com.alevel.dateChange.IncreaseDate.*;
+import static ua.com.alevel.dateChange.IncreaseDate.increaseHour;
 import static ua.com.alevel.util.StringToDate.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CustomDateListTest {
 
+    private static final Logger INFO = LoggerFactory.getLogger("info");
+    private static final Logger WARN = LoggerFactory.getLogger("info");
+    private static final Logger ERROR = LoggerFactory.getLogger("error");
+
     private CustomDate testDate;
+
     @Test
     @Order(1)
     public void createCalendarWithDifferentDateFormat() {
+        INFO.info("Add new date");
         try {
             String[] temp;
             //1. Dates Without Time
@@ -123,28 +134,24 @@ public class CustomDateListTest {
             ddMmmYyyy(temp[0], testDate);
             hhMMSsMmm(temp[1], testDate);
             addDate(testDate);
-
-            //printList();
-
             Assertions.assertEquals(CustomDateList.dateList.size(), 16);
             CustomDateList.dateList.clear();
-
-            //printList();
-        } catch (NumberFormatException | IOException e ) {
-            //System.out.println("Error: " + e.getMessage());
+        } catch (NumberFormatException | IOException e) {
+            ERROR.error(e.getMessage());
         }
     }
 
     @Test
     @Order(2)
     public void createIncorrectDateFormat() {
+        INFO.info("Add incorrect date");
         try {
             testDate = new CustomDate();
             String input = "hkj/hjg/hjk";
             ddMmYyyy(input, testDate);
             addDate(testDate);
         } catch (NumberFormatException | IOException e) {
-            //System.out.println("Error: " + e.getMessage());
+            ERROR.error(e.getMessage());
         }
 
         try {
@@ -153,7 +160,7 @@ public class CustomDateListTest {
             ddMmYyyy(input, testDate);
             addDate(testDate);
         } catch (NumberFormatException | IOException e) {
-            //System.out.println("Error: " + e.getMessage());
+            ERROR.error(e.getMessage());
         }
 
         try {
@@ -162,7 +169,7 @@ public class CustomDateListTest {
             ddMmYyyy(input, testDate);
             addDate(testDate);
         } catch (NumberFormatException | IOException e) {
-            //System.out.println("Error: " + e.getMessage());
+            ERROR.error(e.getMessage());
         }
 
         try {
@@ -171,10 +178,8 @@ public class CustomDateListTest {
             ddMmYyyy(input, testDate);
             addDate(testDate);
         } catch (NumberFormatException | IOException e) {
-            //System.out.println("Error: " + e.getMessage());
+            ERROR.error(e.getMessage());
         }
-
-        //printList();
         Assertions.assertEquals(CustomDateList.dateList.size(), 0);
         CustomDateList.dateList.clear();
     }
@@ -182,6 +187,7 @@ public class CustomDateListTest {
     @Test
     @Order(3)
     public void sortingDates() {
+        INFO.info("Sorting dates");
         try {
             String[] temp;
             //1. Dates Without Time
@@ -199,18 +205,38 @@ public class CustomDateListTest {
             input = "//";
             mmDdYyyy(input, testDate);
             addDate(testDate);
-
-            printList();
             sortDateList(true);
 
             Assertions.assertEquals(CustomDateList.dateList.get(0).getDay(), testDate.getDay());
             Assertions.assertEquals(CustomDateList.dateList.get(0).getMonth(), testDate.getMonth());
             Assertions.assertEquals(CustomDateList.dateList.get(0).getYear(), testDate.getYear());
             CustomDateList.dateList.clear();
+        } catch (NumberFormatException | IOException e) {
+            ERROR.error(e.getMessage());
+        }
+    }
 
-            //printList();
-        } catch (NumberFormatException | IOException e ) {
-            //System.out.println("Error: " + e.getMessage());
+    @Test
+    @Order(4)
+    public void IncreaseDecreaseDates() {
+        WARN.warn("Increase Decrease Date");
+        try {
+            testDate = new CustomDate(12, 5, 2003, 5, 0, 0, 0);
+            testDate = decreaseYear(1, testDate);
+            Assertions.assertEquals(testDate.getYear(), 2002);
+            testDate = decreaseDay(1, testDate);
+            Assertions.assertEquals(testDate.getDay(), 11);
+            testDate = decreaseHour(1, testDate);
+            Assertions.assertEquals(testDate.getHour(), 4);
+
+            testDate = increaseYear(1, testDate);
+            Assertions.assertEquals(testDate.getYear(), 2003);
+            testDate = increaseDay(1, testDate);
+            Assertions.assertEquals(testDate.getDay(), 12);
+            testDate = increaseHour(1, testDate);
+            Assertions.assertEquals(testDate.getHour(), 5);
+        } catch (NumberFormatException e) {
+            ERROR.error(e.getMessage());
         }
     }
 }
