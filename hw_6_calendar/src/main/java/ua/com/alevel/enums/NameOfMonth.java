@@ -44,7 +44,7 @@ public enum NameOfMonth {
                 return b;
             }
         }
-        throw new IOException("Not found such mounth");
+        throw new IOException("Not found such month!");
     }
 
     public int getMonthDays() {

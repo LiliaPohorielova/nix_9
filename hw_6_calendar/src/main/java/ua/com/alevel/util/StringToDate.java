@@ -1,19 +1,17 @@
 package ua.com.alevel.util;
 
 import ua.com.alevel.date.CustomDate;
-import ua.com.alevel.date.CustomDateList;
 import ua.com.alevel.enums.NameOfMonth;
 
 import java.io.IOException;
 import java.util.Scanner;
 
 import static ua.com.alevel.date.CustomDateList.addDate;
-import static ua.com.alevel.dateValid.FormatVerify.isValidDate;
 
 public class StringToDate {
 
     public static void stringToDate(int dateFormat) {
-        System.out.println("\n\n------------------ INPUTTING DATE ------------------");
+        System.out.println("\n\n================== INPUTTING DATE ==================");
         CustomDate date = new CustomDate();
         Scanner scanner = new Scanner(System.in);
         String inputString;
@@ -148,7 +146,7 @@ public class StringToDate {
                     addDate(date);
                     break;
                 default:
-                    System.out.println("Incorrect Input");
+                    System.out.println("Incorrect choice!");
             }
         } catch (NumberFormatException | IOException e) {
             System.out.println("Error: " + e.getMessage());

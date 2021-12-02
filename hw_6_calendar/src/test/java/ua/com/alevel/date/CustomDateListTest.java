@@ -1,17 +1,14 @@
-package ua.com.alevel.util;
+package ua.com.alevel.date;
 
 import org.junit.jupiter.api.*;
-import ua.com.alevel.date.CustomDate;
-import ua.com.alevel.date.CustomDateList;
 
 import java.io.IOException;
 
-import static ua.com.alevel.date.CustomDateList.addDate;
-import static ua.com.alevel.date.CustomDateList.printList;
+import static ua.com.alevel.date.CustomDateList.*;
 import static ua.com.alevel.util.StringToDate.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class StringToDateTest {
+public class CustomDateListTest {
 
     private CustomDate testDate;
     @Test
@@ -180,5 +177,40 @@ public class StringToDateTest {
         //printList();
         Assertions.assertEquals(CustomDateList.dateList.size(), 0);
         CustomDateList.dateList.clear();
+    }
+
+    @Test
+    @Order(3)
+    public void sortingDates() {
+        try {
+            String[] temp;
+            //1. Dates Without Time
+            testDate = new CustomDate();
+            String input = "/2/";
+            ddMmYyyy(input, testDate);
+            addDate(testDate);
+
+            testDate = new CustomDate();
+            input = "Jun-22-2021";
+            mmmDdYyyy(input, testDate);
+            addDate(testDate);
+
+            testDate = new CustomDate();
+            input = "//";
+            mmDdYyyy(input, testDate);
+            addDate(testDate);
+
+            printList();
+            sortDateList(true);
+
+            Assertions.assertEquals(CustomDateList.dateList.get(0).getDay(), testDate.getDay());
+            Assertions.assertEquals(CustomDateList.dateList.get(0).getMonth(), testDate.getMonth());
+            Assertions.assertEquals(CustomDateList.dateList.get(0).getYear(), testDate.getYear());
+            CustomDateList.dateList.clear();
+
+            //printList();
+        } catch (NumberFormatException | IOException e ) {
+            //System.out.println("Error: " + e.getMessage());
+        }
     }
 }

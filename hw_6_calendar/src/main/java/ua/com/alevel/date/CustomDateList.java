@@ -1,7 +1,6 @@
 package ua.com.alevel.date;
 
 import ua.com.alevel.dateCompare.DifferenceBetweenDates;
-import ua.com.alevel.dateFormat.OutputDateFormat;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,7 +12,6 @@ public class CustomDateList extends ArrayList<CustomDate> {
 
     public static List<CustomDate> dateList = new ArrayList<>();
     private static List<Long> milliList = new ArrayList<>();
-    public static int idOfDateList;
 
     public static List<CustomDate> getDateList() {
         return dateList;
@@ -25,7 +23,6 @@ public class CustomDateList extends ArrayList<CustomDate> {
 
     public static void printList() {
         if (!dateList.isEmpty()) {
-            System.out.println("Your list of Dates: ");
             for (CustomDate d : dateList) {
                 System.out.println(d);
             }
@@ -34,18 +31,18 @@ public class CustomDateList extends ArrayList<CustomDate> {
         }
     }
 
-    public static void sortList() {
+    public static void sortDateList(boolean asc) {
         if (dateList.isEmpty()) {
             System.out.println("No dates to sort.");
             return;
         }
         dateList.stream().forEach(x -> milliList.add(DifferenceBetweenDates.dateToMilliseconds(x)));
-        Collections.sort(milliList);
+        if (asc) Collections.sort(milliList);
+        else Collections.sort(milliList,Collections.reverseOrder());
         dateList.clear();
         milliList.stream().forEach(x -> dateList.add(DifferenceBetweenDates.millisecondsToDate(x)));
         milliList.clear();
-        dateList.stream().forEach(x -> OutputDateFormat.dateOutput(x));
-        printList();
+        dateList.stream().forEach(x -> System.out.println(x));
     }
 
     public List<CustomDate> findAll() {

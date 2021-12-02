@@ -87,9 +87,10 @@ public class CustomDate {
     }
 
     @Override
-    //TODO: OUTPUT!!!
     public String toString() {
-        if(month < 10) return "Date: " + day + "/" + "0" + month + "/" + year + " " + hour + ":" + minute + ":" + second + ":" + millisecond;
-        return "Date: " + day + "/" + month + "/" + year + " " + hour + ":" + minute + ":" + second + ":" + millisecond;
+        return "Date: " +
+                String.format("%02d", day) + "/" + String.format("%02d", month) + "/" + String.format("%04d", year) + " " +
+                String.format("%02d", hour) + ":" + String.format("%02d", minute) + ":" + String.format("%02d", second) + ":" + String.format("%03d", millisecond);
+
     }
 }
