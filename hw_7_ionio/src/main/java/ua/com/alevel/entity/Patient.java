@@ -27,7 +27,7 @@ public class Patient extends BaseEntity {
 
     @Override
     public String toString() {
-        return  "ID: " + super.getId() + "\n" +
+        return "ID: " + super.getId() + "\n" +
                 "Name: " + name + "\n" +
                 "Age: " + age + "\n";
     }

@@ -2,6 +2,7 @@ package ua.com.alevel.db.impl;
 
 import ua.com.alevel.db.DoctorDB;
 import ua.com.alevel.entity.Doctor;
+
 import static ua.com.alevel.ParseCSVUtil.*;
 import static ua.com.alevel.util.DeleteUtil.deleteInDB;
 import static ua.com.alevel.util.FindByID.findObjectByID;
@@ -60,7 +61,7 @@ public class DoctorDBImpl implements DoctorDB {
 
     public Doctor findById(String id) {
         try {
-            return findObjectByID(Doctor.class,id);
+            return findObjectByID(Doctor.class, id);
         } catch (ReflectiveOperationException e) {
             e.printStackTrace();
         }

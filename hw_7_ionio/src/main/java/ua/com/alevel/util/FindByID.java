@@ -9,30 +9,6 @@ import static ua.com.alevel.ParseCSVUtil.getFileAsListOfStrings;
 
 public class FindByID {
 
-    //!!!!!!!! findByID (Declaration) !!!!!!!!
-    public static <ENTITY> List<ENTITY> findRelation(Class<ENTITY> clazz, String id) throws ReflectiveOperationException {
-        List<String> inputRelation = getFileAsListOfStrings("declaration.csv");
-        List<String> idList = new ArrayList<>();
-        for (String s : inputRelation) {
-            if (s.contains(id)) {
-                String[] relationArray = s.split(",");
-                for (String value : relationArray) {
-                    if (!value.equals(id)) {
-                        idList.add(value);
-                    }
-                }
-            }
-        }
-        List<ENTITY> result = new ArrayList<>();
-        for (String s : idList) {
-            if (findObjectByID(clazz, s) != null) {
-                result.add(findObjectByID(clazz, s));
-            }
-
-        }
-        return result;
-    }
-
     public static <ENTITY> ENTITY findObjectByID(Class<ENTITY> dataClass, String id) throws ReflectiveOperationException {
         String pathToFile = dataClass.getSimpleName().toLowerCase() + ".csv";
         List<String> fileStrings = getFileAsListOfStrings(pathToFile);
@@ -64,7 +40,6 @@ public class FindByID {
             return object;
         } else throw new RuntimeException("Id is not found");
     }
-
 
     public static String[] isIdInDB(List<String> fileStrings, String id) {
         String[] tempObject;

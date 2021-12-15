@@ -1,7 +1,6 @@
 package ua.com.alevel.db.impl;
 
 import ua.com.alevel.db.PatientDB;
-import ua.com.alevel.entity.Doctor;
 import ua.com.alevel.entity.Patient;
 
 import java.io.IOException;
@@ -63,7 +62,7 @@ public final class PatientDBImpl implements PatientDB {
 
     public Patient findById(String id) {
         try {
-            return findObjectByID(Patient.class,id);
+            return findObjectByID(Patient.class, id);
         } catch (ReflectiveOperationException e) {
             e.printStackTrace();
         }

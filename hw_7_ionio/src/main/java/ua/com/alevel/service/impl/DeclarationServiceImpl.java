@@ -19,6 +19,7 @@ public class DeclarationServiceImpl implements DeclarationService {
         LOGGER_INFO.info("declaration start created");
         declarationDao.create(declaration);
         LOGGER_INFO.info("declaration finish created, id: " + declaration.getId());
+        System.out.println("Declaration has been successfully created!");
     }
 
     public void update(Declaration declaration) {
@@ -26,6 +27,7 @@ public class DeclarationServiceImpl implements DeclarationService {
             LOGGER_INFO.info("declaration start updated, id: " + declaration.getId());
             declarationDao.update(declaration);
             LOGGER_INFO.info("declaration finish updated, id: " + declaration.getId());
+            System.out.println("Declaration has been successfully updated!");
         } catch (RuntimeException e) {
             LOGGER_ERROR.error("declaration NOT be updated " + declaration.getId() + "; problem = " + e.getMessage());
             throw e;
@@ -37,6 +39,7 @@ public class DeclarationServiceImpl implements DeclarationService {
             LOGGER_WARN.warn("declaration start deleted " + id);
             declarationDao.delete(id);
             LOGGER_WARN.warn("declaration start deleted " + id);
+            System.out.println("Declaration has been successfully deleted!");
         } catch (RuntimeException e) {
             LOGGER_ERROR.error("declaration NOT be deleted " + id + "; problem = " + e.getMessage());
             throw e;
@@ -53,10 +56,6 @@ public class DeclarationServiceImpl implements DeclarationService {
     }
 
     public ArrayList<Declaration> findAll() {
-        try {
-            return declarationDao.findAll();
-        } catch (RuntimeException exception) {
-            throw exception;
-        }
+        return declarationDao.findAll();
     }
 }

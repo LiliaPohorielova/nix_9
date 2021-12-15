@@ -7,7 +7,8 @@ import ua.com.alevel.service.impl.DoctorServiceImpl;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
+
+import static ua.com.alevel.util.PrintAll.printAllDoctors;
 
 public class DoctorControllerImpl implements DoctorController {
 
@@ -64,7 +65,6 @@ public class DoctorControllerImpl implements DoctorController {
             doctor.setSpecialization(specialization);
             doctor.setName(name);
             doctorService.create(doctor);
-            printAll();
         } catch (IOException | RuntimeException e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -73,7 +73,7 @@ public class DoctorControllerImpl implements DoctorController {
     private void update(BufferedReader reader) {
         System.out.print("\n===================== UPDATE DOCTOR =====================");
         try {
-            printAll();
+            printAllDoctors(doctorService);
             System.out.println("Please, enter id (Choose one id of the options below)");
             String id = reader.readLine();
             System.out.println("Please, enter new doctor`s name");
@@ -85,7 +85,6 @@ public class DoctorControllerImpl implements DoctorController {
             doctor.setSpecialization(specialization);
             doctor.setName(name);
             doctorService.update(doctor);
-            printAll();
         } catch (IOException | RuntimeException e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -94,11 +93,10 @@ public class DoctorControllerImpl implements DoctorController {
     private void delete(BufferedReader reader) {
         System.out.print("\n===================== DELETE DOCTOR =====================");
         try {
-            printAll();
+            printAllDoctors(doctorService);
             System.out.println("Please, enter id (Choose one id of the options below)");
             String id = reader.readLine();
             doctorService.delete(id);
-            printAll();
         } catch (IOException | RuntimeException e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -107,7 +105,7 @@ public class DoctorControllerImpl implements DoctorController {
     private void findById(BufferedReader reader) {
         System.out.print("\n===================== FIND DOCTOR BY ID =====================");
         try {
-            printAll();
+            printAllDoctors(doctorService);
             System.out.println("Please, enter id");
             String id = reader.readLine();
             Doctor doctor = doctorService.findById(id);
@@ -119,20 +117,6 @@ public class DoctorControllerImpl implements DoctorController {
 
     private void findAll(BufferedReader reader) {
         System.out.print("\n===================== FIND ALL DOCTORS =====================");
-        printAll();
-    }
-
-    private void printAll() {
-        System.out.println("\nAll Doctors");
-        ArrayList<Doctor> doctors = doctorService.findAll();
-        if (doctors.size() != 0) {
-            for (Doctor doctor : doctors) {
-                System.out.println("Doctor's ID: " + doctor.getId());
-                System.out.println("Doctor's Name: " + doctor.getName());
-                System.out.println("Doctor's Specialization: " + doctor.getSpecialization() + "\n");
-            }
-        } else {
-            System.out.println("Error: Doctors empty!");
-        }
+        printAllDoctors(doctorService);
     }
 }

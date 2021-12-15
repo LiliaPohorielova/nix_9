@@ -13,7 +13,7 @@ public class DeleteUtil {
         List<String> input = checkFilePath(fileName);
         StringBuilder output = new StringBuilder();
         for (int i = 0; i < input.size(); i++) {
-            if (input.get(i).contains(id) ) {
+            if (input.get(i).contains(id)) {
                 input.remove(i);
                 i--;
             } else {

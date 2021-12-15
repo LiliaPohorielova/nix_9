@@ -3,8 +3,14 @@ package ua.com.alevel.db.impl;
 import ua.com.alevel.db.DeclarationDB;
 import ua.com.alevel.entity.Declaration;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
+
+import static ua.com.alevel.ParseCSVUtil.getObjectsFromCSV;
+import static ua.com.alevel.ParseCSVUtil.saveObjectToCSV;
+import static ua.com.alevel.util.DeleteUtil.deleteInDB;
+import static ua.com.alevel.util.FindByID.findObjectByID;
 
 public class DeclarationDBImpl implements DeclarationDB {
 
@@ -24,41 +30,58 @@ public class DeclarationDBImpl implements DeclarationDB {
 
     public void create(Declaration declaration) {
         declaration.setId(generateId());
-        declarations.add(declaration);
+        try {
+            saveObjectToCSV(declaration);
+        } catch (IOException e) {
+            System.out.println("error = " + e.getMessage());
+        }
     }
 
     public void update(Declaration declaration) {
-        Declaration temp = findById(declaration.getId());
-        temp.setIdPatient(declaration.getIdPatient());
-        temp.setIdDoctor(declaration.getIdDoctor());
+        try {
+            findObjectByID(Declaration.class, declaration.getId());
+            deleteInDB(declaration.getClass(), declaration.getId());
+        } catch (ReflectiveOperationException e) {
+            e.printStackTrace();
+        }
+        try {
+            saveObjectToCSV(declaration);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void delete(String id) {
-        for (int i = 0; i < declarations.size(); i++) {
-            if (declarations.get(i).getId().equals(id)) {
-                declarations.remove(i);
-            }
+        try {
+            findObjectByID(Declaration.class, id);
+            deleteInDB(Declaration.class, id);
+        } catch (ReflectiveOperationException e) {
+            e.printStackTrace();
         }
-
     }
 
     public Declaration findById(String id) {
-        for (int i = 0; i < declarations.size(); i++) {
-            if (declarations.get(i).getId().equals(id)) {
-                return declarations.get(i);
-            }
+        try {
+            return findObjectByID(Declaration.class, id);
+        } catch (ReflectiveOperationException e) {
+            e.printStackTrace();
         }
-        throw new RuntimeException("Declaration not found by id");
+        throw new RuntimeException("Not found Doctor's ID");
     }
 
     public ArrayList<Declaration> findAll() {
-        return declarations;
+        try {
+            return getObjectsFromCSV(Declaration.class);
+        } catch (ReflectiveOperationException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private String generateId() {
         String id = UUID.randomUUID().toString();
-        for (int i = 0; i < declarations.size(); i++) {
-            if (declarations.get(i).getId().equals(id)) {
+        for (Declaration declaration : declarations) {
+            if (declaration.getId().equals(id)) {
                 return generateId();
             }
         }

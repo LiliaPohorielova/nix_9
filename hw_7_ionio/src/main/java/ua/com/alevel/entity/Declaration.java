@@ -27,10 +27,8 @@ public class Declaration extends BaseEntity {
 
     @Override
     public String toString() {
-        return "Declaration{" +
-                "id='" + super.getId() + '\'' +
-                ", patient='" + idPatient + '\'' +
-                ", id of doctor= '" + idDoctor +
-                "'}";
+        return "ID: " + super.getId() + "\n" +
+                "Patient: " + idPatient + "\n" +
+                "Doctor: " + idDoctor + "\n";
     }
 }

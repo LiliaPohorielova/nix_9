@@ -1,9 +1,6 @@
 package ua.com.alevel;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -102,6 +99,8 @@ public class ParseCSVUtil {
         List<String> input = new ArrayList<>();
         BufferedReader bufferedReader;
         try {
+            File yourFile = new File(filePath);
+            yourFile.createNewFile();
             bufferedReader = new BufferedReader(new FileReader(filePath));
             while (bufferedReader.ready()) {
                 input.add(bufferedReader.readLine());

@@ -21,6 +21,7 @@ public class PatientServiceImpl implements PatientService {
         LOGGER_INFO.info("patient start created");
         patientDao.create(patient);
         LOGGER_INFO.info("patient finish created, id: " + patient.getId());
+        System.out.println("Patient has been successfully created!");
     }
 
     public void update(Patient patient) {
@@ -28,6 +29,7 @@ public class PatientServiceImpl implements PatientService {
             LOGGER_INFO.info("patient start updated " + patient.getId());
             patientDao.update(patient);
             LOGGER_INFO.info("patient finish updated " + patient.getId());
+            System.out.println("Patient has been successfully updated!");
         } catch (RuntimeException e) {
             LOGGER_ERROR.error("patient NOT be updated " + patient.getId() + "; problem = " + e.getMessage());
             throw e;
@@ -38,13 +40,13 @@ public class PatientServiceImpl implements PatientService {
         DeclarationService declarationService = new DeclarationServiceImpl();
         ArrayList<Declaration> declarations = declarationService.findAll();
         boolean canBeDeleted = true;
-        for (int i = 0; i < declarations.size(); i++) {
-            if (declarations.get(i) != null && declarations.get(i).getIdPatient().equals(id)) {
+        for (Declaration declaration : declarations) {
+            if (declaration != null && declaration.getIdPatient().equals(id)) {
                 if (canBeDeleted) {
-                    System.out.println("You cannot delete a patient. Delete the declaration first:");
+                    System.out.println("You cannot delete a patient! Delete the declaration first:");
                     canBeDeleted = false;
                 }
-                System.out.println(declarations.get(i).getId());
+                System.out.println(declaration.getId());
             }
         }
         if (canBeDeleted) {
@@ -52,6 +54,7 @@ public class PatientServiceImpl implements PatientService {
                 LOGGER_WARN.warn("patient start deleted " + id);
                 patientDao.delete(id);
                 LOGGER_WARN.warn("patient finish deleted " + id);
+                System.out.println("Patient has been successfully deleted!");
             } catch (RuntimeException e) {
                 LOGGER_ERROR.error("patient NOT be deleted " + id + "; problem = " + e.getMessage());
                 throw e;
