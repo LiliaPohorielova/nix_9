@@ -8,8 +8,8 @@ import static ua.com.alevel.util.CheckFile.checkFilePath;
 
 public class DeleteUtil {
 
-    public static <T> void deleteInDB(Class<T> clazz, String id) throws InstantiationException, IllegalAccessException {
-        String fileName = clazz.getSimpleName().toLowerCase() + ".csv";
+    public static <T> void deleteInDB(Class<T> dataClass, String id) throws InstantiationException, IllegalAccessException {
+        String fileName = dataClass.getSimpleName().toLowerCase() + ".csv";
         List<String> input = checkFilePath(fileName);
         StringBuilder output = new StringBuilder();
         for (int i = 0; i < input.size(); i++) {
