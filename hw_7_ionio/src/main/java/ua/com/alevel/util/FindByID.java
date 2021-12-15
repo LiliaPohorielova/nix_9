@@ -33,7 +33,6 @@ public class FindByID {
         return result;
     }
 
-
     public static <ENTITY> ENTITY findObjectByID(Class<ENTITY> dataClass, String id) throws ReflectiveOperationException {
         String pathToFile = dataClass.getSimpleName().toLowerCase() + ".csv";
         List<String> fileStrings = getFileAsListOfStrings(pathToFile);
