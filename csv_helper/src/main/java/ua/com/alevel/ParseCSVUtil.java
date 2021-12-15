@@ -12,6 +12,7 @@ import java.util.List;
 public class ParseCSVUtil {
 
     private static final String CSV_SEPARATOR = ",";
+
     public static void saveObjectToCSV(Object object) throws IOException {
         String pathToFile = object.getClass().getSimpleName().toLowerCase() + ".csv";
         ArrayList<Field> objectFields = (ArrayList<Field>) getFields(object);
@@ -36,11 +37,11 @@ public class ParseCSVUtil {
                 } else {
                     resultObjectString.append(CSV_SEPARATOR);
                 }
-            } catch ( NoSuchFieldException | IllegalAccessException  e) {
+            } catch (NoSuchFieldException | IllegalAccessException e) {
                 System.out.println("error = " + e.getMessage());
             }
         }
-        try(FileWriter fileWriter = new FileWriter(pathToFile, true)) {
+        try (FileWriter fileWriter = new FileWriter(pathToFile, true)) {
             fileWriter.write(resultObjectString.toString());
         } catch (IOException e) {
             System.out.println("error = " + e.getMessage());
@@ -63,27 +64,41 @@ public class ParseCSVUtil {
 
         for (int i = 0; i < countOfFields; i++) titlesOfObjectFields[i] = objectFields.get(i).getName();
 
-        for (int i = 0; i < fileStrings.size(); i++) {
-            inputObject = fileStrings.get(i).split(CSV_SEPARATOR);
+        for (String fileString : fileStrings) {
+            inputObject = fileString.split(CSV_SEPARATOR);
             tempEntity = dataClass.newInstance();
             for (int j = 0; j < inputObject.length; j++) {
                 typeOfObject = tempEntity.getClass().getField(titlesOfObjectFields[j]).getType().getTypeName();
                 if (typeOfObject.equals("java.lang.String")) {
                     tempEntity.getClass().getField(titlesOfObjectFields[j]).set(tempEntity, inputObject[j]);
                 }
+                if (typeOfObject.equals("byte")) {
+                    tempEntity.getClass().getField(titlesOfObjectFields[j]).setByte(tempEntity, Byte.parseByte(inputObject[j]));
+                }
+                if (typeOfObject.equals("short")) {
+                    tempEntity.getClass().getField(titlesOfObjectFields[j]).setShort(tempEntity, Short.parseShort(inputObject[j]));
+                }
                 if (typeOfObject.equals("int")) {
                     tempEntity.getClass().getField(titlesOfObjectFields[j]).setInt(tempEntity, Integer.parseInt(inputObject[j]));
+                }
+                if (typeOfObject.equals("long")) {
+                    tempEntity.getClass().getField(titlesOfObjectFields[j]).setLong(tempEntity, Long.parseLong(inputObject[j]));
+                }
+                if (typeOfObject.equals("float")) {
+                    tempEntity.getClass().getField(titlesOfObjectFields[j]).setFloat(tempEntity, Float.parseFloat(inputObject[j]));
+                }
+                if (typeOfObject.equals("double")) {
+                    tempEntity.getClass().getField(titlesOfObjectFields[j]).setDouble(tempEntity, Double.parseDouble(inputObject[j]));
                 }
                 if (typeOfObject.equals("boolean")) {
                     tempEntity.getClass().getField(titlesOfObjectFields[j]).setBoolean(tempEntity, Boolean.parseBoolean(inputObject[j]));
                 }
             }
-            if(!isEmpty(tempEntity)) resultArrayOfObjects.add(tempEntity);
+            if (!isEmpty(tempEntity)) resultArrayOfObjects.add(tempEntity);
         }
         return resultArrayOfObjects;
     }
 
-    //!!!!!!!!!!!!!!!!UTIL!!!!!!!!!!!!!!!!!
     public static List<String> getFileAsListOfStrings(String filePath) {
         List<String> input = new ArrayList<>();
         BufferedReader bufferedReader;
@@ -93,25 +108,20 @@ public class ParseCSVUtil {
                 input.add(bufferedReader.readLine());
             }
         } catch (IOException e) {
-            System.out.println("error = " + e.getMessage());
+            System.out.println("Error: " + e.getMessage());
         }
         return input;
     }
 
     private static <T> List<Field> getFields(T t) {
         List<Field> fields = new ArrayList<>();
-        Class clazz = t.getClass().getSuperclass();
-        fields.addAll(Arrays.asList(clazz.getDeclaredFields()));
+        Class<?> dataClass = t.getClass().getSuperclass();
+        fields.addAll(Arrays.asList(dataClass.getDeclaredFields()));
         fields.addAll(Arrays.asList(t.getClass().getDeclaredFields()));
-//        while (clazz != Object.class) {
-//            fields.addAll(Arrays.asList(clazz.getDeclaredFields()));
-//            clazz = clazz.getClass();
-//        }
-        //System.out.println(fields);
         return fields;
     }
 
-    private static boolean isEmpty(Object o)  {
+    private static boolean isEmpty(Object o) {
         for (Field field : o.getClass().getDeclaredFields()) {
             try {
                 field.setAccessible(true);
@@ -119,7 +129,7 @@ public class ParseCSVUtil {
                     return true;
                 }
             } catch (Exception e) {
-                System.out.println("Exception occured in processing");
+                System.out.println("Exception occurred in processing!");
             }
         }
         return false;
