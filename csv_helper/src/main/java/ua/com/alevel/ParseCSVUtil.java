@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ParseCSVUtil {
@@ -13,8 +14,8 @@ public class ParseCSVUtil {
     private static final String CSV_SEPARATOR = ",";
     public static void saveObjectToCSV(Object object) throws IOException {
         String pathToFile = object.getClass().getSimpleName().toLowerCase() + ".csv";
-        Field[] objectFields = object.getClass().getDeclaredFields();
-        int countOfFields = objectFields.length;
+        ArrayList<Field> objectFields = (ArrayList<Field>) getFields(object);
+        int countOfFields = objectFields.size();
         String[] titlesOfObjectFields = new String[countOfFields];
         StringBuilder resultObjectString = new StringBuilder();
         Class<?> objectClass = object.getClass();
@@ -22,7 +23,7 @@ public class ParseCSVUtil {
         String tempFieldTitle;
         Object tempObject;
 
-        for (int i = 0; i < countOfFields; i++) titlesOfObjectFields[i] = objectFields[i].getName();
+        for (int i = 0; i < countOfFields; i++) titlesOfObjectFields[i] = objectFields.get(i).getName();
 
         for (int i = 0; i < countOfFields; i++) {
             tempFieldTitle = titlesOfObjectFields[i];
@@ -47,109 +48,39 @@ public class ParseCSVUtil {
     }
 
     //TODO: FILE PATH AS A PARAMETER
-    public static <ENTITY> List<ENTITY> getObjectsFromCSV(Class<ENTITY> dataClass) throws ReflectiveOperationException {
+    public static <ENTITY> ArrayList<ENTITY> getObjectsFromCSV(Class<ENTITY> dataClass) throws ReflectiveOperationException {
         String pathToFile = dataClass.getSimpleName().toLowerCase() + ".csv";
         List<String> fileStrings = getFileAsListOfStrings(pathToFile);
-        Field[] objectFields = dataClass.getDeclaredFields();
-        int countOfFields = objectFields.length;
+        ArrayList<Field> objectFields = new ArrayList<>();
+        objectFields.addAll(Arrays.asList(dataClass.getSuperclass().getDeclaredFields()));
+        objectFields.addAll(Arrays.asList(dataClass.getDeclaredFields()));
+        int countOfFields = objectFields.size();
         String[] titlesOfObjectFields = new String[countOfFields];
-        List<ENTITY> resultArrayOfObjects = new ArrayList<>();
+        ArrayList<ENTITY> resultArrayOfObjects = new ArrayList<>();
         ENTITY tempEntity;
-        String[] inputData;
+        String[] inputObject;
         String typeOfObject;
 
-        for (int i = 0; i < countOfFields; i++) titlesOfObjectFields[i] = objectFields[i].getName();
+        for (int i = 0; i < countOfFields; i++) titlesOfObjectFields[i] = objectFields.get(i).getName();
 
         for (int i = 0; i < fileStrings.size(); i++) {
-            inputData = fileStrings.get(i).split(CSV_SEPARATOR);
+            inputObject = fileStrings.get(i).split(CSV_SEPARATOR);
             tempEntity = dataClass.newInstance();
-            for (int j = 0; j < inputData.length; i++) {
-                typeOfObject = tempEntity.getClass().getField(titlesOfObjectFields[i]).getType().getTypeName();
+            for (int j = 0; j < inputObject.length; j++) {
+                typeOfObject = tempEntity.getClass().getField(titlesOfObjectFields[j]).getType().getTypeName();
                 if (typeOfObject.equals("java.lang.String")) {
-                    tempEntity.getClass().getField(titlesOfObjectFields[i]).set(tempEntity, inputData[i]);
+                    tempEntity.getClass().getField(titlesOfObjectFields[j]).set(tempEntity, inputObject[j]);
                 }
                 if (typeOfObject.equals("int")) {
-                    tempEntity.getClass().getField(titlesOfObjectFields[i]).setInt(tempEntity, Integer.parseInt(inputData[i]));
+                    tempEntity.getClass().getField(titlesOfObjectFields[j]).setInt(tempEntity, Integer.parseInt(inputObject[j]));
                 }
                 if (typeOfObject.equals("boolean")) {
-                    tempEntity.getClass().getField(titlesOfObjectFields[i]).setBoolean(tempEntity, Boolean.parseBoolean(inputData[i]));
+                    tempEntity.getClass().getField(titlesOfObjectFields[j]).setBoolean(tempEntity, Boolean.parseBoolean(inputObject[j]));
                 }
             }
-            resultArrayOfObjects.add(tempEntity);
+            if(!isEmpty(tempEntity)) resultArrayOfObjects.add(tempEntity);
         }
         return resultArrayOfObjects;
-    }
-
-    //!!!!!!!! findByID (Declaration) !!!!!!!!
-    public static <ENTITY> List<ENTITY> findRelation(Class<ENTITY> clazz, String id) throws ReflectiveOperationException {
-        List<String> inputRelation = getFileAsListOfStrings("bookauthor.csv");
-        List<String> idList = new ArrayList<>();
-        for (String s : inputRelation) {
-            if (s.contains(id)) {
-                String[] relationArray = s.split(",");
-                for (String value : relationArray) {
-                    if (!value.equals(id)) {
-                        idList.add(value);
-                    }
-                }
-            }
-        }
-        List<ENTITY> result = new ArrayList<>();
-        for (String s : idList) {
-            if (findObjectByID(clazz, s) != null) {
-                result.add(findObjectByID(clazz, s));
-            }
-
-        }
-        return result;
-    }
-
-    //!!!!!!!! findByID (Declaration) !!!!!!!!
-    public static <ENTITY> ENTITY findObjectByID(Class<ENTITY> dataClass, String id) throws ReflectiveOperationException {
-        String pathToFile = dataClass.getSimpleName().toLowerCase() + ".csv";
-        List<String> fileStrings = getFileAsListOfStrings(pathToFile);
-        if (fileStrings.isEmpty()) throw new ReflectiveOperationException("file is empty");
-
-        Field[] fields = dataClass.getDeclaredFields();
-        String[] fieldNames = new String[fields.length];
-        for (int i = 0; i < fields.length; i++) {
-            fieldNames[i] = fields[i].getName();
-        }
-
-        String[] values;
-        String[] forOutput = null;
-        boolean matches = false;
-        for (String s : fileStrings) {
-            values = s.split(CSV_SEPARATOR);
-            for (String value : values) {
-                if (value.equals(id)) {
-                    matches = true;
-                    forOutput = values;
-                    break;
-                }
-            }
-        }
-        if (!matches) {
-            values = null;
-        } else {
-            values = forOutput;
-        }
-        if (values == null) return null;
-
-        ENTITY object = dataClass.newInstance();
-        for (int i = 0; i < values.length; i++) {
-            String type = object.getClass().getField(fieldNames[i]).getType().getTypeName();
-            if (type.equals("java.lang.String")) {
-                object.getClass().getField(fieldNames[i]).set(object, values[i]);
-            }
-            if (type.equals("int")) {
-                object.getClass().getField(fieldNames[i]).setInt(object, Integer.parseInt(values[i]));
-            }
-            if (type.equals("boolean")) {
-                object.getClass().getField(fieldNames[i]).setBoolean(object, Boolean.parseBoolean(values[i]));
-            }
-        }
-        return object;
     }
 
     //!!!!!!!!!!!!!!!!UTIL!!!!!!!!!!!!!!!!!
@@ -165,5 +96,32 @@ public class ParseCSVUtil {
             System.out.println("error = " + e.getMessage());
         }
         return input;
+    }
+
+    private static <T> List<Field> getFields(T t) {
+        List<Field> fields = new ArrayList<>();
+        Class clazz = t.getClass().getSuperclass();
+        fields.addAll(Arrays.asList(clazz.getDeclaredFields()));
+        fields.addAll(Arrays.asList(t.getClass().getDeclaredFields()));
+//        while (clazz != Object.class) {
+//            fields.addAll(Arrays.asList(clazz.getDeclaredFields()));
+//            clazz = clazz.getClass();
+//        }
+        //System.out.println(fields);
+        return fields;
+    }
+
+    private static boolean isEmpty(Object o)  {
+        for (Field field : o.getClass().getDeclaredFields()) {
+            try {
+                field.setAccessible(true);
+                if (field.get(o) == null) {
+                    return true;
+                }
+            } catch (Exception e) {
+                System.out.println("Exception occured in processing");
+            }
+        }
+        return false;
     }
 }

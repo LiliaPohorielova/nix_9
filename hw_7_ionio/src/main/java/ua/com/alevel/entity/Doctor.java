@@ -2,8 +2,8 @@ package ua.com.alevel.entity;
 
 public class Doctor extends BaseEntity {
 
-    private String name;
-    private String specialization;
+    public String name;
+    public String specialization;
 
     public Doctor() {
         super();
@@ -27,10 +27,8 @@ public class Doctor extends BaseEntity {
 
     @Override
     public String toString() {
-        return "Doctor{" +
-                "id='" + super.getId() + '\'' +
-                ", name='" + name + '\'' +
-                ", specialization='" + specialization +
-                "'}";
+        return  "ID: " + super.getId() + "\n" +
+                "Name: " + name + "\n" +
+                "Specialization: " + specialization + "\n";
     }
 }

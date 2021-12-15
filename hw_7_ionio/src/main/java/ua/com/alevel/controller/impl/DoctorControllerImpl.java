@@ -64,15 +64,16 @@ public class DoctorControllerImpl implements DoctorController {
             doctor.setSpecialization(specialization);
             doctor.setName(name);
             doctorService.create(doctor);
+            printAll();
         } catch (IOException | RuntimeException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
 
     private void update(BufferedReader reader) {
-        System.out.println("\n===================== UPDATE DOCTOR =====================");
+        System.out.print("\n===================== UPDATE DOCTOR =====================");
         try {
-            System.out.println(doctorService.findAll());
+            printAll();
             System.out.println("Please, enter id (Choose one id of the options below)");
             String id = reader.readLine();
             System.out.println("Please, enter new doctor`s name");
@@ -84,41 +85,52 @@ public class DoctorControllerImpl implements DoctorController {
             doctor.setSpecialization(specialization);
             doctor.setName(name);
             doctorService.update(doctor);
+            printAll();
         } catch (IOException | RuntimeException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
 
     private void delete(BufferedReader reader) {
-        System.out.println("\n===================== DELETE DOCTOR =====================");
+        System.out.print("\n===================== DELETE DOCTOR =====================");
         try {
-            System.out.println(doctorService.findAll());
+            printAll();
             System.out.println("Please, enter id (Choose one id of the options below)");
             String id = reader.readLine();
             doctorService.delete(id);
+            printAll();
         } catch (IOException | RuntimeException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
 
     private void findById(BufferedReader reader) {
-        System.out.println("\n===================== FIND DOCTOR BY ID =====================");
+        System.out.print("\n===================== FIND DOCTOR BY ID =====================");
         try {
+            printAll();
             System.out.println("Please, enter id");
             String id = reader.readLine();
             Doctor doctor = doctorService.findById(id);
-            System.out.println("Doctor = " + doctor);
+            System.out.println("\nYour Doctor\n"+doctor);
         } catch (IOException | RuntimeException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
 
     private void findAll(BufferedReader reader) {
-        System.out.println("\n===================== FIND ALL DOCTORS =====================");
+        System.out.print("\n===================== FIND ALL DOCTORS =====================");
+        printAll();
+    }
+
+
+    private void printAll() {
+        System.out.println("\nAll Doctors");
         ArrayList<Doctor> doctors = doctorService.findAll();
         if (doctors.size() != 0) {
             for (int i = 0; i < doctors.size(); i++) {
-                System.out.println(doctors.get(i));
+                System.out.println("Doctor's ID: " + doctors.get(i).getId());
+                System.out.println("Doctor's Name: " + doctors.get(i).getName());
+                System.out.println("Doctor's Specialization: " + doctors.get(i).getSpecialization()+"\n");
             }
         } else {
             System.out.println("Error: Doctors empty");

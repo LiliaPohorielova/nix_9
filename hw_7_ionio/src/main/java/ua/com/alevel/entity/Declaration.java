@@ -2,8 +2,8 @@ package ua.com.alevel.entity;
 
 public class Declaration extends BaseEntity {
 
-    private String idPatient;
-    private String idDoctor;
+    public String idPatient;
+    public String idDoctor;
 
     public Declaration() {
         super();
