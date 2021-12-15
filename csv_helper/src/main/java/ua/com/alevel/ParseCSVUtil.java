@@ -48,7 +48,6 @@ public class ParseCSVUtil {
         }
     }
 
-    //TODO: FILE PATH AS A PARAMETER
     public static <ENTITY> ArrayList<ENTITY> getObjectsFromCSV(Class<ENTITY> dataClass) throws ReflectiveOperationException {
         String pathToFile = dataClass.getSimpleName().toLowerCase() + ".csv";
         List<String> fileStrings = getFileAsListOfStrings(pathToFile);
