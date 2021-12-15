@@ -111,7 +111,7 @@ public class DoctorControllerImpl implements DoctorController {
             System.out.println("Please, enter id");
             String id = reader.readLine();
             Doctor doctor = doctorService.findById(id);
-            System.out.println("\nYour Doctor\n"+doctor);
+            System.out.println("\nYour Doctor\n" + doctor);
         } catch (IOException | RuntimeException e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -122,18 +122,17 @@ public class DoctorControllerImpl implements DoctorController {
         printAll();
     }
 
-
     private void printAll() {
         System.out.println("\nAll Doctors");
         ArrayList<Doctor> doctors = doctorService.findAll();
         if (doctors.size() != 0) {
-            for (int i = 0; i < doctors.size(); i++) {
-                System.out.println("Doctor's ID: " + doctors.get(i).getId());
-                System.out.println("Doctor's Name: " + doctors.get(i).getName());
-                System.out.println("Doctor's Specialization: " + doctors.get(i).getSpecialization()+"\n");
+            for (Doctor doctor : doctors) {
+                System.out.println("Doctor's ID: " + doctor.getId());
+                System.out.println("Doctor's Name: " + doctor.getName());
+                System.out.println("Doctor's Specialization: " + doctor.getSpecialization() + "\n");
             }
         } else {
-            System.out.println("Error: Doctors empty");
+            System.out.println("Error: Doctors empty!");
         }
     }
 }
