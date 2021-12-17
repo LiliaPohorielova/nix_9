@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="utf-8">
+    <title>Update Doctor</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card mt-2">
+                <div class="card-header">
+                    <h4>Update doctor</h4>
+                </div>
+                <div class="card-body">
+                    <form action="#" th:action="@{'/doctors/update/' + ${doctor.getId()}}" th:object="${doctor}" method="post" enctype="multipart/form-data">
+                        <div class="form-doctor">
+                            <label for="lastname">Lastname doctor</label>
+                            <input type="text" class="form-control" id="lastname" aria-describedby="name" placeholder="Введите фамилию доктора" th:field="*{lastname}">
+                            <label for="firstname">Firstname doctor</label>
+                            <input type="text" class="form-control" id="firstname" aria-describedby="name" placeholder="Введите название доктора" th:field="*{firstname}">
+                            <label for="middle_name">Middle Name doctor</label>
+                            <input type="text" class="form-control" id="middle_name" aria-describedby="name" placeholder="Введите название доктора" th:field="*{middleName}">
+                        </div>
+                        <div class="form-doctor">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
