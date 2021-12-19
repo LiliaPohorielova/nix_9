@@ -43,15 +43,21 @@
                             <th>updated</th>
                             <td th:text="${#calendars.format(doctor.getUpdated(),'dd MMMM yyyy')}"></td>
                         </tr>
+                        <tr>
+                            <th>Specialization</th>
+                            <td th:text="${T(ua.com.alevel.type.DoctorSpecialization).valueOf(doctor.getSpecialization())}"></td>
+                        </tr>
                     </table>
                     <hr>
-                              <div>
-                                <a th:href="@{/patients/new/}" type="button" class="btn btn-primary">Add new patient</a>
-                              </div>
-                    <hr>
-                    <div>
-                        <a th:href="@{'/patients?doctorId=' + ${doctor.getId()}}" type="button" class="btn btn-primary">Show
-                            all patient</a>
+                    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                        <div class="btn-group mr-2" role="group" aria-label="First group">
+                            <a th:href="@{/patients/new/}" type="button" class="btn btn-primary">Add new patient</a>
+                        </div>
+
+                        <div class="btn-group mr-2" role="group" aria-label="Second group">
+                            <a th:href="@{'/patients?doctorId=' + ${doctor.getId()}}" type="button"
+                               class="btn btn-success">Show all patient</a>
+                        </div>
                     </div>
                 </div>
             </div>

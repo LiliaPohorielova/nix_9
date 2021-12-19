@@ -11,8 +11,9 @@
 </head>
 <body>
 <div class="container">
-  <nav class="navbar navbar-dark bg-dark justify-content-center">
+  <nav class="navbar navbar-dark bg-primary justify-content-around">
     <a class="nav-item nav-link" th:href="@{/doctors}">Doctors</a>
+    <a class="nav-item nav-link" th:href="@{/doctors/new/}">Add new doctor</a>
     <a class="nav-item nav-link" th:href="@{/patients}">Patients</a>
   </nav>
   <div class="row mt-2" th:if="${showMessage}">

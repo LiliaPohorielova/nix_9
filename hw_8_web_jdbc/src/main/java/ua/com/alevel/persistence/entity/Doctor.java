@@ -1,11 +1,13 @@
 package ua.com.alevel.persistence.entity;
 
+import ua.com.alevel.type.DoctorSpecialization;
+
 public class Doctor extends BaseEntity {
 
     private String lastname;
     private String firstname;
     private String middleName;
-    private String specialization;
+    private DoctorSpecialization specialization;
 
     public Doctor() {
         super();
@@ -35,11 +37,21 @@ public class Doctor extends BaseEntity {
         this.middleName = middleName;
     }
 
-    public String getSpecialization() {
+    public DoctorSpecialization getSpecialization() {
         return specialization;
     }
 
-    public void setSpecialization(String specialization) {
+    public void setSpecialization(DoctorSpecialization specialization) {
         this.specialization = specialization;
+    }
+
+    @Override
+    public String toString() {
+        return "Doctor{" +
+                "lastname='" + lastname + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", middleName='" + middleName + '\'' +
+                ", specialization=" + specialization +
+                '}';
     }
 }

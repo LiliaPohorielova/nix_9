@@ -18,14 +18,31 @@
                     <h4>Update doctor</h4>
                 </div>
                 <div class="card-body">
-                    <form action="#" th:action="@{'/doctors/update/' + ${doctor.getId()}}" th:object="${doctor}" method="post" enctype="multipart/form-data">
-                        <div class="form-doctor">
+                    <form action="#" th:action="@{'/doctors/update/' + ${doctor.getId()}}" th:object="${doctor}"
+                          method="post" enctype="multipart/form-data">
+                        <div class="form-group">
                             <label for="lastname">Lastname doctor</label>
-                            <input type="text" class="form-control" id="lastname" aria-describedby="name" placeholder="Введите фамилию доктора" th:field="*{lastname}">
+                            <input type="text" class="form-control" id="lastname" aria-describedby="name"
+                                   placeholder="Введите фамилию доктора" th:field="*{lastname}">
+                        </div>
+                        <div class="form-group">
                             <label for="firstname">Firstname doctor</label>
-                            <input type="text" class="form-control" id="firstname" aria-describedby="name" placeholder="Введите название доктора" th:field="*{firstname}">
+                            <input type="text" class="form-control" id="firstname" aria-describedby="name"
+                                   placeholder="Введите название доктора" th:field="*{firstname}">
+                        </div>
+                        <div class="form-group">
                             <label for="middle_name">Middle Name doctor</label>
-                            <input type="text" class="form-control" id="middle_name" aria-describedby="name" placeholder="Введите название доктора" th:field="*{middleName}">
+                            <input type="text" class="form-control" id="middle_name" aria-describedby="name"
+                                   placeholder="Введите название доктора" th:field="*{middleName}">
+                        </div>
+                        <div class="form-group">
+                            <label for="type">Specialization</label>
+                            <select class="form-control" id="type" th:field="*{specialization}">
+                                <option th:each="type : ${T(ua.com.alevel.type.DoctorSpecialization).values()}"
+                                        th:value="${type}"
+                                        th:text="${type}">
+                                </option>
+                            </select>
                         </div>
                         <div class="form-doctor">
                         </div>

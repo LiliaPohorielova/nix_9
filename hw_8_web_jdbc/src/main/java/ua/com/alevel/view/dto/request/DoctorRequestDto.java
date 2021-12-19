@@ -1,11 +1,13 @@
 package ua.com.alevel.view.dto.request;
 
+import ua.com.alevel.type.DoctorSpecialization;
+
 public class DoctorRequestDto extends RequestDto{
 
     private String lastname;
     private String firstname;
     private String middleName;
-    private String specialization;
+    private DoctorSpecialization specialization;
 
     public String getLastname() {
         return lastname;
@@ -31,11 +33,11 @@ public class DoctorRequestDto extends RequestDto{
         this.middleName = middleName;
     }
 
-    public String getSpecialization() {
+    public DoctorSpecialization getSpecialization() {
         return specialization;
     }
 
-    public void setSpecialization(String specialization) {
+    public void setSpecialization(DoctorSpecialization specialization) {
         this.specialization = specialization;
     }
 }

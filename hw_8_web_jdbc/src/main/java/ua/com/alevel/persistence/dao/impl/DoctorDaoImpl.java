@@ -6,6 +6,7 @@ import ua.com.alevel.persistence.dao.DoctorDao;
 import ua.com.alevel.persistence.datatable.DataTableRequest;
 import ua.com.alevel.persistence.datatable.DataTableResponse;
 import ua.com.alevel.persistence.entity.Doctor;
+import ua.com.alevel.type.DoctorSpecialization;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -33,7 +34,7 @@ public class DoctorDaoImpl implements DoctorDao {
             preparedStatement.setString(4, doctor.getLastname());
             preparedStatement.setString(5, doctor.getFirstname());
             preparedStatement.setString(6, doctor.getMiddleName());
-            preparedStatement.setString(7, doctor.getSpecialization());
+            preparedStatement.setString(7, doctor.getSpecialization().toString());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println("e = " + e.getMessage());
@@ -46,7 +47,7 @@ public class DoctorDaoImpl implements DoctorDao {
             preparedStatement.setString(1, doctor.getLastname());
             preparedStatement.setString(2, doctor.getFirstname());
             preparedStatement.setString(3, doctor.getMiddleName());
-            preparedStatement.setString(4, doctor.getSpecialization());
+            preparedStatement.setString(4, doctor.getSpecialization().toString());
             preparedStatement.setTimestamp(5, new Timestamp(new Date().getTime()));
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -98,13 +99,14 @@ public class DoctorDaoImpl implements DoctorDao {
 
         String sql = "select id, created, updated, visible, last_name, first_name, middle_name, specialization, count(*) as patientCount " +
                 "from doctor left join declaration as decl on doctor.id = decl.doctor_id " +
-                "doctor by doctor_id order by " +
+                "group by doctor_id order by " +
                 request.getSort() + " " +
                 request.getOrder() + " limit " +
                 limit + "," +
                 request.getPageSize();
 
         try (ResultSet resultSet = jpaConfig.getStatement().executeQuery(sql)) {
+            System.out.println(resultSet.getFetchSize());
             while (resultSet.next()) {
                 DoctorResultSet doctorResultSet = convertResultSetToDoctor(resultSet);
                 doctors.add(doctorResultSet.getDoctor());
@@ -171,7 +173,7 @@ public class DoctorDaoImpl implements DoctorDao {
         doctor.setLastname(doctorLastName);
         doctor.setFirstname(doctorFirstName);
         doctor.setMiddleName(doctorMiddleName);
-        doctor.setSpecialization(doctorSpecialization);
+        doctor.setSpecialization(DoctorSpecialization.valueOf(doctorSpecialization));
 
         return doctor;
     }

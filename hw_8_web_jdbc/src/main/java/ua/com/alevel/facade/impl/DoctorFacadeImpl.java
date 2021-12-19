@@ -34,6 +34,7 @@ public class DoctorFacadeImpl implements DoctorFacade {
         doctor.setLastname(doctorRequestDto.getLastname());
         doctor.setFirstname(doctorRequestDto.getFirstname());
         doctor.setMiddleName(doctorRequestDto.getMiddleName());
+        doctor.setSpecialization(doctorRequestDto.getSpecialization());
         doctorService.create(doctor);
     }
 
@@ -43,6 +44,7 @@ public class DoctorFacadeImpl implements DoctorFacade {
         doctor.setLastname(doctorRequestDto.getLastname());
         doctor.setFirstname(doctorRequestDto.getFirstname());
         doctor.setMiddleName(doctorRequestDto.getMiddleName());
+        doctor.setSpecialization(doctorRequestDto.getSpecialization());
         doctorService.update(doctor);
     }
 

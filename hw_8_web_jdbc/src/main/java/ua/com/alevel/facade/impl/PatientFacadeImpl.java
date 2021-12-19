@@ -72,7 +72,6 @@ public class PatientFacadeImpl implements PatientFacade {
             String[] params = request.getParameterMap().get("doctorId");
             if (params != null) {
                 Long doctorId = Long.parseLong(params[0]);
-                System.out.println("doctorId = " + doctorId);
                 dataTableRequest.getQueryMap().put("doctorId", doctorId);
             }
         }

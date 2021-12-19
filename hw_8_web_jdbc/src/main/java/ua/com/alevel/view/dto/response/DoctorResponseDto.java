@@ -1,13 +1,14 @@
 package ua.com.alevel.view.dto.response;
 
 import ua.com.alevel.persistence.entity.Doctor;
+import ua.com.alevel.type.DoctorSpecialization;
 
 public class DoctorResponseDto extends ResponseDto {
 
     private String lastname;
     private String firstname;
     private String middleName;
-    private String specialization;
+    private DoctorSpecialization specialization;
     private Integer patientCount;
 
     public DoctorResponseDto() { }
@@ -20,6 +21,7 @@ public class DoctorResponseDto extends ResponseDto {
         this.lastname = doctor.getLastname();
         this.firstname = doctor.getFirstname();
         this.middleName = doctor.getMiddleName();
+        this.specialization = doctor.getSpecialization();
     }
 
     public String getLastname() {
@@ -46,11 +48,11 @@ public class DoctorResponseDto extends ResponseDto {
         this.middleName = middleName;
     }
 
-    public String getSpecialization() {
+    public DoctorSpecialization getSpecialization() {
         return specialization;
     }
 
-    public void setSpecialization(String specialization) {
+    public void setSpecialization(DoctorSpecialization specialization) {
         this.specialization = specialization;
     }
 

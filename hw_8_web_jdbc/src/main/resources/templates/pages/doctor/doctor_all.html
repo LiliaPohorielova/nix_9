@@ -8,9 +8,7 @@
     <title>Doctor</title>
 </head>
 <body>
-
 <div layout:fragment="data_table_content">
-
     <tr th:each="doctor,iter : ${pageData.getItems()}">
         <td th:text="${iter.count}"></td>
         <td th:text="${doctor.getLastname()}"></td>
@@ -21,18 +19,12 @@
             <a th:href="@{'/doctors/details/' + ${doctor.getId()}}" type="button" class="btn btn-primary">details</a>
         </td>
         <td>
-            <a th:href="@{'/doctors/update/' + ${doctor.getId()}}" type="button"
-               class="btn btn-primary">edit</a>
+            <a th:href="@{'/doctors/update/' + ${doctor.getId()}}" type="button" class="btn btn-success">edit</a>
         </td>
         <td>
             <a th:href="@{'/doctors/delete/' + ${doctor.getId()}}" type="button" class="btn btn-danger">delete</a>
         </td>
     </tr>
-
-    <form>
-        <a th:href="@{/doctors/new/}" type="button" class="btn btn-danger">Add new doctor</a>
-    </form>
-
 </div>
 </body>
 </html>
