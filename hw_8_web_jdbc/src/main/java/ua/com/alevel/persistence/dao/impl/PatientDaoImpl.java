@@ -104,6 +104,7 @@ public class PatientDaoImpl implements PatientDao {
         Long doctorId = null;
         if (request.getQueryMap().get("doctorId") != null) {
             doctorId = (Long) request.getQueryMap().get("doctorId");
+            System.out.println("doctorId = " + doctorId);
         }
         try (ResultSet resultSet = doctorId == null ?
                 jpaConfig.getStatement().executeQuery(FIND_ALL_PATIENTS_QUERY) :

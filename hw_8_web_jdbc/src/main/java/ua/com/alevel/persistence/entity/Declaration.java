@@ -2,33 +2,33 @@ package ua.com.alevel.persistence.entity;
 
 public class Declaration extends BaseEntity {
 
-    public String idPatient;
-    public String idDoctor;
+    public Long patientId;
+    public Long doctorId;
 
     public Declaration() {
         super();
     }
 
-    public String getIdPatient() {
-        return idPatient;
+    public Long getPatientId() {
+        return patientId;
     }
 
-    public void setIdPatient(String idPatient) {
-        this.idPatient = idPatient;
+    public void setPatientId(Long patientId) {
+        this.patientId = patientId;
     }
 
-    public String getIdDoctor() {
-        return idDoctor;
+    public Long getDoctorId() {
+        return doctorId;
     }
 
-    public void setIdDoctor(String idDoctor) {
-        this.idDoctor = idDoctor;
+    public void setDoctorId(Long doctorId) {
+        this.doctorId = doctorId;
     }
 
     @Override
     public String toString() {
         return "ID: " + super.getId() + "\n" +
-                "Patient: " + idPatient + "\n" +
-                "Doctor: " + idDoctor + "\n";
+                "Patient: " + patientId + "\n" +
+                "Doctor: " + doctorId + "\n";
     }
 }

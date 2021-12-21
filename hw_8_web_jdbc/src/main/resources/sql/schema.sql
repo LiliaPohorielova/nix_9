@@ -1,6 +1,6 @@
+CREATE SCHEMA hw_8_hospital;
 
-
-CREATE TABLE doctor
+CREATE TABLE hw_8_hospital.doctor
 (
     id          BIGINT AUTO_INCREMENT
         PRIMARY KEY,
@@ -14,7 +14,7 @@ CREATE TABLE doctor
 
 );
 
-create table patient
+create table hw_8_hospital.patient
 (
     id         BIGINT AUTO_INCREMENT
         PRIMARY KEY,
@@ -26,11 +26,12 @@ create table patient
     age        INT          NOT NULL
 );
 
-create table declaration
+create table hw_8_hospital.declaration
 (
+    id         BIGINT AUTO_INCREMENT
+        PRIMARY KEY,
     doctor_id  BIGINT NOT NULL,
     patient_id BIGINT NOT NULL,
-    PRIMARY key (doctor_id, patient_id),
     FOREIGN KEY (doctor_id) REFERENCES doctor (id) ON DELETE CASCADE,
     FOREIGN KEY (patient_id) REFERENCES patient (id) ON DELETE CASCADE
 );

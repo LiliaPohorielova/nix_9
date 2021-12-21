@@ -97,16 +97,15 @@ public class DoctorDaoImpl implements DoctorDao {
 
         int limit = (request.getCurrentPage() - 1) * request.getPageSize();
 
-        String sql = "select id, created, updated, visible, last_name, first_name, middle_name, specialization, count(*) as patientCount " +
+
+        String sql = "select doctor.id, doctor.created, doctor.updated, doctor.visible, doctor.last_name, doctor.first_name, doctor.middle_name, doctor.specialization, count(decl.patient_id) as patientCount " +
                 "from doctor left join declaration as decl on doctor.id = decl.doctor_id " +
-                "group by doctor_id order by " +
+                "group by doctor.id order by " +
                 request.getSort() + " " +
                 request.getOrder() + " limit " +
                 limit + "," +
                 request.getPageSize();
-
         try (ResultSet resultSet = jpaConfig.getStatement().executeQuery(sql)) {
-            System.out.println(resultSet.getFetchSize());
             while (resultSet.next()) {
                 DoctorResultSet doctorResultSet = convertResultSetToDoctor(resultSet);
                 doctors.add(doctorResultSet.getDoctor());
@@ -141,6 +140,7 @@ public class DoctorDaoImpl implements DoctorDao {
         String doctorLastName = resultSet.getString("last_name");
         String doctorFirstName = resultSet.getString("first_name");
         String doctorMiddleName = resultSet.getString("middle_name");
+        String doctorSpecialization = resultSet.getString("specialization");
         int patientCount = resultSet.getInt("patientCount");
 
         Doctor doctor = new Doctor();
@@ -151,6 +151,7 @@ public class DoctorDaoImpl implements DoctorDao {
         doctor.setLastname(doctorLastName);
         doctor.setFirstname(doctorFirstName);
         doctor.setMiddleName(doctorMiddleName);
+        doctor.setSpecialization(DoctorSpecialization.valueOf(doctorSpecialization));
 
         return new DoctorResultSet(doctor, patientCount);
     }

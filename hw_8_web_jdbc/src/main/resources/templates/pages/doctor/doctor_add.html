@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="utf-8">
+    <title>Add Doctor</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-2 mt-2">
+                <div class="card-header">
+                    All Doctors
+                </div>
+                <div class="card-body">
+                    <table class="table table-sm table-hover">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Lastname</th>
+                            <th>Firstname</th>
+                            <th>Middle name</th>
+                            <th>Specialization</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="doctor,iter : ${doctors}">
+                            <td th:text="${iter.count}"></td>
+                            <td th:text="${doctor.getLastname()}"></td>
+                            <td th:text="${doctor.getFirstname()}"></td>
+                            <td th:text="${doctor.getMiddleName()}"></td>
+                            <td th:text="${doctor.getSpecialization()}"></td>
+                            <td>
+                                <a th:href="@{'/doctors/doctor/' + ${patient.getId()} + '/' +${doctor.getId()}}"
+                                   type="button" class="btn btn-primary">Add</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
+
+
+
+

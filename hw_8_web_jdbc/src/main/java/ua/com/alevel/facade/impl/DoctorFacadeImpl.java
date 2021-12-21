@@ -72,7 +72,7 @@ public class DoctorFacadeImpl implements DoctorFacade {
 
         Map<String, String[]> parameterMap = request.getParameterMap();
         if (MapUtils.isNotEmpty(parameterMap)) {
-            System.out.println("parameterMap = " + parameterMap);
+            //System.out.println("parameterMap = " + parameterMap);
         }
 
         DataTableResponse<Doctor> all = doctorService.findAll(dataTableRequest);

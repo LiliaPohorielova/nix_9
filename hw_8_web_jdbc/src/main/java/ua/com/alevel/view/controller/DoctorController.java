@@ -8,10 +8,14 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
+import ua.com.alevel.facade.DeclarationFacade;
 import ua.com.alevel.facade.DoctorFacade;
+import ua.com.alevel.facade.PatientFacade;
+import ua.com.alevel.view.dto.request.DeclarationRequestDto;
 import ua.com.alevel.view.dto.request.DoctorRequestDto;
 import ua.com.alevel.view.dto.response.DoctorResponseDto;
 import ua.com.alevel.view.dto.response.PageData;
+import ua.com.alevel.view.dto.response.PatientResponseDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,9 +41,13 @@ public class DoctorController extends AbstractController {
     }
 
     private final DoctorFacade doctorFacade;
+    private final PatientFacade patientFacade;
+    private final DeclarationFacade declarationFacade;
 
-    public DoctorController(DoctorFacade doctorFacade) {
+    public DoctorController(DoctorFacade doctorFacade, PatientFacade patientFacade, DeclarationFacade declarationFacade) {
         this.doctorFacade = doctorFacade;
+        this.patientFacade = patientFacade;
+        this.declarationFacade = declarationFacade;
     }
 
     @GetMapping
@@ -78,30 +86,65 @@ public class DoctorController extends AbstractController {
         return "redirect:/doctors";
     }
 
-    @PostMapping("/update/{id}")
-    public String updateDoctor(@PathVariable Long id, @ModelAttribute("doctor") DoctorRequestDto doctorRequestDto) {
-        doctorFacade.update(doctorRequestDto, id);
-        return "redirect:/doctors";
-    }
-
     @GetMapping("/update/{id}")
-    public String update(@PathVariable Long id, Model model) {
+    public String redirectToUpdateDoctorPage(@PathVariable Long id, Model model) {
         DoctorResponseDto doctorResponseDto = doctorFacade.findById(id);
         model.addAttribute("doctor", doctorResponseDto);
         return "pages/doctor/doctor_update";
     }
 
+    @PostMapping("/update/{id}")
+    public String updateDoctor(@ModelAttribute("doctor") DoctorRequestDto doctorRequestDto, @PathVariable Long id) {
+        doctorFacade.update(doctorRequestDto, id);
+        return "redirect:/doctors";
+    }
+
     @GetMapping("/details/{id}")
-    public String details(@PathVariable Long id, Model model) {
-        DoctorResponseDto doctorResponseDto = doctorFacade.findById(id);
-        model.addAttribute("doctor", doctorResponseDto);
+    public String findById(@PathVariable Long id, Model model) {
+        List<PatientResponseDto> patients = declarationFacade.findByDoctorId(id);
+        model.addAttribute("doctor", doctorFacade.findById(id));
+        model.addAttribute("patients", patients);
         return "pages/doctor/doctor_details";
     }
 
     @GetMapping("/delete/{id}")
-    public String delete(@PathVariable Long id) {
+    public String deleteById(@PathVariable Long id) {
+        List<PatientResponseDto> patients = declarationFacade.findByDoctorId(id);
+        patients.stream()
+                .map(patient -> declarationFacade.findByDoctorIdAndPatientId(patient.getId(), id).getId())
+                .forEach(declarationFacade::delete);
         doctorFacade.delete(id);
         return "redirect:/doctors";
+    }
+
+    @GetMapping("/add/{id}")
+    public String redirectToAddDoctorPage(@PathVariable Long id, Model model, WebRequest request) {
+        List<DoctorResponseDto> doctors = doctorFacade.findAll(request).getItems();
+        model.addAttribute("doctors", doctors);
+        model.addAttribute("patient", patientFacade.findById(id));
+        return "pages/doctor/doctor_add";
+    }
+
+    @GetMapping("/doctor/{patientId}/{doctorId}")
+    public String addPatient(@PathVariable Long patientId, @PathVariable Long doctorId, Model model) {
+        DeclarationRequestDto declarationRequestDto = new DeclarationRequestDto();
+        declarationRequestDto.setPatientId(patientId);
+        declarationRequestDto.setDoctorId(doctorId);
+        declarationFacade.create(declarationRequestDto);
+        List<DoctorResponseDto> doctors = declarationFacade.findByPatientId(patientId);
+        model.addAttribute("patient", patientFacade.findById(patientId));
+        model.addAttribute("doctors", doctors);
+        return "pages/patient/patient_details";
+    }
+
+    @GetMapping("/delete/doctor/{patientId}/{doctorId}")
+    public String deletePatientFromDoctor(@PathVariable Long patientId, @PathVariable Long doctorId, Model model) {
+        Long id = declarationFacade.findByDoctorIdAndPatientId(patientId, doctorId).getId();
+        declarationFacade.delete(id);
+        List<DoctorResponseDto> doctors = declarationFacade.findByPatientId(patientId);
+        model.addAttribute("patient", patientFacade.findById(patientId));
+        model.addAttribute("doctors", doctors);
+        return "pages/patient/patient_details";
     }
 
     private List<HeaderData> getHeaderDataList(HeaderName[] columnTitles, PageData<DoctorResponseDto> response) {

@@ -39,16 +39,16 @@ public class PatientFacadeImpl implements PatientFacade {
 
     @Override
     public void update(PatientRequestDto patientRequestDto, Long id) {
-    Patient patient = patientService.findById(id);
-    patient.setFirstname(patientRequestDto.getFirstname());
-    patient.setLastname(patientRequestDto.getLastname());
-    patient.setAge(patientRequestDto.getAge());
-    patientService.update(patient);
+        Patient patient = patientService.findById(id);
+        patient.setFirstname(patientRequestDto.getFirstname());
+        patient.setLastname(patientRequestDto.getLastname());
+        patient.setAge(patientRequestDto.getAge());
+        patientService.update(patient);
     }
 
     @Override
     public void delete(Long id) {
-    patientService.delete(id);
+        patientService.delete(id);
     }
 
     @Override
