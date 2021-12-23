@@ -8,6 +8,7 @@ import ua.com.alevel.view.dto.request.SortData;
 import java.util.Objects;
 
 public final class WebRequestUtil {
+
     private static final String PAGE_PARAM = "page";
     private static final String SIZE_PARAM = "size";
     private static final String SORT_PARAM = "sort";

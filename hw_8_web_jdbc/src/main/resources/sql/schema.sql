@@ -2,14 +2,14 @@ CREATE SCHEMA hw_8_hospital;
 
 CREATE TABLE hw_8_hospital.doctor
 (
-    id          BIGINT AUTO_INCREMENT
+    id             BIGINT AUTO_INCREMENT
         PRIMARY KEY,
-    created     DATETIME(6) NULL,
-    updated     DATETIME(6) NULL,
-    visible     BIT null,
-    last_name   VARCHAR(255) NOT NULL,
-    first_name  VARCHAR(255) NOT NULL,
-    middle_name VARCHAR(255) NOT NULL,
+    created        DATETIME(6)  NULL,
+    updated        DATETIME(6)  NULL,
+    visible        BIT          null,
+    last_name      VARCHAR(255) NOT NULL,
+    first_name     VARCHAR(255) NOT NULL,
+    middle_name    VARCHAR(255) NOT NULL,
     specialization VARCHAR(255) NOT NULL
 
 );
@@ -18,11 +18,11 @@ create table hw_8_hospital.patient
 (
     id         BIGINT AUTO_INCREMENT
         PRIMARY KEY,
-    created    DATETIME(6) NULL,
-    updated    DATETIME(6) NULL,
-    visible    BIT null,
-    last_name   VARCHAR(255) NOT NULL,
-    first_name  VARCHAR(255) NOT NULL,
+    created    DATETIME(6)  NULL,
+    updated    DATETIME(6)  NULL,
+    visible    BIT          null,
+    last_name  VARCHAR(255) NOT NULL,
+    first_name VARCHAR(255) NOT NULL,
     age        INT          NOT NULL
 );
 

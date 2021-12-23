@@ -40,16 +40,6 @@ public class PatientDaoImpl implements PatientDao {
         }
     }
 
-    private void insertPatientInDoctor(Doctor doctor, Patient patient) {
-        try (PreparedStatement preparedStatement = jpaConfig.getConnection().prepareStatement(INSERT_DECLARATION)) {
-            preparedStatement.setLong(1, doctor.getId());
-            preparedStatement.setLong(2, patient.getId());
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println("problem new: = " + e.getMessage());
-        }
-    }
-
     @Override
     public void update(Patient patient) {
         try (PreparedStatement preparedStatement = jpaConfig.getConnection().prepareStatement(UPDATE_PATIENT_BY_ID_QUERY + patient.getId())) {
@@ -99,31 +89,42 @@ public class PatientDaoImpl implements PatientDao {
 
     @Override
     public DataTableResponse<Patient> findAll(DataTableRequest request) {
-        List<Patient> patients = new ArrayList<>();
+        List<Patient> doctors = new ArrayList<>();
         Map<Object, Object> otherParamMap = new HashMap<>();
-        Long doctorId = null;
-        if (request.getQueryMap().get("doctorId") != null) {
-            doctorId = (Long) request.getQueryMap().get("doctorId");
-            System.out.println("doctorId = " + doctorId);
+        int limit = (request.getCurrentPage() - 1) * request.getPageSize();
+
+        String sql = FIND_ALL_PATIENTS_JOIN_DECLARATION_QUERY +
+                request.getSort() + " " +
+                request.getOrder() + " limit " +
+                limit + "," +
+                request.getPageSize();
+
+        try (ResultSet resultSet = jpaConfig.getStatement().executeQuery(sql)) {
+            while (resultSet.next()) {
+                PatientDaoImpl.PatientResultSet doctorResultSet = convertResultSetToPatient(resultSet);
+                doctors.add(doctorResultSet.getPatient());
+                otherParamMap.put(doctorResultSet.getPatient().getId(), doctorResultSet.getDoctorCount());
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        try (ResultSet resultSet = doctorId == null ?
-                jpaConfig.getStatement().executeQuery(FIND_ALL_PATIENTS_QUERY) :
-                jpaConfig.getStatement().executeQuery(FIND_ALL_PATIENTS_BY_DOCTOR_ID_QUERY + doctorId)) {
+        DataTableResponse<Patient> tableResponse = new DataTableResponse<>();
+        tableResponse.setItems(doctors);
+        tableResponse.setOtherParamMap(otherParamMap);
+        return tableResponse;
+    }
+
+    @Override
+    public List<Patient> findAll() {
+        List<Patient> patients = new ArrayList<>();
+        try (ResultSet resultSet = jpaConfig.getStatement().executeQuery(FIND_ALL_PATIENTS_QUERY)) {
             while (resultSet.next()) {
                 patients.add(initPatientByResultSet(resultSet));
             }
         } catch (SQLException e) {
             System.out.println("problem: = " + e.getMessage());
         }
-
-        DataTableResponse<Patient> dataTableResponse = new DataTableResponse<>();
-        dataTableResponse.setSort(request.getSort());
-        dataTableResponse.setOrder(request.getOrder());
-        dataTableResponse.setCurrentPage(request.getPageSize());
-        dataTableResponse.setItems(patients);
-        dataTableResponse.setOtherParamMap(otherParamMap);
-
-        return dataTableResponse;
+        return patients;
     }
 
     @Override
@@ -136,6 +137,28 @@ public class PatientDaoImpl implements PatientDao {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    private PatientDaoImpl.PatientResultSet convertResultSetToPatient(ResultSet resultSet) throws SQLException {
+        Long id = resultSet.getLong("id");
+        Timestamp created = resultSet.getTimestamp("created");
+        Timestamp updated = resultSet.getTimestamp("updated");
+        Boolean visible = resultSet.getBoolean("visible");
+        String patientLastName = resultSet.getString("last_name");
+        String patientFirstName = resultSet.getString("first_name");
+        int patientAge = resultSet.getInt("age");
+        int doctorCount = resultSet.getInt("doctorCount");
+
+        Patient patient = new Patient();
+        patient.setId(id);
+        patient.setCreated(created);
+        patient.setUpdated(updated);
+        patient.setVisible(visible);
+        patient.setLastname(patientLastName);
+        patient.setFirstname(patientFirstName);
+        patient.setAge(patientAge);
+
+        return new PatientDaoImpl.PatientResultSet(patient, doctorCount);
     }
 
     public Patient initPatientByResultSet(ResultSet resultSet) throws SQLException {
@@ -158,5 +181,24 @@ public class PatientDaoImpl implements PatientDao {
         patient.setAge(age);
 
         return patient;
+    }
+
+    private static class PatientResultSet {
+
+        private final Patient patient;
+        private final int doctorCount;
+
+        private PatientResultSet(Patient patient, int doctorCount) {
+            this.patient = patient;
+            this.doctorCount = doctorCount;
+        }
+
+        public Patient getPatient() {
+            return patient;
+        }
+
+        public int getDoctorCount() {
+            return doctorCount;
+        }
     }
 }

@@ -2,8 +2,7 @@ package ua.com.alevel.persistence.dao.query;
 
 public class JpaQueryUtil {
 
-    private JpaQueryUtil() {
-    }
+    private JpaQueryUtil() { }
 
     public static final String CREATE_DOCTOR_QUERY = "INSERT INTO doctor VALUES(default,?,?,?,?,?,?,?)";
     public static final String INSERT_DECLARATION = "INSERT INTO declaration VALUES(default,?,?)";
@@ -13,6 +12,11 @@ public class JpaQueryUtil {
     public static final String FIND_ALL_DOCTORS_QUERY = "SELECT * FROM doctor";
     public static final String FIND_DOCTOR_BY_ID_QUERY = "SELECT * FROM doctor WHERE id = ";
     public static final String FIND_ALL_DOCTORS_BY_PATIENT_ID_QUERY = "SELECT * FROM declaration WHERE patient_id = ";
+    public static final String FIND_ALL_DOCTORS_JOIN_DECLARATION_QUERY = "SELECT doctor.id, doctor.created, " +
+            "doctor.updated, doctor.visible, doctor.last_name, doctor.first_name, doctor.middle_name, " +
+            "doctor.specialization, count(decl.patient_id) AS patientCount " +
+            "FROM doctor LEFT JOIN declaration AS decl ON doctor.id = decl.doctor_id " +
+            "GROUP BY doctor.id ORDER BY ";
 
     public static final String CREATE_PATIENT_QUERY = "INSERT INTO patient VALUES(default,?,?,?,?,?,?)";
     public static final String UPDATE_PATIENT_BY_ID_QUERY = "UPDATE patient SET first_name = ?, last_name = ?,age = ?, updated = ? WHERE id = ";
@@ -21,6 +25,11 @@ public class JpaQueryUtil {
     public static final String FIND_PATIENT_BY_ID_QUERY = "SELECT * FROM patient WHERE id = ";
     public static final String FIND_ALL_PATIENTS_QUERY = "SELECT * FROM patient";
     public static final String FIND_ALL_PATIENTS_BY_DOCTOR_ID_QUERY = "SELECT * FROM declaration WHERE doctor_id = ";
+    public static final String FIND_ALL_PATIENTS_JOIN_DECLARATION_QUERY = "SELECT patient.id, patient.created, " +
+            "patient.updated, patient.visible, patient.last_name, patient.first_name, patient.age, " +
+            "count(decl.doctor_id) AS doctorCount " +
+            "FROM patient LEFT JOIN declaration AS decl ON patient.id = decl.patient_id " +
+            "GROUP BY patient.id ORDER BY ";
 
     public static final String CREATE_DECLARATION_QUERY = "INSERT INTO declaration VALUES(default,?,?)";
     public static final String UPDATE_DECLARATION_BY_ID_QUERY = "UPDATE declaration SET doctor_id = ?, patient_id = ? WHERE id = ";

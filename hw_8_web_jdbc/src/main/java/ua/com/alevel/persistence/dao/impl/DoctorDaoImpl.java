@@ -6,6 +6,7 @@ import ua.com.alevel.persistence.dao.DoctorDao;
 import ua.com.alevel.persistence.datatable.DataTableRequest;
 import ua.com.alevel.persistence.datatable.DataTableResponse;
 import ua.com.alevel.persistence.entity.Doctor;
+import ua.com.alevel.persistence.entity.Patient;
 import ua.com.alevel.type.DoctorSpecialization;
 
 import java.sql.PreparedStatement;
@@ -94,17 +95,14 @@ public class DoctorDaoImpl implements DoctorDao {
     public DataTableResponse<Doctor> findAll(DataTableRequest request) {
         List<Doctor> doctors = new ArrayList<>();
         Map<Object, Object> otherParamMap = new HashMap<>();
-
         int limit = (request.getCurrentPage() - 1) * request.getPageSize();
 
-
-        String sql = "select doctor.id, doctor.created, doctor.updated, doctor.visible, doctor.last_name, doctor.first_name, doctor.middle_name, doctor.specialization, count(decl.patient_id) as patientCount " +
-                "from doctor left join declaration as decl on doctor.id = decl.doctor_id " +
-                "group by doctor.id order by " +
+        String sql = FIND_ALL_DOCTORS_JOIN_DECLARATION_QUERY +
                 request.getSort() + " " +
                 request.getOrder() + " limit " +
                 limit + "," +
                 request.getPageSize();
+
         try (ResultSet resultSet = jpaConfig.getStatement().executeQuery(sql)) {
             while (resultSet.next()) {
                 DoctorResultSet doctorResultSet = convertResultSetToDoctor(resultSet);
@@ -118,6 +116,19 @@ public class DoctorDaoImpl implements DoctorDao {
         tableResponse.setItems(doctors);
         tableResponse.setOtherParamMap(otherParamMap);
         return tableResponse;
+    }
+
+    @Override
+    public List<Doctor> findAll() {
+        List<Doctor> doctors = new ArrayList<>();
+        try (ResultSet resultSet = jpaConfig.getStatement().executeQuery(FIND_ALL_DOCTORS_QUERY)) {
+            while (resultSet.next()) {
+                doctors.add(initDoctorByResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            System.out.println("problem: = " + e.getMessage());
+        }
+        return doctors;
     }
 
     @Override

@@ -6,6 +6,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
+
     @ExceptionHandler(value = EntityNotFoundException.class)
     public ModelAndView defaultErrorHandler(EntityNotFoundException exception) {
         ModelAndView mav = new ModelAndView();

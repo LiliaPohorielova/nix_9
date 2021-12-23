@@ -7,6 +7,8 @@ import ua.com.alevel.persistence.datatable.DataTableResponse;
 import ua.com.alevel.persistence.entity.Patient;
 import ua.com.alevel.service.PatientService;
 
+import java.util.List;
+
 @Service
 public class PatientServiceImpl implements PatientService {
 
@@ -42,5 +44,11 @@ public class PatientServiceImpl implements PatientService {
         long count = patientDao.count();
         dataTableResponse.setItemsSize(count);
         return dataTableResponse;
+    }
+
+    @Override
+    public List<Patient> findAll() {
+        List<Patient> patients = patientDao.findAll();
+        return patients;
     }
 }

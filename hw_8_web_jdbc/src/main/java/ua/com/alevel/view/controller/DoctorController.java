@@ -119,7 +119,7 @@ public class DoctorController extends AbstractController {
 
     @GetMapping("/add/{id}")
     public String redirectToAddDoctorPage(@PathVariable Long id, Model model, WebRequest request) {
-        List<DoctorResponseDto> doctors = doctorFacade.findAll(request).getItems();
+        List<DoctorResponseDto> doctors = doctorFacade.findAll();
         model.addAttribute("doctors", doctors);
         model.addAttribute("patient", patientFacade.findById(id));
         return "pages/doctor/doctor_add";
@@ -149,7 +149,6 @@ public class DoctorController extends AbstractController {
 
     private List<HeaderData> getHeaderDataList(HeaderName[] columnTitles, PageData<DoctorResponseDto> response) {
         List<HeaderData> headerDataList = new ArrayList<>();
-
         for (HeaderName headerName : columnTitles) {
             HeaderData data = new HeaderData();
             data.setHeaderName(headerName.getColumnName());
@@ -158,7 +157,7 @@ public class DoctorController extends AbstractController {
             } else {
                 data.setSortable(true);
                 data.setSort(headerName.getDbName());
-                if (response.getSort().equals(headerName.getTableName())) {
+                if (response.getSort().equals(headerName.getDbName())) {
                     data.setActive(true);
                     data.setOrder(response.getOrder());
                 } else {

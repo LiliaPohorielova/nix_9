@@ -8,6 +8,8 @@ insert into doctor values (7, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), true, 'S
 insert into doctor values (8, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), true, 'Bovchaluk', 'Stanicslav', 'Yaroslavovich' , 'PHYSICIAN');
 insert into doctor values (9, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), true, 'Dinovich', 'Mykyta', 'Vladimirovich' , 'PEDIATRICIAN');
 insert into doctor values (10, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), true, 'Makashvilli', 'Arsen', 'Timurovich' , 'CARDIOLOGIST');
+insert into doctor values (11, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), true, 'Prakiv', 'Dmitrii', 'Stepanovich' , 'SURGEON');
+insert into doctor values (12, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), true, 'Divakov', 'Ivan', 'Petrovich' , 'SURGEON');
 
 
 insert into patient values (1, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), true, 'Antonenko', 'Mykyta', 15);
@@ -63,3 +65,5 @@ insert into declaration values (27, 9, 18);
 insert into declaration values (28, 10, 8);
 insert into declaration values (29, 10, 16);
 insert into declaration values (30, 10, 19);
+insert into declaration values (31, 11, 12);
+insert into declaration values (32, 12, 20);

@@ -1,6 +1,5 @@
 package ua.com.alevel.facade.impl;
 
-import org.apache.commons.collections4.MapUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.WebRequest;
 import ua.com.alevel.facade.DoctorFacade;
@@ -16,7 +15,6 @@ import ua.com.alevel.view.dto.response.DoctorResponseDto;
 import ua.com.alevel.view.dto.response.PageData;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -70,11 +68,6 @@ public class DoctorFacadeImpl implements DoctorFacade {
         dataTableRequest.setSort(sortData.getSort());
         dataTableRequest.setOrder(sortData.getOrder());
 
-        Map<String, String[]> parameterMap = request.getParameterMap();
-        if (MapUtils.isNotEmpty(parameterMap)) {
-            //System.out.println("parameterMap = " + parameterMap);
-        }
-
         DataTableResponse<Doctor> all = doctorService.findAll(dataTableRequest);
         List<DoctorResponseDto> list = all.getItems().
                 stream().
@@ -91,5 +84,12 @@ public class DoctorFacadeImpl implements DoctorFacade {
         pageData.setItemsSize(all.getItemsSize());
 
         return pageData;
+    }
+
+    @Override
+    public List<DoctorResponseDto> findAll() {
+        List<Doctor> all = doctorService.findAll();
+        List<DoctorResponseDto> items = all.stream().map(DoctorResponseDto::new).collect(Collectors.toList());
+        return items;
     }
 }

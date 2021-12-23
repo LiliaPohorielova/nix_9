@@ -1,6 +1,5 @@
 package ua.com.alevel.facade.impl;
 
-import org.apache.commons.collections4.MapUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.WebRequest;
 import ua.com.alevel.facade.PatientFacade;
@@ -16,7 +15,6 @@ import ua.com.alevel.view.dto.response.PageData;
 import ua.com.alevel.view.dto.response.PatientResponseDto;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -62,34 +60,32 @@ public class PatientFacadeImpl implements PatientFacade {
         SortData sortData = WebRequestUtil.generateSortData(request);
 
         DataTableRequest dataTableRequest = new DataTableRequest();
-        dataTableRequest.setOrder(sortData.getOrder());
-        dataTableRequest.setSort(sortData.getSort());
+        dataTableRequest.setPageSize(pageAndSizeData.getSize());
         dataTableRequest.setCurrentPage(pageAndSizeData.getPage());
-        dataTableRequest.setPageSize(dataTableRequest.getPageSize());
-
-        Map<String, String[]> parameterMap = request.getParameterMap();
-        if (MapUtils.isNotEmpty(parameterMap)) {
-            String[] params = request.getParameterMap().get("doctorId");
-            if (params != null) {
-                Long doctorId = Long.parseLong(params[0]);
-                dataTableRequest.getQueryMap().put("doctorId", doctorId);
-            }
-        }
+        dataTableRequest.setSort(sortData.getSort());
+        dataTableRequest.setOrder(sortData.getOrder());
 
         DataTableResponse<Patient> all = patientService.findAll(dataTableRequest);
-
-        List<PatientResponseDto> items = all.getItems()
-                .stream().map(PatientResponseDto::new)
-                .collect(Collectors.toList());
+        List<PatientResponseDto> list = all.getItems().
+                stream().
+                map(PatientResponseDto::new).
+                collect(Collectors.toList());
 
         PageData<PatientResponseDto> pageData = new PageData<>();
-        pageData.setItems(items);
+        pageData.setItems(list);
         pageData.setCurrentPage(pageAndSizeData.getPage());
         pageData.setPageSize(pageAndSizeData.getSize());
         pageData.setOrder(sortData.getOrder());
         pageData.setSort(sortData.getSort());
         pageData.setItemsSize(all.getItemsSize());
-        pageData.initPaginationState(pageData.getCurrentPage());
+
         return pageData;
+    }
+
+    @Override
+    public List<PatientResponseDto> findAll() {
+        List<Patient> all = patientService.findAll();
+        List<PatientResponseDto> items = all.stream().map(PatientResponseDto::new).collect(Collectors.toList());
+        return items;
     }
 }

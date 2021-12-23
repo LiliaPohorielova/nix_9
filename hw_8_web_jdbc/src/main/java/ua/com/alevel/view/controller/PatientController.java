@@ -1,6 +1,7 @@
 package ua.com.alevel.view.controller;
 
 import org.apache.commons.collections4.MapUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -16,8 +17,11 @@ import ua.com.alevel.view.dto.response.DoctorResponseDto;
 import ua.com.alevel.view.dto.response.PageData;
 import ua.com.alevel.view.dto.response.PatientResponseDto;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import static ua.com.alevel.util.WebRequestUtil.DEFAULT_ORDER_PARAM_VALUE;
 
 @Controller
 @RequestMapping("/patients")
@@ -26,8 +30,8 @@ public class PatientController extends AbstractController {
     private HeaderName[] getColumnTitles() {
         return new HeaderName[]{
                 new HeaderName("#", null, null),
+                new HeaderName("last name", "lastname", "last_name"),
                 new HeaderName("first name", "firstname", "first_name"),
-                new HeaderName("last name", "lastname", "first_name"),
                 new HeaderName("age", "age", "age"),
                 new HeaderName("created", "created", "created"),
                 new HeaderName("details", null, null),
@@ -48,9 +52,14 @@ public class PatientController extends AbstractController {
 
     @GetMapping
     public String findAll(Model model, WebRequest request) {
+        HeaderName[] columnTitles = getColumnTitles();
         PageData<PatientResponseDto> response = patientFacade.findAll(request);
-        initDataTable(response, getColumnTitles(), model);
+        response.initPaginationState(response.getCurrentPage());
+        List<HeaderData> headerDataList = getHeaderDataList(columnTitles, response);
+
+        model.addAttribute("headerDataList", headerDataList);
         model.addAttribute("createUrl", "/patients/all");
+        model.addAttribute("pageData", response);
         model.addAttribute("cardHeader", "All Patients");
         return "pages/patient/patient_all";
     }
@@ -109,7 +118,7 @@ public class PatientController extends AbstractController {
 
     @GetMapping("/add/{id}")
     public String redirectToAddPatientPage(@PathVariable Long id, Model model, WebRequest request) {
-        List<PatientResponseDto> patients = patientFacade.findAll(request).getItems();
+        List<PatientResponseDto> patients = patientFacade.findAll();
         model.addAttribute("patients", patients);
         model.addAttribute("doctor", doctorFacade.findById(id));
         return "pages/patient/patient_add";
@@ -135,5 +144,28 @@ public class PatientController extends AbstractController {
         List<PatientResponseDto> patients = declarationFacade.findByDoctorId(doctorId);
         model.addAttribute("patients", patients);
         return "pages/doctor/doctor_details";
+    }
+
+    private List<HeaderData> getHeaderDataList(HeaderName[] columnTitles, PageData<PatientResponseDto> response) {
+        List<HeaderData> headerDataList = new ArrayList<>();
+        for (HeaderName headerName : columnTitles) {
+            HeaderData data = new HeaderData();
+            data.setHeaderName(headerName.getColumnName());
+            if (StringUtils.isBlank(headerName.getTableName())) {
+                data.setSortable(false);
+            } else {
+                data.setSortable(true);
+                data.setSort(headerName.getDbName());
+                if (response.getSort().equals(headerName.getDbName())) {
+                    data.setActive(true);
+                    data.setOrder(response.getOrder());
+                } else {
+                    data.setActive(false);
+                    data.setOrder(DEFAULT_ORDER_PARAM_VALUE);
+                }
+            }
+            headerDataList.add(data);
+        }
+        return headerDataList;
     }
 }
