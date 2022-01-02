@@ -109,4 +109,11 @@ public class DoctorFacadeImpl implements DoctorFacade {
 
         return pageData;
     }
+
+    @Override
+    public List<DoctorResponseDto> findAll() {
+        List<Doctor> all = doctorService.findAll();
+        List<DoctorResponseDto> items = all.stream().map(DoctorResponseDto::new).collect(Collectors.toList());
+        return items;
+    }
 }

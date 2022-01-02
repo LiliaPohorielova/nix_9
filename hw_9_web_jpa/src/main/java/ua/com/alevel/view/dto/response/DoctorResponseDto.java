@@ -9,7 +9,6 @@ public class DoctorResponseDto extends ResponseDto {
     private String firstname;
     private String middleName;
     private DoctorSpecialization specialization;
-    //private Integer patientCount;
 
     public DoctorResponseDto() { }
 
@@ -55,14 +54,6 @@ public class DoctorResponseDto extends ResponseDto {
         this.specialization = specialization;
     }
 
-   /* public Integer getPatientCount() {
-        return patientCount;
-    }
-
-    public void setPatientCount(Integer patientCount) {
-        this.patientCount = patientCount;
-    }
-    */
     @Override
     public String toString() {
         return "DoctorResponseDto{" +

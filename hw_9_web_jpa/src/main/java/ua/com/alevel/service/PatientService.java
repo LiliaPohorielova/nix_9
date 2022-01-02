@@ -8,4 +8,6 @@ import java.util.List;
 public interface PatientService extends BaseService<Patient> {
 
     List<Doctor> getDoctors(Long id);
+
+    List<Patient> findAll();
 }

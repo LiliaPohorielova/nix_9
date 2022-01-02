@@ -59,7 +59,7 @@ public class DoctorDaoImpl implements DoctorDao {
     @Override
     public void delete(Long id) {
         Query query = sessionFactory.getCurrentSession()
-                .createQuery("delete from Doctor o where o.id = :id")
+                .createQuery("delete from Doctor d where d.id = :id")
                 .setParameter("id", id);
         query.executeUpdate();
     }
@@ -67,7 +67,7 @@ public class DoctorDaoImpl implements DoctorDao {
     @Override
     public boolean existById(Long id) {
         Query query = sessionFactory.getCurrentSession()
-                .createQuery("select count(o.id) from Doctor o where o.id = :id")
+                .createQuery("select count(d.id) from Doctor d where d.id = :id")
                 .setParameter("id", id);
         return (Long) query.getSingleResult() == 1;
     }
@@ -104,7 +104,12 @@ public class DoctorDaoImpl implements DoctorDao {
     @Override
     public long count() {
         Query query = sessionFactory.getCurrentSession()
-                .createQuery("select count(o.id) from Doctor o");
+                .createQuery("select count(d.id) from Doctor d");
         return (Long) query.getSingleResult();
+    }
+
+    @Override
+    public List<Doctor> findAll() {
+        return sessionFactory.getCurrentSession().createQuery("from Doctor").list();
     }
 }

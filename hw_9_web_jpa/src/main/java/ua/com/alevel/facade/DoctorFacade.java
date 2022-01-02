@@ -13,4 +13,6 @@ public interface DoctorFacade extends BaseFacade<DoctorRequestDto, DoctorRespons
     void addPatient(Long doctorId, Long patientId);
 
     void removePatient(Long doctorId, Long patientId);
+
+    List<DoctorResponseDto> findAll();
 }

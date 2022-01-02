@@ -28,8 +28,8 @@ public class PatientController extends AbstractController {
     private HeaderName[] getColumnTitles() {
         return new HeaderName[]{
                 new HeaderName("#", null, null),
-                new HeaderName("last name", "lastname", "last_name"),
-                new HeaderName("first name", "firstname", "first_name"),
+                new HeaderName("last name", "lastname", "lastname"),
+                new HeaderName("first name", "firstname", "firstname"),
                 new HeaderName("age", "age", "age"),
                 new HeaderName("created", "created", "created"),
                 new HeaderName("details", null, null),
@@ -114,7 +114,7 @@ public class PatientController extends AbstractController {
 
     @GetMapping("/add/{id}")
     public String redirectToAddPatientPage(@PathVariable Long id, Model model, WebRequest request) {
-        List<PatientResponseDto> patients = patientFacade.findAll(request).getItems();
+        List<PatientResponseDto> patients = patientFacade.findAll();
         model.addAttribute("patients", patients);
         model.addAttribute("doctor", doctorFacade.findById(id));
         return "pages/patient/patient_add";

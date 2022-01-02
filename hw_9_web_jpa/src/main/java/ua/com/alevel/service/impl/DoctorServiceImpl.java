@@ -73,4 +73,10 @@ public class DoctorServiceImpl implements DoctorService {
         dataTableResponse.setItemsSize(count);
         return dataTableResponse;
     }
+
+    @Override
+    public List<Doctor> findAll() {
+        List<Doctor> doctors = doctorDao.findAll();
+        return doctors;
+    }
 }

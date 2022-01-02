@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "doctor")
+@Table(name = "doctors")
 public class Doctor extends BaseEntity {
 
     private String lastname;
@@ -23,8 +23,8 @@ public class Doctor extends BaseEntity {
     @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
     @JoinTable(
             name = "declaration",
-            joinColumns = @JoinColumn(name = "doctor_id"),
-            inverseJoinColumns = @JoinColumn(name = "patient_id"))
+            joinColumns = @JoinColumn(name = "doctor"),
+            inverseJoinColumns = @JoinColumn(name = "patient"))
     private List<Patient> patients;
 
     public Doctor() {

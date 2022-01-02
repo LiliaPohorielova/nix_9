@@ -92,4 +92,9 @@ public class PatientDaoImpl implements PatientDao {
         Query query = sessionFactory.getCurrentSession().createQuery("select count(p.id) from Patient p");
         return (Long) query.getSingleResult();
     }
+
+    @Override
+    public List<Patient> findAll() {
+        return sessionFactory.getCurrentSession().createQuery("from Patient").list();
+    }
 }

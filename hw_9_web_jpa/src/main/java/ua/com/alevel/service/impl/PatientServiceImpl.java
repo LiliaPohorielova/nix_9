@@ -62,4 +62,10 @@ public class PatientServiceImpl implements PatientService {
         dataTableResponse.setItemsSize(count);
         return dataTableResponse;
     }
+
+    @Override
+    public List<Patient> findAll() {
+        List<Patient> patients = patientDao.findAll();
+        return patients;
+    }
 }

@@ -9,4 +9,5 @@ import java.util.List;
 public interface PatientFacade extends BaseFacade<PatientRequestDto, PatientResponseDto>{
 
     List<DoctorResponseDto> getDoctors(Long id);
+    List<PatientResponseDto> findAll();
 }

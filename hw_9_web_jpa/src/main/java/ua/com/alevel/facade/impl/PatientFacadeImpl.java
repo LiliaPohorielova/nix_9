@@ -100,7 +100,13 @@ public class PatientFacadeImpl implements PatientFacade {
         return pageData;
     }
 
-    //TODO:DELETE
+    @Override
+    public List<PatientResponseDto> findAll() {
+        List<Patient> all = patientService.findAll();
+        List<PatientResponseDto> items = all.stream().map(PatientResponseDto::new).collect(Collectors.toList());
+        return items;
+    }
+
     private List<PatientResponseDto> convertToDtoByEntity(List<Patient> patients) {
         return patients.stream()
                 .map(PatientResponseDto::new)

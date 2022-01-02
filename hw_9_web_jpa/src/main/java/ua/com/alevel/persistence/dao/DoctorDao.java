@@ -13,4 +13,6 @@ public interface DoctorDao extends BaseDao<Doctor>{
     void addPatient(Long doctorId, Long patientId);
 
     void removePatient(Long doctorId, Long patientId);
+
+    List<Doctor> findAll();
 }

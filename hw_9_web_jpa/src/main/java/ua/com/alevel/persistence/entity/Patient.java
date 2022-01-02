@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "patient")
+@Table(name = "patients")
 public class Patient extends BaseEntity {
 
     @Column(name = "lastname")
@@ -16,7 +16,7 @@ public class Patient extends BaseEntity {
 
     private Integer age;
 
-    @ManyToMany(mappedBy = "patient", cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "patients", cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
     private List<Doctor> doctors;
 
     public Patient() {
