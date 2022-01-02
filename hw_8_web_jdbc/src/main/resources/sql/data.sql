@@ -66,4 +66,7 @@ insert into declaration values (28, 10, 8);
 insert into declaration values (29, 10, 16);
 insert into declaration values (30, 10, 19);
 insert into declaration values (31, 11, 12);
-insert into declaration values (32, 12, 20);
+insert into declaration values (32, 11, 21);
+insert into declaration values (33, 11, 8);
+insert into declaration values (34, 12, 20);
+insert into declaration values (35, 12, 21);
