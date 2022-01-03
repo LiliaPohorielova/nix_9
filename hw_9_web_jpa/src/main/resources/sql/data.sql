@@ -1,3 +1,6 @@
+# Для создания базы данных - запусите приложение
+# Для заполнения базы данных, используйте затем этот скрипт
+USE hw_9_hospital;
 insert into doctors values (1, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), true, 'Mykyta', 'Kuznetsov', 'Victorovich' , 'DENTIST');
 insert into doctors values (2, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), true, 'Ivan', 'Sidorov', 'Aleksandrovich' , 'DENTIST');
 insert into doctors values (3, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), true, 'Sofia', 'Petrova', 'Vyacheslavovna' , 'PEDIATRICIAN');
