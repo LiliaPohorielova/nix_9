@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+  <meta charset="utf-8">
+  <title>Details Patient</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card mb-2 mt-2">
+        <div class="card-header">
+          Details Patient
+        </div>
+        <div class="card-body">
+          <table class="table table-hover">
+            <tr>
+              <th>id</th>
+              <td th:text="${patient.getId()}"></td>
+            </tr>
+            <tr>
+              <th>first name</th>
+              <td th:text="${patient.getFirstname()}"></td>
+            </tr>
+            <tr>
+              <th>last name</th>
+              <td th:text="${patient.getLastname()}"></td>
+            </tr>
+            <tr>
+              <th>age</th>
+              <td th:text="${patient.getAge()}"></td>
+            </tr>
+            <tr>
+              <th>created</th>
+              <td th:text="${#calendars.format(patient.getCreated(),'dd MMMM yyyy')}"></td>
+            </tr>
+            <tr>
+              <th>updated</th>
+              <td th:text="${#calendars.format(patient.getUpdated(),'dd MMMM yyyy')}"></td>
+            </tr>
+            <tr>
+          </table>
+          <table class="table table-sm table-hover">
+            <thead>
+            <tr>
+              <th>#</th>
+              <th>Lastname</th>
+              <th>Firstname</th>
+              <th>Middle name</th>
+              <th>Specialization</th>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="doctor,iter : ${doctors}">
+              <td th:text="${iter.count}"></td>
+              <td th:text="${doctor.getLastname()}"></td>
+              <td th:text="${doctor.getFirstname()}"></td>
+              <td th:text="${doctor.getMiddleName()}"></td>
+              <td th:text="${T(ua.com.alevel.type.DoctorSpecialization).valueOf(doctor.getSpecialization())}"></td>
+              <td>
+                <a th:href="@{'/doctors/delete/doctor/' + ${patient.getId()} + '/' + ${doctor.getId()}}"
+                   type="button" class="btn btn-danger">delete</a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+          <hr>
+          <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+            <div class="btn-group mr-2" role="group" aria-label="Second group">
+              <a th:href="@{/patients}" type="button" class="btn btn-primary">Back</a>
+            </div>
+            <div class="btn-group mr-2" role="group" aria-label="Third group">
+              <a th:href="@{'/doctors/add/' + ${patient.getId()}}" type="button" class="btn btn-success">Add doctor</a>
+            </div>
+          </div>
+          <hr>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

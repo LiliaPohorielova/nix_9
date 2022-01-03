@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}"
+>
+<head>
+    <meta charset="utf-8">
+    <title>Details Doctor</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-2 mt-2">
+                <div class="card-header">
+                    Details Doctor
+                </div>
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <tr>
+                            <th>ID</th>
+                            <td th:text="${doctor.getId()}"></td>
+                        </tr>
+                        <tr>
+                            <th>Lastname</th>
+                            <td th:text="${doctor.getLastname()}"></td>
+                        </tr>
+                        <tr>
+                            <th>Firstname</th>
+                            <td th:text="${doctor.getFirstname()}"></td>
+                        </tr>
+                        <tr>
+                            <th>MiddleName</th>
+                            <td th:text="${doctor.getMiddleName()}"></td>
+                        </tr>
+                        <tr>
+                            <th>Created</th>
+                            <td th:text="${#calendars.format(doctor.getCreated(),'dd MMMM yyyy')}"></td>
+                        </tr>
+                        <tr>
+                            <th>Updated</th>
+                            <td th:text="${#calendars.format(doctor.getUpdated(),'dd MMMM yyyy')}"></td>
+                        </tr>
+                        <tr>
+                            <th>Specialization</th>
+                            <td th:text="${T(ua.com.alevel.type.DoctorSpecialization).valueOf(doctor.getSpecialization())}"></td>
+                        </tr>
+                    </table>
+                    <table class="table table-sm table-hover">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Lastname</th>
+                            <th>Firstname</th>
+                            <th>Age</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="patient,iter : ${patients}">
+                            <td th:text="${iter.count}"></td>
+                            <td th:text="${patient.getLastname()}"></td>
+                            <td th:text="${patient.getFirstname()}"></td>
+                            <td th:text="${patient.getAge()}"></td>
+                            <td>
+                                <a th:href="@{'/patients/delete/doctor/' + ${patient.getId()} + '/' + ${doctor.getId()}}"
+                                   type="button" class="btn btn-danger">delete</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <hr>
+                    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                        <div class="btn-group mr-2" role="group" aria-label="Second group">
+                            <a th:href="@{/doctors}" type="button" class="btn btn-primary">Back</a>
+                        </div>
+                        <div class="btn-group mr-2" role="group" aria-label="Third group">
+                            <a th:href="@{'/patients/add/' + ${doctor.getId()}}" type="button" class="btn btn-success">Add
+                                new patient</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

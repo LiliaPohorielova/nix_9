@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="utf-8">
+    <title>New Patient</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card mt-2">
+                <div class="card-header">
+                    <h4>New Patient</h4>
+                </div>
+                <div class="card-body">
+                    <form action="#" th:action="@{/patients/new}" th:object="${patient}"
+                          method="post">
+                        <div class="form-group">
+                            <label for="firstName">First name</label>
+                            <input type="text" class="form-control" id="firstName" aria-describedby="firstName"
+                                   placeholder="Введите имя" th:field="*{firstname}">
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last name</label>
+                            <input type="text" class="form-control" id="lastName" aria-describedby="lastName"
+                                   placeholder="Введите фамилию" th:field="*{lastname}">
+                        </div>
+                        <div class="form-group">
+                            <label for="age">Age</label>
+                            <input type="number" min="1" class="form-control" id="age" aria-describedby="age"
+                                   placeholder="Введите возраст" th:field="*{age}">
+                        </div>
+                        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                            <div class="btn-group mr-2" role="group" aria-label="Second group">
+                                <a th:href="@{/patients}" type="button" class="btn btn-primary">Back</a>
+                            </div>
+                            <div class="btn-group mr-2" role="group" aria-label="Third group">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

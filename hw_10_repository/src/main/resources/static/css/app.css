@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu');
+html,body {
+    background: url('https://i.ibb.co/Np5f4jB/0076ff-5dc7f4-ffffff-1920-1080.png') no-repeat center center fixed;
+    background-size: cover;
+    height: 100%;
+    font-family: 'Ubuntu', sans-serif;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+}
+a.nav-item.nav-link:hover{
+    cursor: pointer;
+    text-decoration-line: underline;
+    color: #12ccc6;
+}
+a.nav-item.nav-link {
+    color: white;
+}
+
+a.nav-item.nav-link:visited {
+    color: white;
+}
+
+.sort {
+    cursor: pointer;
+    margin-right: 2em;
+}

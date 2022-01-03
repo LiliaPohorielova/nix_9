@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/data_table}">
+<head>
+    <meta charset="utf-8">
+    <title>Doctor</title>
+</head>
+<body>
+<div layout:fragment="data_table_content">
+    <tr th:each="doctor,iter : ${pageData.getItems()}">
+        <td th:text="${iter.count}"></td>
+        <td th:text="${doctor.getLastname()}"></td>
+        <td th:text="${doctor.getFirstname()}"></td>
+        <td th:text="${doctor.getMiddleName()}"></td>
+        <td th:text="${#calendars.format(doctor.getCreated(),'dd MMMM yyyy')}"></td>
+        <td>
+            <a th:href="@{'/doctors/details/' + ${doctor.getId()}}" type="button" class="btn btn-primary">details</a>
+        </td>
+        <td>
+            <a th:href="@{'/doctors/update/' + ${doctor.getId()}}" type="button" class="btn btn-success">edit</a>
+        </td>
+        <td>
+            <a th:href="@{'/doctors/delete/' + ${doctor.getId()}}" type="button" class="btn btn-danger">delete</a>
+        </td>
+    </tr>
+</div>
+</body>
+</html>
